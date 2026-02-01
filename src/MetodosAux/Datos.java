@@ -1,10 +1,10 @@
 package MetodosAux;
-
 import java.util.Scanner;
 
 /**
  * Clase para todos los metodos o funcionalidades propias de la Entrada/Salida
- *
+ * 
+ * @author DaniS y Libio
  */
 public class Datos {
     //Scanner (Objeto) estatico que se podra utilizar en todos los metodos de la clase
