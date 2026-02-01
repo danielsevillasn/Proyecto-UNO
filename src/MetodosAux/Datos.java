@@ -48,6 +48,13 @@ public class Datos {
         System.out.println("\t3. Otra modalidad");
         System.out.print("\tElija opción: ");
         ModoDeJuego = sc.nextLine();
+        switch (ModoDeJuego) {
+            case "1":
+                ModoDeJuego = "Clásico";
+                break;
+            default:
+                break;
+        }
         return (ModoDeJuego);
     }
 
@@ -62,10 +69,20 @@ public class Datos {
         System.out.println("\nPulse enter para continuar, 0 para salir");
         System.out.print("4- ");
         System.out.println("\nPulse enter para continuar, 0 para salir");
-
         return (PantallaJugadores);
     }
 
+    public static void PantallaReglas(){
+        System.out.println("============Reglas============");
+        System.out.println("Principales: ");
+        System.out.println("El objetivo principal de UNO es ser el primer jugador en quedarse sin cartas, tras repartir 7 a cada uno.");
+        System.out.println("En tu turno, debes igualar la carta superior de la pila por color, número o símbolo.");
+        System.out.println("Si no tienes, roba una del mazo. Al quedar con una carta, grita \\\\\\\"¡UNO!\\\\\\\" o serás penalizado");
+        System.out.println("Si no tienes, roba una del mazo. Al quedar con una carta, grita \\\\\\\"¡UNO!\\\\\\\" o serás penalizado");
+        System.out.println("Si no tienes, roba una del mazo. Al quedar con una carta, grita \\\\\\\"¡UNO!\\\\\\\" o serás penalizado");
+        System.out.println("Modo de juego: "+ModoDejuego);
+        System.out.println("\nPulse enter para salir...");
+    }
 
 
 
