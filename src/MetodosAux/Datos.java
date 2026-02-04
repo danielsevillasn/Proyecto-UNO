@@ -35,7 +35,7 @@ public class Datos {
      * @return Dato introducido por teclado tipo entero
      */
     public static int pedirEntero(String mensaje){
-        System.out.print("Dame "+mensaje);
+        System.out.print("Dame "+ mensaje);
         int dato = s.nextInt();
         return dato;
     }
