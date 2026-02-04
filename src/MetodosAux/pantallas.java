@@ -92,7 +92,7 @@ public class pantallas {
         System.out.println("Principales: ");
         System.out.println("El objetivo principal de UNO es ser el primer jugador en quedarse sin cartas, tras repartir 7 a cada uno.");
         System.out.println("En tu turno, debes igualar la carta superior de la pila por color, número o símbolo.");
-        System.out.println("Si no tienes, roba una del mazo. Al quedar con una carta, grita \\\\\\\"¡UNO!\\\\\\\" o serás penalizado");
+        System.out.println("dfhgisughdiugfw");
         System.out.println("Si no tienes, roba una del mazo. Al quedar con una carta, grita \\\\\\\"¡UNO!\\\\\\\" o serás penalizado");
         System.out.println("Si no tienes, roba una del mazo. Al quedar con una carta, grita \\\\\\\"¡UNO!\\\\\\\" o serás penalizado");
         System.out.println("Modo de juego: "+ModoDejuego);
