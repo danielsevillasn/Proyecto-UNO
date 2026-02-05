@@ -1,8 +1,14 @@
 package Principal;
+import Objetos.Juego;
+/**
+ * Inicializa el juego UNO, creando un objeto de la clase JuegoUno y llamando a su método ejecutarSistemaCompleto()
+ * 
+ * @author DaniS y Libio
+ */
 public class UNO {
-//El main solamente tiene que tener un par de líneas,
-//en las que hay que crear un objeto y empezar la partida
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) throws InterruptedException {
+        Juego juego = new Juego();
+        juego.ejecutarSistemaCompleto();
+
     }
 }

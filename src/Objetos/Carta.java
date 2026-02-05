@@ -1,50 +1,32 @@
 package Objetos;
-
-public class Carta {
-    //Atributos///////////////
-    private int numero;
-    private String tipo;
+public abstract class Carta {
     private String color;
+    private int numero;
 
-    //Metodos/////////////////
-
-    //Constructor por defecto
-    public Carta(){
-        this.tipo = "";
-        this.color = "";
-        this.numero = 0;
-    }
-    //Constructor para dar inicio a la istancia
-    
-    //Setter
-    public void setNumero(int numero){
-        this.numero = numero;
+    public Carta(int n, String c) {
+        this.numero = n;
+        this.color = c;
     }
 
-    public void setTipo(String tipo){
-        this.tipo = tipo;
+    public String getColor() {
+        return color;
     }
 
-        public void setColor(String color){
-        this.color = color;
+    public int getNumero() {
+        return numero;
     }
 
-    //Getter
-    public int getNumero(){
-        return this.numero;
-    }
+    public abstract void chuparCartas();
 
-    public String getTipo(){
-        return this.tipo;
-    }
-
-    public String getColor(){
-        return this.color;
-    }
-
-    //Metodo toString
     @Override
-    public String toString(){
-        return ("La carta "+this.numero+"del tipo "+this.tipo+"y de color "+this.color);
+    public String toString() {
+        String c = switch (color) {
+            case "Rojo" -> "\u001B[31m";
+            case "Azul" -> "\u001B[34m";
+            case "Verde" -> "\u001B[32m";
+            case "Amarillo" -> "\u001B[33m";
+            default -> "\u001B[0m";
+        };
+        return c + "[" + color + " " + numero + "]" + "\u001B[0m";
     }
 }
