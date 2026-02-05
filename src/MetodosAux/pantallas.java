@@ -120,7 +120,7 @@ public class pantallas {
         System.out.println("  ██████  ██   ██ ██   ████ ██   ██ ███████    ██    ███████ ");
         System.out.println();
         System.out.println(AMARILLO + "\t\t\t¡GANASTE!" + RESET);
-        System.out.println(ROJO+"\t\t  Jugador:"+NombreJugador+"!"+ RESET);
+        System.out.println(ROJO+"\t\t  Jugador:"+ NombreJugador +"!"+ RESET);
     }
 
     /**
@@ -157,3 +157,4 @@ public class pantallas {
         Thread.sleep(2000);
     }
 }
+//Son solo cambio de prueba de una rama
