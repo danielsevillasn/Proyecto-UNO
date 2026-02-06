@@ -75,7 +75,6 @@ public class Juego {
                     t.dejar(j.jugarCarta(sel));
                     if (j.getNumCartas() == 0) {
                         fin = true;
-                        // ¡CLAVE! Actualizamos el nombre del ganador real para la pantalla final
                         pantallas.NombreJugador = j.getNombre();
                     }
                 } else {
