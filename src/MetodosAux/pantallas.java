@@ -115,7 +115,7 @@ public class pantallas {
         Thread.sleep(1000);
         System.out.println(AMARILLO + "\t\t\t¡GANASTE!" + RESET);
         Thread.sleep(1000);
-        System.out.println(ROJO + "\t\t\t Jugador:" + NombreJugador + "!" + RESET);
+        System.out.println(ROJO + "\t\t  Jugador:" + NombreJugador + "!" + RESET);
         Thread.sleep(2000);
         System.out.println("\n\n\n\n");
     }
