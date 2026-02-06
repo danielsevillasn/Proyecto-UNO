@@ -1,11 +1,12 @@
 package Objetos;
+
 import MetodosAux.pantallas;
 import java.util.Scanner;
 
 public class Juego {
 
     static Scanner s = new Scanner(System.in);
-    private String[] nombresCargados = {"Jugador 1", "Jugador 2"}; // Nombres por defecto
+    private String[] nombresCargados = { "Jugador 1", "Jugador 2" }; // Nombres por defecto
     private int cantidadActual = 2;
 
     public void ejecutarSistemaCompleto() throws InterruptedException {
@@ -28,9 +29,10 @@ public class Juego {
     }
 
     public void configurarJugadores() {
-        int cantidadActual = pantallas.PantallaJugadores();
+        cantidadActual = pantallas.PantallaJugadores();
         System.out.print("¿Cuántos jugadores (2-4)? ");
-        cantidadActual = s.nextInt(); s.nextLine();
+        cantidadActual = s.nextInt();
+        s.nextLine();
         nombresCargados = new String[cantidadActual];
         for (int i = 0; i < cantidadActual; i++) {
             System.out.print("Nombre Jugador " + (i + 1) + ": ");
@@ -38,7 +40,6 @@ public class Juego {
         }
         pantallas.Jugadores = String.valueOf(cantidadActual);
     }
-
 
     private void partida() throws InterruptedException {
         Tablero t = new Tablero();
@@ -63,9 +64,33 @@ public class Juego {
                 System.out.print(i + ":" + j.mano[i] + " ");
             System.out.println(j.getNumCartas() + ":[ROBAR]");
 
-            System.out.print("Acción: ");
-            int sel = s.nextInt();
-            s.nextLine();
+            int sel = -1;
+            while (sel < 0 || sel > j.getNumCartas()) {
+                System.out.print("Acción: ");
+                String opcion = s.nextLine();
+
+                if (opcion.isEmpty()) {
+                    System.out.println("No has introducido nada.");
+                    continue;
+                }
+
+                boolean esNumero = true;
+                for (int i = 0; i < opcion.length(); i++) {
+                    if (!Character.isDigit(opcion.charAt(i))) {
+                        esNumero = false;
+                    }
+                }
+
+                if (esNumero) {
+                    sel = Integer.parseInt(opcion);
+                    if (sel < 0 || sel > j.getNumCartas()) {
+                        System.out.println("Número fuera de rango.");
+                    }
+                } else {
+                    System.out.println("Error: Introduce solo números (sin letras).");
+                    sel = -1; // Forzamos a que el bucle siga
+                }
+            }
 
             if (sel == j.getNumCartas()) {
                 j.recibirCarta(t.pull());
