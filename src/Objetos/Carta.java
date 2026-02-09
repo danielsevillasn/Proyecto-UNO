@@ -1,7 +1,8 @@
 package Objetos;
+
 public abstract class Carta {
-    private String color;
-    private int numero;
+    private final String color;
+    private final int numero;
 
     public Carta(int n, String c) {
         this.numero = n;
@@ -16,7 +17,7 @@ public abstract class Carta {
         return numero;
     }
 
-    public abstract void chuparCartas();
+    //public abstract void chuparCartas();
 
     @Override
     public String toString() {

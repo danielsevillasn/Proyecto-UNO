@@ -5,7 +5,8 @@ public class CartaNormal extends Carta {
         super(n, c);
     }
 
-    @Override
+    /* @Override
     public void chuparCartas() {
-    }
+    } 
+    */
 }
