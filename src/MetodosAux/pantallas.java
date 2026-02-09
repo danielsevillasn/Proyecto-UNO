@@ -7,17 +7,14 @@ import java.util.Scanner;
  * 
  * @author DaniS y Libio
  */
-
 public class pantallas {
+    public static String ModoDeJuego = "Clásico";
+    public static String Jugadores = "2 jugadores";
+    public static String NombreJugador = "Jugador 1";
     // Scanner (Objeto) estatico que se podra utilizar en todos los metodos de la
     // clase
     static Scanner s = new Scanner(System.in);
 
-    // Variables necesarias para que los métodos de impresión funcionen
-    public static String ModoDeJuego = "Clásico";
-    public static String ModoDejuego = "Clásico";
-    public static String Jugadores = "2";
-    public static String NombreJugador = "Invitado";
     /**
      * Muestra al usuario un menú de opciones; pide que teclee una de ellas y
      * devuelve la Opción introducida
@@ -26,6 +23,10 @@ public class pantallas {
      * @return Opción introducida por teclado tipo String
      */
     public static String PantallaMenu() {
+        final String ModoDeJuego = "Clásico";
+        final String Jugadores = "2 jugadores";
+        String InicioUno = "";
+        System.out.println();
         System.out.println("==========Inicio=========");
         System.out.println("\t1- Modo de juego");
         System.out.println("\t2- Jugadores");
@@ -33,10 +34,13 @@ public class pantallas {
         System.out.println("\t4- Iniciar juego");
         System.out.println("\t5- Salir");
         System.out.println("==========================");
+        System.out.print("\tElija opción: ");
+
         System.out.println("Modo de juego: " + ModoDeJuego + "\tjugadores: " + Jugadores);
 
-        System.out.print("\tElija opción: ");
-        return s.nextLine();
+        InicioUno = s.nextLine();
+
+        return (InicioUno);
     }
 
     /**
@@ -54,13 +58,14 @@ public class pantallas {
         System.out.println("\t3. Otra modalidad");
         System.out.print("\tElija opción: ");
         ModoDeJuego = s.nextLine();
-        String resultado = "";
-        if (ModoDeJuego.equals("1")) {
-            resultado = "Clásico";
-        } else {
-            resultado = "Otro";
+        switch (ModoDeJuego) {
+            case "1":
+                ModoDeJuego = "Clásico";
+                break;
+            default:
+                break;
         }
-        return (resultado);
+        return (ModoDeJuego);
     }
 
     /**
@@ -69,10 +74,19 @@ public class pantallas {
      * @param ninguno
      * @return Opción introducida por teclado tipo String
      */
-    public static int PantallaJugadores() {
-        int cantidadActual = 2;
+    public static String PantallaJugadores() {
+
+        String PantallaJugadores = "";
         System.out.println("============Jugadores============");
-        return cantidadActual;
+        System.out.print("1- ");
+        System.out.println("\nPulse enter para continuar, 0 para salir");
+        System.out.print("2- ");
+        System.out.println("\nPulse enter para continuar, 0 para salir");
+        System.out.print("3- ");
+        System.out.println("\nPulse enter para continuar, 0 para salir");
+        System.out.print("4- ");
+        System.out.println("\nPulse enter para continuar, 0 para salir");
+        return (PantallaJugadores);
     }
 
     /**
@@ -83,41 +97,42 @@ public class pantallas {
      * @return nada
      */
     public static void PantallaReglas() {
+        String ModoDeJuego = "Clásico";
         System.out.println("============Reglas============");
         System.out.println("Principales: ");
-        System.out.println("El objetivo principal de UNO es ser el primer jugador en quedarse sin cartas, tras repartir 7 a cada uno.");
+        System.out.println(
+                "El objetivo principal de UNO es ser el primer jugador en quedarse sin cartas, tras repartir 7 a cada uno.");
         System.out.println("En tu turno, debes igualar la carta superior de la pila por color, número o símbolo.");
-        System.out.println("Modo de juego: " + ModoDejuego);
+        System.out.println("dfhgisughdiugfw");
+        System.out.println(
+                "Si no tienes, roba una del mazo. Al quedar con una carta, grita \\\\\\\"¡UNO!\\\\\\\" o serás penalizado");
+        System.out.println(
+                "Si no tienes, roba una del mazo. Al quedar con una carta, grita \\\\\\\"¡UNO!\\\\\\\" o serás penalizado");
+        System.out.println("Modo de juego: " + ModoDeJuego);
         System.out.println("\nPulse enter para salir...");
-        s.nextLine();
     }
 
     /**
      * Pantalla en la que sale "Ganaste" con el nombre del ganador
      * 
-     * @param nada
+     * @param NombreJugador nombre del jugador ganador
      * @return nada
      */
-    public static void PantallaFinal() throws InterruptedException{
+    public static void PantallaFinal(String NombreJugador) {
         String AMARILLO = "\u001B[33m";
         String VERDE = "\u001B[32m";
         String RESET = "\u001B[0m";
         String ROJO = "\u001B[31m";
 
         System.out.println(VERDE);
-        Thread.sleep(1000);
         System.out.println("  ██████   █████  ███    ██  █████  ███████ ████████ ███████ ");
         System.out.println(" ██       ██   ██ ████   ██ ██   ██ ██         ██    ██      ");
         System.out.println(" ██   ███ ███████ ██ ██  ██ ███████ ███████    ██    █████   ");
         System.out.println(" ██    ██ ██   ██ ██  ██ ██ ██   ██      ██    ██    ██      ");
         System.out.println("  ██████  ██   ██ ██   ████ ██   ██ ███████    ██    ███████ ");
         System.out.println();
-        Thread.sleep(1000);
         System.out.println(AMARILLO + "\t\t\t¡GANASTE!" + RESET);
-        Thread.sleep(1000);
         System.out.println(ROJO + "\t\t  Jugador:" + NombreJugador + "!" + RESET);
-        Thread.sleep(2000);
-        System.out.println("\n\n\n\n");
     }
 
     /**
@@ -151,6 +166,6 @@ public class pantallas {
         s.nextLine();
         System.out.println(RESET);
         System.out.println();
+        Thread.sleep(2000);
     }
 }
-// Son solo cambio de prueba de una rama
