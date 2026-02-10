@@ -1,5 +1,10 @@
 package Objetos;
 
+/**
+ * Clase que establece el turno del juego
+ * 
+ * @author DaniS y Libio
+ */
 public class Turno {
     int actual = 0;
 
