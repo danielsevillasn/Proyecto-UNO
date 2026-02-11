@@ -43,10 +43,11 @@ public class Juego {
      */
 public void configurarJugadores() {
     int numJugadores = -1;
+    String opcion;
     
     while (numJugadores < 2 || numJugadores > 4) {
         System.out.print("¿Cuántos jugadores (2-4)? ");
-        String opcion = s.nextLine();
+        opcion = s.nextLine();
 
         if (opcion.isEmpty()) {
             System.out.println("No has introducido nada.");
@@ -95,7 +96,12 @@ public void configurarJugadores() {
         Turno controlador = new Turno();
         Jugador[] lista = new Jugador[cantidadActual];
         boolean fin = false;
-        int opcionCarta = -1;
+        int opcionCarta;
+        Jugador j;
+        String opcion;
+        boolean esNumero;
+        Carta cartaSeleccionada;
+        Carta cartaEnMesa;
 
         // Reparto inicial, 7 cartas por jugador
         for (int i = 0; i < cantidadActual; i++) {
@@ -109,25 +115,27 @@ public void configurarJugadores() {
 
         // Bucle de juego, hasta que alguien se quede sin cartas
         while (!fin) {
-            Jugador j = lista[controlador.actual];
+            j = lista[controlador.actual];
             System.out.println("\n--- TURNO DE: " + j.getNombre() + " ---");
             System.out.println("Mesa: " + t.verMesa());
 
             // Mostrar la mano del jugador actual
-            for (int i = 0; i < j.getNumCartas(); i++)
+            for (int i = 0; i < j.getNumCartas(); i++){
                 System.out.print(i + ":" + j.mano[i] + " ");
+            }
             System.out.println(j.getNumCartas() + ":[ROBAR]");
 
             // Bucle de validación de entrada, para que no se metan letras
+            opcionCarta = -1;
             while (opcionCarta < 0 || opcionCarta > j.getNumCartas()) {
                 System.out.print("Acción: ");
-                String opcion = s.nextLine();
+                opcion = s.nextLine();
 
                 if (opcion.isEmpty()) {
                     System.out.println("No has introducido nada.");
                 }else{
                     //Para evitar que lo que se introduce no sea un numero
-                    boolean esNumero = true;
+                    esNumero = true;
                     for (int i = 0; i < opcion.length(); i++) {
                         if (!Character.isDigit(opcion.charAt(i))) {
                             esNumero = false;
@@ -153,8 +161,8 @@ public void configurarJugadores() {
                 j.recibirCarta(t.tirarCarta());
             } else {
                 // Opción Jugar Carta
-                Carta cartaSeleccionada = j.mano[opcionCarta];
-                Carta cartaEnMesa = t.verMesa();
+                cartaSeleccionada = j.mano[opcionCarta];
+                cartaEnMesa = t.verMesa();
 
                 //Para ver si la carta que se juega se puede jugar en la mesa
                 if (cartaSeleccionada.puedePonerseSobre(cartaEnMesa)) {

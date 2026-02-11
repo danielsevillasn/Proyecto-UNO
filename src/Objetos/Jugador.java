@@ -10,13 +10,14 @@ public class Jugador {
     protected Carta[] mano = new Carta[100];
     protected int numCartas = 0;
 
-    public Jugador(String n) {
-        this.nombre = n;
+    public Jugador(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void recibirCarta(Carta c) {
-        if (c != null)
-            mano[numCartas++] = c;
+    public void recibirCarta(Carta carta) {
+        if (carta != null){
+            mano[numCartas++] = carta;
+        }
     }
 
     public String getNombre() {
@@ -27,11 +28,12 @@ public class Jugador {
         return numCartas;
     }
 
-    public Carta jugarCarta(int i) {
-        Carta c = mano[i];
-        for (int j = i; j < numCartas - 1; j++)
+    public Carta jugarCarta(int n) {
+        Carta carta = mano[n];
+        for (int j = n; j < numCartas - 1; j++){
             mano[j] = mano[j + 1];
+        }
         mano[--numCartas] = null;
-        return c;
+        return carta;
     }
 }
