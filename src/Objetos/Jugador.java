@@ -1,5 +1,10 @@
 package Objetos;
 
+/**
+ * Clase jugador que guarda los nombres y la baraja de cartas
+ * 
+ * @author DaniS y Libio
+ */
 public class Jugador {
     private String nombre;
     protected Carta[] mano = new Carta[100];

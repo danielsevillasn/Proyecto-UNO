@@ -1,15 +1,20 @@
 package Objetos;
 
-public abstract class Carta {
-    private final String color;
+/**
+ * Clase Carta con implementacion de herencias, enum e interfaz
+ * 
+ * @author DaniS y Libio
+ */
+public abstract class Carta implements Jugable {
+    private final Color color;
     private final int numero;
 
-    public Carta(int n, String c) {
+    public Carta(int n, Color c) {
         this.numero = n;
         this.color = c;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
@@ -22,10 +27,10 @@ public abstract class Carta {
     @Override
     public String toString() {
         String c = switch (color) {
-            case "Rojo" -> "\u001B[31m";
-            case "Azul" -> "\u001B[34m";
-            case "Verde" -> "\u001B[32m";
-            case "Amarillo" -> "\u001B[33m";
+            case ROJO -> "\u001B[31m";
+            case AZUL -> "\u001B[34m";
+            case VERDE -> "\u001B[32m";
+            case AMARILLO -> "\u001B[33m";
             default -> "\u001B[0m";
         };
         return c + "[" + color + " " + numero + "]" + "\u001B[0m";

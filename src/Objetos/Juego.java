@@ -125,26 +125,26 @@ public void configurarJugadores() {
 
                 if (opcion.isEmpty()) {
                     System.out.println("No has introducido nada.");
-                    continue;
-                }
-
-                // Validación manual de que la cadena sea numérica
-                boolean esNumero = true;
-                for (int i = 0; i < opcion.length(); i++) {
-                    if (!Character.isDigit(opcion.charAt(i))) {
-                        esNumero = false;
+                }else{
+                    // Validación manual de que la cadena sea numérica
+                    boolean esNumero = true;
+                    for (int i = 0; i < opcion.length(); i++) {
+                        if (!Character.isDigit(opcion.charAt(i))) {
+                            esNumero = false;
+                        }
+                    }
+    
+                    if (esNumero) {
+                        sel = Integer.parseInt(opcion);
+                        if (sel < 0 || sel > j.getNumCartas()) {
+                            System.out.println("Número fuera de rango.");
+                        }
+                    } else {
+                        System.out.println("Error: Introduce solo números (sin letras).");
+                        sel = -1;
                     }
                 }
-
-                if (esNumero) {
-                    sel = Integer.parseInt(opcion);
-                    if (sel < 0 || sel > j.getNumCartas()) {
-                        System.out.println("Número fuera de rango.");
-                    }
-                } else {
-                    System.out.println("Error: Introduce solo números (sin letras).");
-                    sel = -1; 
-                }
+                Thread.sleep(1000);
             }
 
             // Procesar la acción seleccionada
@@ -177,4 +177,3 @@ public void configurarJugadores() {
         pantallas.PantallaFinal();
     }
 }
-
