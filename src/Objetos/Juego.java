@@ -140,7 +140,7 @@ public void configurarJugadores() {
                             System.out.println("Número fuera de rango.");
                         }
                     } else {
-                        System.out.println("Error: Introduce solo números (sin letras).");
+                        System.out.println("Error, introduce la posicion de la carta que quieras sacar");
                         sel = -1;
                     }
                 }
