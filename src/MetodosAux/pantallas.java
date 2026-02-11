@@ -33,7 +33,7 @@ public class pantallas {
         System.out.println("==========================");
         System.out.println("Modo de juego: " + ModoDeJuego + "\tjugadores: " + Jugadores);
 
-        System.out.print("\tElija opción: ");
+        System.out.print("\tElija opción (1-5): ");
         return s.nextLine();
     }
 
@@ -51,7 +51,7 @@ public class pantallas {
             System.out.println("\t1. Clásico");
             System.out.println("\t2. Otra modalidad");
             System.out.println("\t3. Otra modalidad");
-            System.out.print("\tElija opción: ");
+            System.out.print("\tElija opción (1-3): ");
             ModoDeJuego = s.nextLine();
             if (ModoDeJuego.equals("1")) {
                 ModoDeJuego = "Clásico";
