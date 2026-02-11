@@ -94,8 +94,10 @@ public void configurarJugadores() {
         t.inicializar();
         Turno controlador = new Turno();
         Jugador[] lista = new Jugador[cantidadActual];
+        boolean fin = false;
+        int opcionCarta = -1;
 
-        // Reparto inicial: 7 cartas por jugador
+        // Reparto inicial, 7 cartas por jugador
         for (int i = 0; i < cantidadActual; i++) {
             lista[i] = new Jugador(nombresCargados[i]);
             for (int c = 0; c < 7; c++)
@@ -105,8 +107,7 @@ public void configurarJugadores() {
         // Coloca la primera carta en la mesa para empezar
         t.dejar(t.tirarCarta());
 
-        boolean fin = false;
-        // Bucle de juego (se ejecuta hasta que alguien se queda sin cartas)
+        // Bucle de juego, hasta que alguien se quede sin cartas
         while (!fin) {
             Jugador j = lista[controlador.actual];
             System.out.println("\n--- TURNO DE: " + j.getNombre() + " ---");
@@ -117,16 +118,15 @@ public void configurarJugadores() {
                 System.out.print(i + ":" + j.mano[i] + " ");
             System.out.println(j.getNumCartas() + ":[ROBAR]");
 
-            // Bucle de validación de entrada (para evitar errores si el usuario mete letras)
-            int sel = -1;
-            while (sel < 0 || sel > j.getNumCartas()) {
+            // Bucle de validación de entrada, para que no se metan letras
+            while (opcionCarta < 0 || opcionCarta > j.getNumCartas()) {
                 System.out.print("Acción: ");
                 String opcion = s.nextLine();
 
                 if (opcion.isEmpty()) {
                     System.out.println("No has introducido nada.");
                 }else{
-                    // Validación manual de que la cadena sea numérica
+                    //Para evitar que lo que se introduce no sea un numero
                     boolean esNumero = true;
                     for (int i = 0; i < opcion.length(); i++) {
                         if (!Character.isDigit(opcion.charAt(i))) {
@@ -135,30 +135,30 @@ public void configurarJugadores() {
                     }
     
                     if (esNumero) {
-                        sel = Integer.parseInt(opcion);
-                        if (sel < 0 || sel > j.getNumCartas()) {
+                        opcionCarta = Integer.parseInt(opcion);
+                        if (opcionCarta < 0 || opcionCarta > j.getNumCartas()) {
                             System.out.println("Número fuera de rango.");
                         }
                     } else {
                         System.out.println("Error, introduce la posicion de la carta que quieras sacar");
-                        sel = -1;
+                        opcionCarta = -1;
                     }
                 }
                 Thread.sleep(1000);
             }
 
-            // Procesar la acción seleccionada
-            if (sel == j.getNumCartas()) {
+            //Procesar la opción seleccionada
+            if (opcionCarta == j.getNumCartas()) {
                 // Opción Robar
                 j.recibirCarta(t.tirarCarta());
             } else {
                 // Opción Jugar Carta
-                Carta cartaSeleccionada = j.mano[sel];
+                Carta cartaSeleccionada = j.mano[opcionCarta];
                 Carta cartaEnMesa = t.verMesa();
 
-                // Aplicación de reglas: ¿Es compatible la carta con la mesa?
+                //Para ver si la carta que se juega se puede jugar en la mesa
                 if (cartaSeleccionada.puedePonerseSobre(cartaEnMesa)) {
-                    t.dejar(j.jugarCarta(sel));
+                    t.dejar(j.jugarCarta(opcionCarta));
                     // Condición de victoria: 0 cartas
                     if (j.getNumCartas() == 0) {
                         fin = true;
