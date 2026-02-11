@@ -17,16 +17,15 @@ public class Tablero {
      * y posteriormente baraja el mazo resultante.
      */
     public void inicializar() {
-        // Generación de cartas recorriendo los Enums de Color y los números del 0 al 9
+        // Generamos las cartas recorriendo los Enums de Color y los números del 0 al 9
         for (Color c : Color.values()) {
-            for (int n = 0; n <= 9; n++) {
-                // Aplicación de Polimorfismo: CartaNormal hereda de Carta.
+            for (int i = 0; i <= 9; i++) {
                 // Se almacena el objeto hijo en un array de tipo padre.
-                chupona[topeC++] = new CartaNormal(n, c);
+                chupona[topeC++] = new CartaNormal(i, c);
             }
         }
         
-        // Algoritmo de barajado: Intercambia cada posición con otra aleatoria
+        //Intercambia cada posición con otra aleatoria
         for (int i = 0; i < topeC; i++) {
             int r = (int) (Math.random() * topeC);
             Carta temp = chupona[i];
@@ -36,8 +35,8 @@ public class Tablero {
     }
 
     /**
-     * Extrae (roba) la carta superior del mazo de robo.
-     * @return El objeto Carta extraído o null si el mazo está vacío.
+     * Roba la carta superior de la pila de cartas
+     * @return El objeto Carta extraído o null si el mazo está vacío
      */
     public Carta tirarCarta() {
         if (topeC > 0) {
