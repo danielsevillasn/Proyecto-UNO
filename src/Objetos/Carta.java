@@ -5,7 +5,7 @@ package Objetos;
  * 
  * @author DaniS y Libio
  */
-public abstract class Carta implements Jugable {
+public abstract class Carta implements Jugable{
     private final Color color;
     private final int numero;
 
