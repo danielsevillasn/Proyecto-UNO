@@ -6,8 +6,15 @@ package Objetos;
  * @author DaniS y Libio
  */
 public abstract class Carta implements Jugable{
-    private final Color color;
+    private final Color color; 
     private final int numero;
+    
+    //El final en ambos sirve para que cuando sea signe un valor este no se cambien en ningun momento de la partida
+
+    public Carta() {
+        color = Color.AMARILLO;
+        numero = 0;
+    }
 
     public Carta(int n, Color c) {
         this.numero = n;
@@ -22,7 +29,7 @@ public abstract class Carta implements Jugable{
         return numero;
     }
 
-    //public abstract void chuparCartas();
+    // public abstract void chuparCartas();
 
     @Override
     public String toString() {

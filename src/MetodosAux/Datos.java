@@ -22,7 +22,7 @@ public class Datos {
     //Los parametros se copian y no se modifican en el codigo principal
     //Y los objetos se copian y si se modifican en el codigo principal
     public static String pedirCadena(String mensaje){
-        System.out.print("Dame "+mensaje);
+        System.out.print(mensaje);
         String dato = s.nextLine();
         return(dato);
     }
@@ -38,5 +38,16 @@ public class Datos {
         System.out.print("Dame "+ mensaje);
         int dato = s.nextInt();
         return dato;
+    }
+
+    /**
+     * Salto de líneas para cuando se cambie de menu/salto de escena 
+     * 
+     * @param nada
+     * @return nada
+     */
+    public static void saltoDeLíneas() throws InterruptedException{
+        Thread.sleep(1000);
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 }

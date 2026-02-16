@@ -5,7 +5,7 @@ package Objetos;
  * 
  * @author DaniS y Libio
  */
-public class CartaNormal extends Carta {
+public class CartaNormal extends Carta{
 
     public CartaNormal(int n, Color c) {
         super(n, c);

@@ -23,18 +23,18 @@ public class pantallas {
      * @param ninguno
      * @return Opción introducida por teclado tipo String
      */
-    public static String PantallaMenu() {
+    public static String PantallaMenu() throws InterruptedException{
+        Datos.saltoDeLíneas();
         System.out.println("==========Inicio=========");
         System.out.println("\t1- Modo de juego");
         System.out.println("\t2- Jugadores");
         System.out.println("\t3- Reglas");
         System.out.println("\t4- Iniciar juego");
-        System.out.println("\t5- Salir");
+        System.out.println("\t5- Atras <--");
         System.out.println("==========================");
         System.out.println("Modo de juego: " + ModoDeJuego + "\tjugadores: " + Jugadores);
 
-        System.out.print("\tElija opción (1-5): ");
-        return s.nextLine();
+        return (Datos.pedirCadena("\tElija opción (1-5): "));
     }
 
     /**
@@ -44,15 +44,15 @@ public class pantallas {
      * @param ninguno
      * @return Opción introducida por teclado tipo String
      */
-    public static String PantallaModosDeJuego() {
+    public static String PantallaModosDeJuego() throws InterruptedException{
+        Datos.saltoDeLíneas();
         boolean salir = false;
         while(!salir){
             System.out.println("=========Modos de juego===========");
             System.out.println("\t1. Clásico");
             System.out.println("\t2. Otra modalidad");
             System.out.println("\t3. Otra modalidad");
-            System.out.print("\tElija opción (1-3): ");
-            ModoDeJuego = s.nextLine();
+            ModoDeJuego = Datos.pedirCadena("\tElija opción (1-3): ");
             if (ModoDeJuego.equals("1")) {
                 ModoDeJuego = "Clásico";
                 salir = true;
@@ -68,9 +68,10 @@ public class pantallas {
      * Pantalla en la que ingresas los nombres y la cantidad de jugadores
      * 
      * @param ninguno
-     * @return Opción introducida por teclado tipo String
+     * @return cantidadActual valort inicial para la cantidad de jugadores
      */
-    public static int PantallaJugadores() {
+    public static int PantallaJugadores() throws InterruptedException{
+        Datos.saltoDeLíneas();
         int cantidadActual = 2;
         System.out.println("============Jugadores============");
         return cantidadActual;
@@ -83,7 +84,8 @@ public class pantallas {
      * @param nada
      * @return nada
      */
-    public static void PantallaReglas() {
+    public static void PantallaReglas() throws InterruptedException{
+        Datos.saltoDeLíneas();
         System.out.println("============Reglas============");
         System.out.println("Principales: ");
         System.out.println("El objetivo principal de UNO es ser el primer jugador en quedarse sin cartas, tras repartir 7 a cada uno.");
@@ -100,6 +102,7 @@ public class pantallas {
      * @return nada
      */
     public static void PantallaFinal() throws InterruptedException{
+        Datos.saltoDeLíneas();
         String AMARILLO = "\u001B[33m";
         String VERDE = "\u001B[32m";
         String RESET = "\u001B[0m";
@@ -120,7 +123,6 @@ public class pantallas {
         Thread.sleep(1000);
         System.out.printf(ROJO + "%40s%n" + RESET, mensajeJugador);
         Thread.sleep(2000);
-        System.out.println("\n\n\n\n");
     }
 
     /**
@@ -129,7 +131,7 @@ public class pantallas {
      * @param nada
      * @return nada
      */
-    public static void PantallaIncio() throws InterruptedException {
+    public static void PantallaUNO() throws InterruptedException {
         String AMARILLO = "\u001B[33m";
         String RESET = "\u001B[0m";
         String ROJO = "\u001B[31m";
@@ -150,10 +152,22 @@ public class pantallas {
         System.out.println(ROJO);
 
         Thread.sleep(2000);
-        System.out.println("Dale enter para comenzar...");
+        System.out.println("Dale enter para comenzar..."+RESET);
         s.nextLine();
-        System.out.println(RESET);
-        System.out.println();
+    }
+
+    /**
+     * Muestra al usuario un menú de opciones; pide que teclee una de ellas y
+     * devuelve la Opción introducida
+     * 
+     * @param ninguno
+     * @return Opción introducida por teclado tipo String
+     */
+    public static String PantallaInicio() throws InterruptedException{
+        Datos.saltoDeLíneas();
+        System.out.println("==========Bienvenido/a a UNO=========");
+        System.out.println("\t1- Jugar");
+        System.out.println("\t2- Salir");
+        return Datos.pedirCadena("\tElija opción (1-2): ");
     }
 }
-// Son solo cambio de prueba de una rama

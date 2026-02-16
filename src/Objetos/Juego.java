@@ -1,5 +1,6 @@
 package Objetos;
 
+import MetodosAux.Datos;
 import MetodosAux.pantallas;
 import java.util.Scanner;
 
@@ -12,28 +13,44 @@ public class Juego {
 
     static Scanner s = new Scanner(System.in);
     // Configuración inicial por defecto
-    private String[] nombresCargados = { "Jugador 1", "Jugador 2" }; 
+    private String[] nombresCargados = { "Jugador 1", "Jugador 2" };
     private int cantidadActual = 2;
 
     /**
      * Orquestador principal del sistema. Controla el bucle del menú principal.
      */
     public void ejecutarSistemaCompleto() throws InterruptedException {
-        pantallas.PantallaIncio(); 
-        
-        while (true) {
-            String op = pantallas.PantallaMenu();
-            
-            if (op.equals("1")) { // Configurar modo de juego
-                pantallas.ModoDeJuego = pantallas.PantallaModosDeJuego();
-            } else if (op.equals("2")) { // Configurar nombres y cantidad de jugadores
-                configurarJugadores();
-            } else if (op.equals("3")) { // Mostrar instrucciones
-                pantallas.PantallaReglas();
-            } else if (op.equals("4")) { // Iniciar una partida
-                partida();
-            } else if (op.equals("5")) { // Salir del programa
-                break;
+        String opcion1 = "";
+        String opcion2 = "";
+        pantallas.PantallaUNO();
+
+        while (!opcion1.equals("-1")) {
+            opcion1 = pantallas.PantallaInicio();
+            switch (opcion1) {
+                case "1":
+                    while (true) {
+                        opcion2 = pantallas.PantallaMenu();
+
+                        if (opcion2.equals("1")) { // Configurar modo de juego
+                            pantallas.ModoDeJuego = pantallas.PantallaModosDeJuego();
+                        } else if (opcion2.equals("2")) { // Configurar nombres y cantidad de jugadores
+                            configurarJugadores();
+                        } else if (opcion2.equals("3")) { // Mostrar instrucciones
+                            pantallas.PantallaReglas();
+                        } else if (opcion2.equals("4")) { // Iniciar una partida
+                            Datos.saltoDeLíneas();
+                            partida();
+                        } else if (opcion2.equals("5")) { // Salir del programa
+                            break;
+                        }
+                    }
+                    break;
+                case "2":
+                    opcion1 = "-1";
+                    break;
+                default:
+                    System.out.println("El mensaje introducido por pantalla no es valido, escoge una de las opciones");
+                    break;
             }
         }
     }
@@ -41,49 +58,49 @@ public class Juego {
     /**
      * Solicita por consola el número de participantes y sus respectivos nombres.
      */
-public void configurarJugadores() {
-    int numJugadores = -1;
-    String opcion;
-    
-    while (numJugadores < 2 || numJugadores > 4) {
-        System.out.print("¿Cuántos jugadores (2-4)? ");
-        opcion = s.nextLine();
+    public void configurarJugadores() {
+        int numJugadores = -1;
+        String opcion;
 
-        if (opcion.isEmpty()) {
-            System.out.println("No has introducido nada.");
-            continue;
-        }
+        while (numJugadores < 2 || numJugadores > 4) {
+            System.out.print("¿Cuántos jugadores (2-4)? ");
+            opcion = s.nextLine();
 
-        boolean esNumero = true;
-        for (int i = 0; i < opcion.length(); i++) {
-            if (!Character.isDigit(opcion.charAt(i))) { //isDigit para que no se rompa para un acadena de caracteres
-                esNumero = false;
+            if (opcion.isEmpty()) {
+                System.out.println("No has introducido nada.");
+                continue;
+            }
+
+            boolean esNumero = true;
+            for (int i = 0; i < opcion.length(); i++) {
+                if (!Character.isDigit(opcion.charAt(i))) { // isDigit para que no se rompa para un acadena de
+                                                            // caracteres
+                    esNumero = false;
+                }
+            }
+
+            if (esNumero) {
+                numJugadores = Integer.parseInt(opcion);
+                if (numJugadores < 2 || numJugadores > 4) {
+                    System.out.println("Solo 2, 3 o 4 jugadores.");
+                }
+            } else {
+                System.out.println("Error: Introduce solo números (2-4).");
+                numJugadores = -1;
             }
         }
 
-        if (esNumero) {
-            numJugadores = Integer.parseInt(opcion);
-            if (numJugadores < 2 || numJugadores > 4) {
-                System.out.println("Solo 2, 3 o 4 jugadores.");
-            }
-        } else {
-            System.out.println("Error: Introduce solo números (2-4).");
-            numJugadores = -1;
-        }
-    }
-    
-    cantidadActual = numJugadores;
-    
-    // Nombres normalmente...
-    nombresCargados = new String[cantidadActual];
-    for (int i = 0; i < cantidadActual; i++) {
-        System.out.print("Nombre Jugador " + (i + 1) + ": ");
-        nombresCargados[i] = s.nextLine();
-    }
-    
-    pantallas.Jugadores = String.valueOf(cantidadActual);
-}
+        cantidadActual = numJugadores;
 
+        // Nombres normalmente...
+        nombresCargados = new String[cantidadActual];
+        for (int i = 0; i < cantidadActual; i++) {
+            System.out.print("Nombre Jugador " + (i + 1) + ": ");
+            nombresCargados[i] = s.nextLine();
+        }
+
+        pantallas.Jugadores = String.valueOf(cantidadActual);
+    }
 
     /**
      * Lógica principal de la partida. Controla el flujo de turnos,
@@ -102,6 +119,8 @@ public void configurarJugadores() {
         boolean esNumero;
         Carta cartaSeleccionada;
         Carta cartaEnMesa;
+        Carta cartaRobada;
+        Carta cartaTirada;
 
         // Reparto inicial, 7 cartas por jugador
         for (int i = 0; i < cantidadActual; i++) {
@@ -109,7 +128,7 @@ public void configurarJugadores() {
             for (int c = 0; c < 7; c++)
                 lista[i].recibirCarta(t.tirarCarta());
         }
-        
+
         // Coloca la primera carta en la mesa para empezar
         t.dejar(t.tirarCarta());
 
@@ -120,7 +139,7 @@ public void configurarJugadores() {
             System.out.println("Mesa: " + t.verMesa());
 
             // Mostrar la mano del jugador actual
-            for (int i = 0; i < j.getNumCartas(); i++){
+            for (int i = 0; i < j.getNumCartas(); i++) {
                 System.out.print(i + ":" + j.mano[i] + " ");
             }
             System.out.println(j.getNumCartas() + ":[ROBAR]");
@@ -133,15 +152,15 @@ public void configurarJugadores() {
 
                 if (opcion.isEmpty()) {
                     System.out.println("No has introducido nada.");
-                }else{
-                    //Para evitar que lo que se introduce no sea un numero
+                } else {
+                    // Para evitar que lo que se introduce no sea un numero
                     esNumero = true;
                     for (int i = 0; i < opcion.length(); i++) {
                         if (!Character.isDigit(opcion.charAt(i))) {
                             esNumero = false;
                         }
                     }
-    
+
                     if (esNumero) {
                         opcionCarta = Integer.parseInt(opcion);
                         if (opcionCarta < 0 || opcionCarta > j.getNumCartas()) {
@@ -152,31 +171,40 @@ public void configurarJugadores() {
                         opcionCarta = -1;
                     }
                 }
-                Thread.sleep(1000);
             }
 
-            //Procesar la opción seleccionada
+            // Procesar la opción seleccionada
             if (opcionCarta == j.getNumCartas()) {
                 // Opción Robar
-                j.recibirCarta(t.tirarCarta());
+                cartaRobada = t.tirarCarta();
+                j.recibirCarta(cartaRobada);
+                System.out.println("Has recibido un: " + cartaRobada);
             } else {
                 // Opción Jugar Carta
                 cartaSeleccionada = j.mano[opcionCarta];
                 cartaEnMesa = t.verMesa();
 
-                //Para ver si la carta que se juega se puede jugar en la mesa
-                if (cartaSeleccionada.puedePonerseSobre(cartaEnMesa)) {
-                    t.dejar(j.jugarCarta(opcionCarta));
+                // Para ver si la carta que se juega se puede jugar en la mesa
+                if ((cartaSeleccionada).puedePonerseSobre(cartaEnMesa)) {
+                    cartaTirada = j.jugarCarta(opcionCarta);
+                    t.dejar(cartaTirada);
+                    System.out.println("La carta que has tirado es: "+cartaTirada);
                     // Condición de victoria: 0 cartas
                     if (j.getNumCartas() == 0) {
                         fin = true;
                         pantallas.NombreJugador = j.getNombre();
                     }
                 } else {
-                    System.out.println("¡Movimiento no válido!");
+                    System.out.println("¡Movimiento no válido! (Chupas una carta)");
+                    cartaRobada = t.tirarCarta();
+                    j.recibirCarta(cartaRobada);
+                    System.out.println("Has recibido un: " + cartaRobada);
                 }
             }
-            
+            System.out.println("\nDale enter para pasar el turno...");
+            s.nextLine();
+            Datos.saltoDeLíneas();
+
             // Si nadie ha ganado, pasamos al siguiente turno
             if (!fin)
                 controlador.siguiente(cantidadActual);
