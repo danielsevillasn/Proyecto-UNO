@@ -61,32 +61,31 @@ public class Juego {
     public void configurarJugadores() {
         int numJugadores = -1;
         String opcion;
+        boolean esNumero;
 
         while (numJugadores < 2 || numJugadores > 4) {
-            System.out.print("¿Cuántos jugadores (2-4)? ");
-            opcion = s.nextLine();
+            opcion = Datos.pedirCadena("¿Cuántos jugadores (2-4)? ");
 
             if (opcion.isEmpty()) {
                 System.out.println("No has introducido nada.");
-                continue;
-            }
-
-            boolean esNumero = true;
-            for (int i = 0; i < opcion.length(); i++) {
-                if (!Character.isDigit(opcion.charAt(i))) { // isDigit para que no se rompa para un acadena de
-                                                            // caracteres
-                    esNumero = false;
+            }else{
+                esNumero = true;
+                for (int i = 0; i < opcion.length(); i++) {
+                    if (!Character.isDigit(opcion.charAt(i))) { // isDigit para que no se rompa para un acadena de
+                                                                // caracteres
+                        esNumero = false;
+                    }
                 }
-            }
-
-            if (esNumero) {
-                numJugadores = Integer.parseInt(opcion);
-                if (numJugadores < 2 || numJugadores > 4) {
-                    System.out.println("Solo 2, 3 o 4 jugadores.");
+    
+                if (esNumero) {
+                    numJugadores = Integer.parseInt(opcion);
+                    if (numJugadores < 2 || numJugadores > 4) {
+                        System.out.println("Solo 2, 3 o 4 jugadores.");
+                    }
+                } else {
+                    System.out.println("Error: Introduce solo números (2-4).");
+                    numJugadores = -1;
                 }
-            } else {
-                System.out.println("Error: Introduce solo números (2-4).");
-                numJugadores = -1;
             }
         }
 
@@ -95,8 +94,7 @@ public class Juego {
         // Nombres normalmente...
         nombresCargados = new String[cantidadActual];
         for (int i = 0; i < cantidadActual; i++) {
-            System.out.print("Nombre Jugador " + (i + 1) + ": ");
-            nombresCargados[i] = s.nextLine();
+            nombresCargados[i] = Datos.pedirCadena("Nombre Jugador " + (i + 1) + ": ");
         }
 
         pantallas.Jugadores = String.valueOf(cantidadActual);
@@ -147,8 +145,7 @@ public class Juego {
             // Bucle de validación de entrada, para que no se metan letras
             opcionCarta = -1;
             while (opcionCarta < 0 || opcionCarta > j.getNumCartas()) {
-                System.out.print("Acción: ");
-                opcion = s.nextLine();
+                opcion = Datos.pedirCadena("Acción: ");
 
                 if (opcion.isEmpty()) {
                     System.out.println("No has introducido nada.");
