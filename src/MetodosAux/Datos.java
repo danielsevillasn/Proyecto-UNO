@@ -48,6 +48,6 @@ public class Datos {
      */
     public static void saltoDeLíneas() throws InterruptedException{
         Thread.sleep(1000);
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 }

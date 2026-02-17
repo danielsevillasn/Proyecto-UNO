@@ -31,6 +31,7 @@ public abstract class Carta implements Jugable{
 
     // public abstract void chuparCartas();
 
+    //toString para mostrar los colores de caada carta por pantalla
     @Override
     public String toString() {
         String c = switch (color) {

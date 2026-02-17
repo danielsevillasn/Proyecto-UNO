@@ -5,7 +5,7 @@ import MetodosAux.pantallas;
 import java.util.Scanner;
 
 /**
- * Clase que estructura mediante una serie de metodos todo el juego
+ * Clase que estructurada mediante una serie de metodos para todo el juego
  * 
  * @author DaniS y Libio
  */
@@ -17,7 +17,7 @@ public class Juego {
     private int cantidadActual = 2;
 
     /**
-     * Orquestador principal del sistema. Controla el bucle del menú principal.
+     * Menú principal del sistema, que ejecuta el sistema completo
      */
     public void ejecutarSistemaCompleto() throws InterruptedException {
         String opcion1 = "";
@@ -78,7 +78,7 @@ public class Juego {
                 }
     
                 if (esNumero) {
-                    numJugadores = Integer.parseInt(opcion);
+                    numJugadores = Integer.parseInt(opcion);// Casting para pasar a int
                     if (numJugadores < 2 || numJugadores > 4) {
                         System.out.println("Solo 2, 3 o 4 jugadores.");
                     }
@@ -91,7 +91,7 @@ public class Juego {
 
         cantidadActual = numJugadores;
 
-        // Nombres normalmente...
+        // Nombres por defecto sobreescritos
         nombresCargados = new String[cantidadActual];
         for (int i = 0; i < cantidadActual; i++) {
             nombresCargados[i] = Datos.pedirCadena("Nombre Jugador " + (i + 1) + ": ");
@@ -101,8 +101,11 @@ public class Juego {
     }
 
     /**
-     * Lógica principal de la partida. Controla el flujo de turnos,
-     * validación de jugadas y condiciones de victoria.
+     * Lógica principal de la partida
+     * Controla el flujo de turnos,
+     * validación de jugadas y condiciones de victoria
+     * 
+     * Se inicia el tablero con todos sus componentes
      */
     private void partida() throws InterruptedException {
         // Inicialización de componentes de juego
@@ -153,11 +156,12 @@ public class Juego {
                     // Para evitar que lo que se introduce no sea un numero
                     esNumero = true;
                     for (int i = 0; i < opcion.length(); i++) {
-                        if (!Character.isDigit(opcion.charAt(i))) {
+                        if (!Character.isDigit(opcion.charAt(i))) { //isDigit para que no se rompa en caso de cadena de caracteres
                             esNumero = false;
                         }
                     }
 
+                    //Por si acaso el usuario introduce opciones no validas
                     if (esNumero) {
                         opcionCarta = Integer.parseInt(opcion);
                         if (opcionCarta < 0 || opcionCarta > j.getNumCartas()) {
@@ -191,6 +195,7 @@ public class Juego {
                         fin = true;
                         pantallas.NombreJugador = j.getNombre();
                     }
+                    // Por si el usuario introduce una opción no válida
                 } else {
                     System.out.println("¡Movimiento no válido! (Chupas una carta)");
                     cartaRobada = t.tirarCarta();

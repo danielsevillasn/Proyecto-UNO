@@ -86,6 +86,7 @@ public class pantallas {
      * @return nada
      */
     public static void PantallaReglas() throws InterruptedException {
+        Datos.saltoDeLíneas();
         System.out.println("========== REGLAS DEL JUEGO UNO ==========");
         System.out.println();
         System.out.println("OBJETIVO DEL JUEGO:");
@@ -108,6 +109,7 @@ public class pantallas {
         System.out.println("- Solo sirven para coincidir por número o color, no tienen");
         System.out.println("  efectos especiales");
         System.out.println();
+        System.out.println("Pulse enter para continuar");
         s.nextLine();
     }
 
