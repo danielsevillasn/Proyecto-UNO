@@ -8,7 +8,7 @@ package Objetos;
 public class CartaNormal extends Carta{
 
     public CartaNormal(int n, Color c) {
-        super(n, c);
+        super(n, c, Tipos.NORMAL);
     }
 
     /*

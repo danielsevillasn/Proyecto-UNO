@@ -8,17 +8,20 @@ package Objetos;
 public abstract class Carta implements Jugable{
     private final Color color; 
     private final int numero;
+    protected final Tipos tipo;
     
     //El final en ambos sirve para que cuando sea signe un valor este no se cambien en ningun momento de la partida
 
     public Carta() {
         color = Color.AMARILLO;
         numero = 0;
+        tipo = Tipos.NORMAL;
     }
 
-    public Carta(int n, Color c) {
+    public Carta(int n, Color c, Tipos tipo) {
         this.numero = n;
         this.color = c;
+        this.tipo = tipo;
     }
 
     public Color getColor() {
