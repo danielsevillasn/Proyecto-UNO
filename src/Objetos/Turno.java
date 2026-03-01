@@ -6,7 +6,7 @@ package Objetos;
  * @author DaniS y Libio
  */
 public class Turno {
-    int actual = 0;
+    public int actual = 0;
 
     public void siguiente(int total) {
         actual = (actual + 1) % total;

@@ -1,4 +1,4 @@
-package Objetos;
+package Enumerados;
 
 public enum Tipos {
     NORMAL,
