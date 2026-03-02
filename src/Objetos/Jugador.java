@@ -6,8 +6,8 @@ package Objetos;
  * @author DaniS y Libio
  */
 public class Jugador {
-    private String nombre;
-    protected Carta[] mano = new Carta[100]; //Hay un límite de 100 cartas
+    private final String nombre;
+    public Carta[] mano = new Carta[100]; //Hay un límite de 100 cartas
     protected int numCartas = 0;
 
     public Jugador(String nombre) {

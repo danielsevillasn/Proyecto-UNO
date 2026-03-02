@@ -1,4 +1,4 @@
-package Objetos;
+package Enumerados;
 
 /**
  * Enum que crea la variable color para almacenar todos los colores del juego
@@ -6,5 +6,5 @@ package Objetos;
  * @author DaniS y Libio
  */
 public enum Color {
-    ROJO, AZUL, VERDE, AMARILLO;
+    ROJO, AZUL, VERDE, AMARILLO
 }

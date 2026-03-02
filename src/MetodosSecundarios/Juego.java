@@ -1,12 +1,15 @@
-package Objetos;
+package MetodosSecundarios;
 
-import MetodosAux.Datos;
-import MetodosAux.pantallas;
+import Objetos.Carta;
+import Objetos.Jugador;
+import Objetos.Tablero;
+import Objetos.Turno;
+
 import java.util.Scanner;
 
 /**
- * Clase que estructurada mediante una serie de metodos para todo el juego
- * 
+ * Clase que estructurada mediante una serie de métodos para todo el juego
+ *
  * @author DaniS y Libio
  */
 public class Juego {
@@ -19,29 +22,39 @@ public class Juego {
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
      */
-    public void ejecutarSistemaCompleto() throws InterruptedException {
+    public void ejecutarSistemaCompleto() throws InterruptedException{
         String opcion1 = "";
-        String opcion2 = "";
+        String opcion2;
+        boolean salir = false;
         pantallas.PantallaUNO();
 
         while (!opcion1.equals("-1")) {
             opcion1 = pantallas.PantallaInicio();
             switch (opcion1) {
                 case "1":
-                    while (true) {
+                    while (!salir) {
                         opcion2 = pantallas.PantallaMenu();
 
-                        if (opcion2.equals("1")) { // Configurar modo de juego
-                            pantallas.ModoDeJuego = pantallas.PantallaModosDeJuego();
-                        } else if (opcion2.equals("2")) { // Configurar nombres y cantidad de jugadores
-                            configurarJugadores();
-                        } else if (opcion2.equals("3")) { // Mostrar instrucciones
-                            pantallas.PantallaReglas();
-                        } else if (opcion2.equals("4")) { // Iniciar una partida
-                            Datos.saltoDeLíneas();
-                            partida();
-                        } else if (opcion2.equals("5")) { // Salir del programa
-                            break;
+                        switch (opcion2) {
+                            case "1":  // Configurar modo de juego
+                                pantallas.ModoDeJuego = pantallas.PantallaModosDeJuego();
+                                break;
+                            case "2":  // Configurar nombres y cantidad de jugadores
+                                configurarJugadores();
+                                break;
+                            case "3":  // Mostrar instrucciones
+                                pantallas.PantallaReglas();
+                                break;
+                            case "4":  // Iniciar una partida
+                                Datos.saltoDeLíneas();
+                                partida();
+                                break;
+                            case "5":  // Salir del programa
+                                salir = true;
+                                break;
+                            default:
+                                System.out.println("El mensaje introducido por pantalla no es valido, escoge una de las opciones");
+                                break;
                         }
                     }
                     break;
@@ -58,36 +71,20 @@ public class Juego {
     /**
      * Solicita por consola el número de participantes y sus respectivos nombres.
      */
-    public void configurarJugadores() {
-        int numJugadores = -1;
-        String opcion;
-        boolean esNumero;
+    public void configurarJugadores() throws InterruptedException {
+        int numJugadores;
+        boolean rangoJugadores = false;
+        pantallas.PantallaJugadores();
 
-        while (numJugadores < 2 || numJugadores > 4) {
-            opcion = Datos.pedirCadena("¿Cuántos jugadores (2-4)? ");
+        do {
+            numJugadores = Datos.pedirEntero("¿Cuántos jugadores (2-4)? ");
 
-            if (opcion.isEmpty()) {
-                System.out.println("No has introducido nada.");
-            }else{
-                esNumero = true;
-                for (int i = 0; i < opcion.length(); i++) {
-                    if (!Character.isDigit(opcion.charAt(i))) { // isDigit para que no se rompa para un acadena de
-                                                                // caracteres
-                        esNumero = false;
-                    }
-                }
-    
-                if (esNumero) {
-                    numJugadores = Integer.parseInt(opcion);// Casting para pasar a int
-                    if (numJugadores < 2 || numJugadores > 4) {
-                        System.out.println("Solo 2, 3 o 4 jugadores.");
-                    }
-                } else {
-                    System.out.println("Error: Introduce solo números (2-4).");
-                    numJugadores = -1;
-                }
+            if (numJugadores >= 2 && numJugadores <= 4) {
+                rangoJugadores = true;
+            } else {
+                System.out.println("Error: El número debe estar entre 2 y 4.");
             }
-        }
+        } while (!rangoJugadores);
 
         cantidadActual = numJugadores;
 
@@ -104,7 +101,6 @@ public class Juego {
      * Lógica principal de la partida
      * Controla el flujo de turnos,
      * validación de jugadas y condiciones de victoria
-     * 
      * Se inicia el tablero con todos sus componentes
      */
     private void partida() throws InterruptedException {
@@ -116,8 +112,6 @@ public class Juego {
         boolean fin = false;
         int opcionCarta;
         Jugador j;
-        String opcion;
-        boolean esNumero;
         Carta cartaSeleccionada;
         Carta cartaEnMesa;
         Carta cartaRobada;
@@ -145,33 +139,9 @@ public class Juego {
             }
             System.out.println(j.getNumCartas() + ":[ROBAR]");
 
-            // Bucle de validación de entrada, para que no se metan letras
             opcionCarta = -1;
             while (opcionCarta < 0 || opcionCarta > j.getNumCartas()) {
-                opcion = Datos.pedirCadena("Acción: ");
-
-                if (opcion.isEmpty()) {
-                    System.out.println("No has introducido nada.");
-                } else {
-                    // Para evitar que lo que se introduce no sea un numero
-                    esNumero = true;
-                    for (int i = 0; i < opcion.length(); i++) {
-                        if (!Character.isDigit(opcion.charAt(i))) { //isDigit para que no se rompa en caso de cadena de caracteres
-                            esNumero = false;
-                        }
-                    }
-
-                    //Por si acaso el usuario introduce opciones no validas
-                    if (esNumero) {
-                        opcionCarta = Integer.parseInt(opcion);
-                        if (opcionCarta < 0 || opcionCarta > j.getNumCartas()) {
-                            System.out.println("Número fuera de rango.");
-                        }
-                    } else {
-                        System.out.println("Error, introduce la posicion de la carta que quieras sacar");
-                        opcionCarta = -1;
-                    }
-                }
+                opcionCarta = Datos.pedirEntero("Acción: ");
             }
 
             // Procesar la opción seleccionada

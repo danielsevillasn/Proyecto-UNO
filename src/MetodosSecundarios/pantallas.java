@@ -1,4 +1,4 @@
-package MetodosAux;
+package MetodosSecundarios;
 
 import java.util.Scanner;
 
@@ -8,7 +8,7 @@ import java.util.Scanner;
  * @author DaniS y Libio
  */
 public class pantallas {
-    // Scanner (Objeto) estatico que se podra utilizar en todos los metodos de la
+    // Scanner (Objeto) estático que se podrá utilizar en todos los métodos de la
     // clase
     static Scanner s = new Scanner(System.in);
 
@@ -21,7 +21,7 @@ public class pantallas {
      * Muestra al usuario un menú de opciones; pide que teclee una de ellas y
      * devuelve la Opción introducida
      * 
-     * @param ninguno
+     * @param 'ninguno'
      * @return Opción introducida por teclado tipo String
      */
     public static String PantallaMenu() throws InterruptedException {
@@ -31,7 +31,7 @@ public class pantallas {
         System.out.println("\t2- Jugadores");
         System.out.println("\t3- Reglas");
         System.out.println("\t4- Iniciar juego");
-        System.out.println("\t5- Atras <--");
+        System.out.println("\t5- Atrás <--");
         System.out.println("==========================");
         System.out.println("Modo de juego: " + ModoDeJuego + "\tjugadores: " + Jugadores);
 
@@ -42,7 +42,7 @@ public class pantallas {
      * Muestra al usuario un menú de opciones; pide que teclee una de ellas y
      * devuelve la Opción introducida
      * 
-     * @param ninguno
+     * @param 'ninguno'
      * @return Opción introducida por teclado tipo String
      */
     public static String PantallaModosDeJuego() throws InterruptedException {
@@ -68,21 +68,19 @@ public class pantallas {
     /**
      * Pantalla en la que ingresas los nombres y la cantidad de jugadores
      * 
-     * @param ninguno
-     * @return cantidadActual valort inicial para la cantidad de jugadores
+     * @param 'ninguno'
+     * @return cantidadActual valor inicial para la cantidad de jugadores
      */
-    public static int PantallaJugadores() throws InterruptedException {
+    public static void PantallaJugadores() throws InterruptedException {
         Datos.saltoDeLíneas();
-        int cantidadActual = 2;
         System.out.println("============Jugadores============");
-        return cantidadActual;
     }
 
     /**
      * Pantalla en la que sale todas las reglas del juego y del modo de juego
      * seleccionado
      * 
-     * @param nada
+     * @param 'nada'
      * @return nada
      */
     public static void PantallaReglas() throws InterruptedException {
@@ -116,7 +114,7 @@ public class pantallas {
     /**
      * Pantalla en la que sale "Ganaste" con el nombre del ganador
      * 
-     * @param nada
+     * @param 'nada'
      * @return nada
      */
     public static void PantallaFinal() throws InterruptedException {
@@ -145,7 +143,7 @@ public class pantallas {
     /**
      * Pantalla en la que sale UNO en grande para dar inicio al programa
      * 
-     * @param nada
+     * @param 'nada'
      * @return nada
      */
     public static void PantallaUNO() throws InterruptedException {
@@ -177,7 +175,7 @@ public class pantallas {
      * Muestra al usuario un menú de opciones; pide que teclee una de ellas y
      * devuelve la Opción introducida
      * 
-     * @param ninguno
+     * @param 'ninguno'
      * @return Opción introducida por teclado tipo String
      */
     public static String PantallaInicio() throws InterruptedException {

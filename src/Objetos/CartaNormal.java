@@ -1,5 +1,8 @@
 package Objetos;
 
+import Enumerados.Color;
+import Enumerados.Tipos;
+
 /**
  * Herencia de la clase carta que es parte del tipo normal y que tiene el polimorfismo de puedePonerseSobre 
  * 
@@ -20,7 +23,7 @@ public class CartaNormal extends Carta{
     /**
      * Método para mirar la carta sobre la mesa y ver si la carta seleccionada por el jugador se puede sacar
      * 
-     * @param mesa variable que nos indica que carta esta sobre la mesa
+     * @param mesa variable que nos indica que carta está sobre la mesa
      * @return sePuede variable booleana que nos dice si se puede o no
      */
     @Override

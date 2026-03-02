@@ -1,5 +1,7 @@
 package Objetos;
 
+import Enumerados.Color;
+
 /**
  * Clase tablero que imprime el tablero de juego
  * 
@@ -7,9 +9,9 @@ package Objetos;
  */
 public class Tablero {
     // Atributos
-    private Carta[] chupona = new Carta[108];   // Mazo principal de donde los jugadores roban
+    private final Carta[] chupona = new Carta[108];   // Mazo principal de donde los jugadores roban
     private int topeChupona = 0;                      // Índice para controlar la cantidad de cartas en la chupona (Pila de la que se cogen cartas)
-    private Carta[] descarte = new Carta[108];  // Mazo de descarte donde se juegan las cartas
+    private final Carta[] descarte = new Carta[108];  // Mazo de descarte donde se juegan las cartas
     private int topeDescarte = 0;                      // Índice para controlar la última carta jugada en la mesa
 
     /**

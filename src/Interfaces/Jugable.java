@@ -1,7 +1,9 @@
-package Objetos;
+package Interfaces;
+
+import Objetos.Carta;
 
 /**
- * Interfaz que habilita el metodo puedePonerseSobre para su utilización
+ * Interfaz que habilita el método puedePonerseSobre para su utilización
  * 
  * @author DaniS y Libio
  */
