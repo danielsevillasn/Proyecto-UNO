@@ -7,17 +7,11 @@ package Objetos;
  */
 public class Jugador {
     private final String nombre;
-    public Carta[] mano = new Carta[100]; //Hay un límite de 100 cartas
+    public Carta[] mano = new Carta[20]; //Hay un límite de 100 cartas
     protected int numCartas = 0;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
-    }
-
-    public void recibirCarta(Carta carta) {
-        if (carta != null){
-            mano[numCartas++] = carta;
-        }
     }
 
     public String getNombre() {
@@ -27,6 +21,13 @@ public class Jugador {
     public int getNumCartas() {
         return numCartas;
     }
+
+    public void recibirCarta(Carta carta) {
+        if (carta != null){
+            mano[numCartas++] = carta;
+        }
+    }
+
 
     public Carta jugarCarta(int n) {
         Carta carta = mano[n];

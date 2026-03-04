@@ -10,6 +10,10 @@ import Enumerados.Tipos;
  */
 public class CartaNormal extends Carta{
 
+    public CartaNormal(){
+        super();
+    }
+
     public CartaNormal(int n, Color c) {
         super(n, c, Tipos.NORMAL);
     }
