@@ -22,7 +22,7 @@ public class Juego {
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
      */
-    public void ejecutarSistemaCompleto() throws InterruptedException{
+    public void ejecutarSistemaCompleto() throws InterruptedException {
         String opcion1 = "";
         String opcion2;
         boolean salir = false;
@@ -36,24 +36,25 @@ public class Juego {
                         opcion2 = pantallas.PantallaMenu();
 
                         switch (opcion2) {
-                            case "1":  // Configurar modo de juego
+                            case "1": // Configurar modo de juego
                                 pantallas.ModoDeJuego = pantallas.PantallaModosDeJuego();
                                 break;
-                            case "2":  // Configurar nombres y cantidad de jugadores
+                            case "2": // Configurar nombres y cantidad de jugadores
                                 configurarJugadores();
                                 break;
-                            case "3":  // Mostrar instrucciones
+                            case "3": // Mostrar instrucciones
                                 pantallas.PantallaReglas();
                                 break;
-                            case "4":  // Iniciar una partida
+                            case "4": // Iniciar una partida
                                 Datos.saltoDeLíneas();
                                 partida();
                                 break;
-                            case "5":  // Salir del programa
+                            case "5": // Salir del programa
                                 salir = true;
                                 break;
                             default:
-                                System.out.println("El mensaje introducido por pantalla no es valido, escoge una de las opciones");
+                                System.out.println(
+                                        "El mensaje introducido por pantalla no es valido, escoge una de las opciones");
                                 break;
                         }
                     }
@@ -78,7 +79,6 @@ public class Juego {
 
         do {
             numJugadores = Datos.pedirEntero("¿Cuántos jugadores (2-4)? ");
-
             if (numJugadores >= 2 && numJugadores <= 4) {
                 rangoJugadores = true;
             } else {
@@ -159,7 +159,7 @@ public class Juego {
                 if ((cartaSeleccionada).puedePonerseSobre(cartaEnMesa)) {
                     cartaTirada = j.jugarCarta(opcionCarta);
                     t.dejar(cartaTirada);
-                    System.out.println("La carta que has tirado es: "+cartaTirada);
+                    System.out.println("La carta que has tirado es: " + cartaTirada);
                     // Condición de victoria: 0 cartas
                     if (j.getNumCartas() == 0) {
                         fin = true;
