@@ -1,5 +1,6 @@
 package MetodosSecundarios;
 
+import Excepciones.CartaLanzadaNoValida;
 import Objetos.Carta;
 import Objetos.Jugador;
 import Objetos.Tablero;
@@ -110,6 +111,7 @@ public class Juego {
         Turno controlador = new Turno();
         Jugador[] lista = new Jugador[cantidadActual];
         boolean fin = false;
+        boolean cartaValida = false;
         int opcionCarta;
         Jugador j;
         Carta cartaSeleccionada;
@@ -142,6 +144,13 @@ public class Juego {
             opcionCarta = -1;
             while (opcionCarta < 0 || opcionCarta > j.getNumCartas()) {
                 opcionCarta = Datos.pedirEntero("Acción: ");
+                cartaSeleccionada = j.mano[opcionCarta];
+                cartaEnMesa = t.verMesa();
+                try{
+                    cartaValida = cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
+                }catch (CartaLanzadaNoValida e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             // Procesar la opción seleccionada
@@ -151,12 +160,8 @@ public class Juego {
                 j.recibirCarta(cartaRobada);
                 System.out.println("Has recibido un: " + cartaRobada);
             } else {
-                // Opción Jugar Carta
-                cartaSeleccionada = j.mano[opcionCarta];
-                cartaEnMesa = t.verMesa();
-
                 // Para ver si la carta que se juega se puede jugar en la mesa
-                if ((cartaSeleccionada).puedePonerseSobre(cartaEnMesa)) {
+                if (cartaValida) {
                     cartaTirada = j.jugarCarta(opcionCarta);
                     t.dejar(cartaTirada);
                     System.out.println("La carta que has tirado es: " + cartaTirada);
