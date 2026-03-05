@@ -2,6 +2,7 @@ package Objetos;
 
 import Enumerados.Color;
 import Enumerados.Tipos;
+import Excepciones.CartaLanzadaNoValida;
 
 /**
  * Herencia de la clase carta que es parte del tipo normal y que tiene el polimorfismo de puedePonerseSobre 
@@ -56,6 +57,10 @@ public class CartaNormal extends Carta{
             sePuede = true;
         }
 
-        return sePuede;
+        if(sePuede){
+            return true;
+        }else{
+            throw new CartaLanzadaNoValida("La carta lanzada no es valida, lanza una carta que sea del mismo color o numero");
+        }
     }
 }
