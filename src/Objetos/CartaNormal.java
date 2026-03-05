@@ -27,9 +27,8 @@ public class CartaNormal extends Carta{
 
     /**
      * Método para mirar la carta sobre la mesa y ver si la carta seleccionada por el jugador se puede sacar
-     * 
+     *
      * @param mesa variable que nos indica que carta está sobre la mesa
-     * @return sePuede variable booleana que nos dice si se puede o no
      */
     @Override
     public boolean puedePonerseSobre(Carta mesa) {
@@ -57,10 +56,10 @@ public class CartaNormal extends Carta{
             sePuede = true;
         }
 
-        if(sePuede){
-            return true;
-        }else{
+        if(!sePuede){
             throw new CartaLanzadaNoValida("La carta lanzada no es valida, lanza una carta que sea del mismo color o numero");
+        }else{
+            return true;
         }
     }
 }

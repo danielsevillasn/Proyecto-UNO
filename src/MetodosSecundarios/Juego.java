@@ -111,7 +111,7 @@ public class Juego {
         Turno controlador = new Turno();
         Jugador[] lista = new Jugador[cantidadActual];
         boolean fin = false;
-        boolean cartaValida = false;
+        boolean cartaValida;
         int opcionCarta;
         Jugador j;
         Carta cartaSeleccionada;
@@ -133,7 +133,7 @@ public class Juego {
         while (!fin) {
             j = lista[controlador.actual];
             System.out.println("\n--- TURNO DE: " + j.getNombre() + " ---");
-            System.out.println("Mesa: " + t.verMesa());
+            System.out.println("Mesa: " + t.verCartaEnLaMesa());
 
             // Mostrar la mano del jugador actual
             for (int i = 0; i < j.getNumCartas(); i++) {
@@ -141,41 +141,46 @@ public class Juego {
             }
             System.out.println(j.getNumCartas() + ":[ROBAR]");
 
-            opcionCarta = -1;
-            while (opcionCarta < 0 || opcionCarta > j.getNumCartas()) {
+            while (true) {
                 opcionCarta = Datos.pedirEntero("Acción: ");
-                cartaSeleccionada = j.mano[opcionCarta];
-                cartaEnMesa = t.verMesa();
-                try{
-                    cartaValida = cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
-                }catch (CartaLanzadaNoValida e){
-                    System.out.println(e.getMessage());
-                }
-            }
-
-            // Procesar la opción seleccionada
-            if (opcionCarta == j.getNumCartas()) {
-                // Opción Robar
-                cartaRobada = t.tirarCarta();
-                j.recibirCarta(cartaRobada);
-                System.out.println("Has recibido un: " + cartaRobada);
-            } else {
-                // Para ver si la carta que se juega se puede jugar en la mesa
-                if (cartaValida) {
-                    cartaTirada = j.jugarCarta(opcionCarta);
-                    t.dejar(cartaTirada);
-                    System.out.println("La carta que has tirado es: " + cartaTirada);
-                    // Condición de victoria: 0 cartas
-                    if (j.getNumCartas() == 0) {
-                        fin = true;
-                        pantallas.NombreJugador = j.getNombre();
-                    }
-                    // Por si el usuario introduce una opción no válida
-                } else {
-                    System.out.println("¡Movimiento no válido! (Chupas una carta)");
+                if (opcionCarta == j.getNumCartas()) {
+                    // Opción Robar
                     cartaRobada = t.tirarCarta();
                     j.recibirCarta(cartaRobada);
                     System.out.println("Has recibido un: " + cartaRobada);
+                    cartaValida = false;
+                    break;
+                }else{
+                    try{
+                        cartaSeleccionada = j.mano[opcionCarta];
+                        cartaEnMesa = t.verCartaEnLaMesa();
+                        cartaValida = cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
+                        break;
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("La carta que quieres lanzar no esta dentro del límite de la baraja");
+                    }catch (NullPointerException e){
+                        System.out.println("No existe la carta seleccionada");
+                    }catch (CartaLanzadaNoValida e) {
+                        System.out.println(e.getMessage());
+                        cartaRobada = t.tirarCarta();
+                        j.recibirCarta(cartaRobada);
+                        System.out.println("!CHUPAS UNA CARTA!\n");
+                        Thread.sleep(1000);
+                        System.out.println("Has recibido un: " + cartaRobada);
+                        cartaValida = false;
+                        break;
+                    }
+                }
+            }
+            // Si la carta es válida entonces tira la carta
+            if(cartaValida){
+                cartaTirada = j.jugarCarta(opcionCarta);
+                t.dejar(cartaTirada);
+                System.out.println("La carta que has tirado es: " + cartaTirada);
+                // Condición de victoria: 0 cartas
+                if (j.getNumCartas() == 0) {
+                    fin = true;
+                    pantallas.NombreJugador = j.getNombre();
                 }
             }
             System.out.println("\nDale enter para pasar el turno...");

@@ -62,7 +62,7 @@ public class Tablero {
      * Permite consultar cuál es la carta que está actualmente en la cima del descarte.
      * @return El objeto Carta que se encuentra visible en la mesa.
      */
-    public Carta verMesa() {
+    public Carta verCartaEnLaMesa() {
         // Devuelve la última carta añadida sin extraerla del array
         return descarte[topeDescarte - 1];
     }
