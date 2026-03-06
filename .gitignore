@@ -1,1 +1,19 @@
-bin/ 
+# --- Binarios y Compilados ---
+*.class
+out/
+bin/
+build/
+target/
+
+# --- IDEs (VS Code / IntelliJ) ---
+.vscode/
+.idea/
+*.iml
+
+# --- Sistema (Windows / Linux) ---
+desktop.ini
+Thumbs.db
+.directory
+
+# --- Seguridad ---
+.env
