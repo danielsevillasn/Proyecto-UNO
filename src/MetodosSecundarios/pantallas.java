@@ -25,7 +25,7 @@ public class pantallas {
      * @return Opción introducida por teclado tipo String
      */
     public static String PantallaMenu() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         System.out.println("==========Inicio=========");
         System.out.println("\t1- Modo de juego");
         System.out.println("\t2- Jugadores");
@@ -46,7 +46,7 @@ public class pantallas {
      * @return Opción introducida por teclado tipo String
      */
     public static String PantallaModosDeJuego() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         boolean salir = false;
         while (!salir) {
             System.out.println("=========Modos de juego===========");
@@ -72,7 +72,7 @@ public class pantallas {
      * @return cantidadActual valor inicial para la cantidad de jugadores
      */
     public static void PantallaJugadores() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         System.out.println("============Jugadores============");
     }
 
@@ -84,7 +84,7 @@ public class pantallas {
      * @return nada
      */
     public static void PantallaReglas() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         System.out.println("========== REGLAS DEL JUEGO UNO ==========");
         System.out.println();
         System.out.println("OBJETIVO DEL JUEGO:");
@@ -118,7 +118,7 @@ public class pantallas {
      * @return nada
      */
     public static void PantallaFinal() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         String AMARILLO = "\u001B[33m";
         String VERDE = "\u001B[32m";
         String RESET = "\u001B[0m";
@@ -147,6 +147,7 @@ public class pantallas {
      * @return nada
      */
     public static void PantallaUNO() throws InterruptedException {
+        Datos.saltoDeLineas();
         String AMARILLO = "\u001B[33m";
         String RESET = "\u001B[0m";
         String ROJO = "\u001B[31m";
@@ -179,7 +180,7 @@ public class pantallas {
      * @return Opción introducida por teclado tipo String
      */
     public static String PantallaInicio() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         System.out.println("==========Bienvenido/a a UNO=========");
         System.out.println("\t1- Jugar");
         System.out.println("\t2- Salir");
