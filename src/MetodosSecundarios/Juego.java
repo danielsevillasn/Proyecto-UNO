@@ -17,8 +17,8 @@ public class Juego {
 
     static Scanner s = new Scanner(System.in);
     // Configuración inicial por defecto
-    private String[] nombresCargados = { "Jugador 1", "Jugador 2" };
-    private int cantidadActual = 2;
+    public String[] nombresCargados = { "Jugador 1", "Jugador 2" };
+    public int cantidadActual = 2;
 
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
@@ -41,13 +41,13 @@ public class Juego {
                                 pantallas.ModoDeJuego = pantallas.PantallaModosDeJuego();
                                 break;
                             case "2": // Configurar nombres y cantidad de jugadores
-                                configurarJugadores();
+                                Datos.configurarJugadores(nombresCargados, cantidadActual);
                                 break;
                             case "3": // Mostrar instrucciones
                                 pantallas.PantallaReglas();
                                 break;
                             case "4": // Iniciar una partida
-                                Datos.saltoDeLíneas();
+                                Datos.saltoDeLineas();
                                 partida();
                                 break;
                             case "5": // Salir del programa
@@ -70,33 +70,7 @@ public class Juego {
         }
     }
 
-    /**
-     * Solicita por consola el número de participantes y sus respectivos nombres.
-     */
-    public void configurarJugadores() throws InterruptedException {
-        int numJugadores;
-        boolean rangoJugadores = false;
-        pantallas.PantallaJugadores();
 
-        do {
-            numJugadores = Datos.pedirEntero("¿Cuántos jugadores (2-4)? ");
-            if (numJugadores >= 2 && numJugadores <= 4) {
-                rangoJugadores = true;
-            } else {
-                System.out.println("Error: El número debe estar entre 2 y 4.");
-            }
-        } while (!rangoJugadores);
-
-        cantidadActual = numJugadores;
-
-        // Nombres por defecto sobreescritos
-        nombresCargados = new String[cantidadActual];
-        for (int i = 0; i < cantidadActual; i++) {
-            nombresCargados[i] = Datos.pedirCadena("Nombre Jugador " + (i + 1) + ": ");
-        }
-
-        pantallas.Jugadores = String.valueOf(cantidadActual);
-    }
 
     /**
      * Lógica principal de la partida
@@ -104,7 +78,7 @@ public class Juego {
      * validación de jugadas y condiciones de victoria
      * Se inicia el tablero con todos sus componentes
      */
-    private void partida() throws InterruptedException {
+    public void partida() throws InterruptedException {
         // Inicialización de componentes de juego
         Tablero t = new Tablero();
         t.inicializar();
@@ -157,7 +131,7 @@ public class Juego {
                         cartaValida = cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
                         break;
                     }catch (ArrayIndexOutOfBoundsException e){
-                        System.out.println("La carta que quieres lanzar no esta dentro del límite de la baraja");
+                        System.out.println("La carta que quieres lanzar no esta dentro del limite de la baraja");
                     }catch (NullPointerException e){
                         System.out.println("No existe la carta seleccionada");
                     }catch (CartaLanzadaNoValida e) {
@@ -185,7 +159,7 @@ public class Juego {
             }
             System.out.println("\nDale enter para pasar el turno...");
             s.nextLine();
-            Datos.saltoDeLíneas();
+            Datos.saltoDeLineas();
 
             // Si nadie ha ganado, pasamos al siguiente turno
             if (!fin)
