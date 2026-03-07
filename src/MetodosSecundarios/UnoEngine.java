@@ -137,7 +137,7 @@ public class UnoEngine {
     }
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////Error que hace que el modo de juego devuelto sea un número en lugar de clásico u otro
+    ///////////////////////////////////////////////////////////////////////////////////////////Error que hace que el modo de juego devuelto sea un número en lugar de clásico u otro
         /**
          * Método para seleccionar el modo de juego
          * @param salir
@@ -154,5 +154,6 @@ public class UnoEngine {
             salir = true;
         }
         return salir;
+        
     }
 }
