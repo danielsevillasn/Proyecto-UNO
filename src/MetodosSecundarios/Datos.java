@@ -23,10 +23,8 @@ public class Datos {
     // Los parámetros se copian y no se modifican en el código principal
     // Y los objetos se copian y si se modifican en el código principal
     public static String pedirCadena(String mensaje) throws InterruptedException {
-        Scanner teclas = new Scanner(System.in); // ← tu teclas
-
         System.out.print(mensaje);
-        String entrada = teclas.nextLine().trim();
+        String entrada = s.nextLine().trim();
         if (entrada.equalsIgnoreCase("terminar")) {
             Juego juego = new Juego();
             juego.ejecutarSistemaCompleto();
@@ -42,11 +40,10 @@ public class Datos {
      * @return Dato introducido por teclado tipo entero
      */
     public static int pedirEntero(String mensaje) throws InterruptedException {
-        Scanner teclas = new Scanner(System.in);
 
         while (true) {
             System.out.print(mensaje);
-            String entrada = teclas.nextLine().trim();
+            String entrada = s.nextLine().trim();
 
             // Para que el usuario vuelva a iniciar el juego cuando quiera
             if (entrada.equalsIgnoreCase("terminar")) {
