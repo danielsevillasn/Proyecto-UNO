@@ -53,16 +53,12 @@ public class pantallas {
             System.out.println("\t1. Clásico");
             System.out.println("\t2. Otra modalidad");
             System.out.println("\t3. Otra modalidad");
-            ModoDeJuego = Datos.pedirCadena("\tElija opción (1-3): ");
-            if (ModoDeJuego.equals("1")) {
-                ModoDeJuego = "Clásico";
-                salir = true;
-            } else if (ModoDeJuego.equals("2") || ModoDeJuego.equals("3")) {
-                ModoDeJuego = "Otro";
-                salir = true;
-            }
+            
+            String opcion = Datos.pedirCadena("\tElija opción (1-3): ");
+            ModoDeJuego = UnoEngine.modoDeJuegoSeleccionado(opcion); 
+            salir = true;
         }
-        return (ModoDeJuego);
+        return ModoDeJuego;
     }
 
     /**
@@ -84,7 +80,6 @@ public class pantallas {
      * @return nada
      */
     public static void PantallaReglas() throws InterruptedException {
-        Datos.saltoDeLineas();
         System.out.println("========== REGLAS DEL JUEGO UNO ==========");
         System.out.println();
         System.out.println("OBJETIVO DEL JUEGO:");
@@ -107,8 +102,7 @@ public class pantallas {
         System.out.println("- Solo sirven para coincidir por número o color, no tienen");
         System.out.println("  efectos especiales");
         System.out.println();
-        System.out.println("Pulse enter para continuar");
-        s.nextLine();
+        Datos.pulsaEnter();
     }
 
     /**
@@ -138,6 +132,7 @@ public class pantallas {
         Thread.sleep(1000);
         System.out.printf(ROJO + "%40s%n" + RESET, mensajeJugador);
         Thread.sleep(2000);
+        Datos.pulsaEnter();
     }
 
     /**
