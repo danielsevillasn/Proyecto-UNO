@@ -53,13 +53,13 @@ public class pantallas {
             System.out.println("\t1. Clásico");
             System.out.println("\t2. Otra modalidad");
             System.out.println("\t3. Otra modalidad");
-            ModoDeJuego = Datos.pedirCadena("\tElija opción (1-3): ");
-            salir = UnoEngine.modoDeJuegoSeleccionado(salir, ModoDeJuego);
+            
+            String opcion = Datos.pedirCadena("\tElija opción (1-3): ");
+            ModoDeJuego = UnoEngine.modoDeJuegoSeleccionado(opcion); 
+            salir = true;
         }
-        return (ModoDeJuego);
+        return ModoDeJuego;
     }
-
-
 
     /**
      * Pantalla en la que ingresas los nombres y la cantidad de jugadores
