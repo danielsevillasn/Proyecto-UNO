@@ -3,19 +3,16 @@ package Objetos;
 import Enumerados.Color;
 import Enumerados.Tipos;
 import Interfaces.Jugable;
+import Excepciones.CartaLanzadaNoValida;
 
 /**
  * Clase Carta con implementación de herencias, enum e interfaz
- * 
- * @author DaniS y Libio
+ * * @author DaniS y Libio
  */
 public abstract class Carta implements Jugable {
     private final Color color;
     private final int numero;
     protected final Tipos tipo;
-
-    // El final en ambos sirve para que cuando sea signe un valor este no se cambien
-    // en ningún momento de la partida
 
     public Carta() {
         color = Color.AMARILLO;
@@ -37,9 +34,31 @@ public abstract class Carta implements Jugable {
         return numero;
     }
 
-    // public abstract void chuparCartas();
+    /**
+     * Implementación genérica del movimiento de cartas
+     * Se puede poner sobre la mesa si coincide color o número
+     * Lanza la excepcion de CartaLanzadaNoValida en caso de que la carta que se quiera lanzar no se peda
+     */
+    @Override
+    public boolean puedePonerseSobre(Carta mesa) {
+        if (mesa == null) {
+            return true;
+        }
 
-    // toString para mostrar los colores de cada carta por pantalla
+        boolean mismoColor = (this.color == mesa.getColor());
+        boolean mismoNumero = (this.numero == mesa.getNumero());
+
+        if (mismoColor || mismoNumero) {
+            return true;
+        } else {
+            throw new CartaLanzadaNoValida(
+                    "La carta lanzada no es valida, lanza una carta que sea del mismo color o numero");
+        }
+    }
+
+    /**
+     * @toString que colorea la carta y la muestra por pantalla en el tablero
+     */
     @Override
     public String toString() {
         String c = switch (color) {

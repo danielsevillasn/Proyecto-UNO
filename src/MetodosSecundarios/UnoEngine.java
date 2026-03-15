@@ -13,6 +13,8 @@ public class UnoEngine {
      * Controla el flujo de turnos,
      * validación de jugadas y condiciones de victoria
      * Se inicia el tablero con todos sus componentes
+     * @param 'ninguno'
+     * @throws InterruptedException excepcion que controla los tiempos
      */
     public static void partida(int cantidadActualJugadores, String[] nombresCargados) throws InterruptedException {
         // Inicialización de componentes de juego
