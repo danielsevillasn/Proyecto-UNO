@@ -11,21 +11,25 @@ public class Juego {
 
     static Scanner s = new Scanner(System.in);
     // Configuración inicial por defecto
-    public String[] nombresCargados = { "Jugador 1", "Jugador 2" };
-    public int cantidadActual = 2;
+    public static String[] nombresCargados = { "Jugador 1", "Jugador 2" };
+    public static int cantidadActual = 2;
 
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
      */
     public void ejecutarSistemaCompleto() throws InterruptedException {
-        String opcion1 = "";
-        boolean salir = false;
         pantallas.PantallaUNO();
-        
-        Sistema(opcion1, salir, nombresCargados, cantidadActual);
+        Sistema();
     }
 
-    public static void Sistema(String opcion1, boolean salir, String[] nombresCargados, int cantidadActual) throws InterruptedException {
+    public void ejecutarSistemaCompletoDeveloper() throws InterruptedException {
+        Datos.milisegundos = 0;
+        Sistema();
+    }
+
+    public static void Sistema() throws InterruptedException {
+        String opcion1 = "";
+        boolean salir = false;
         String opcion2;
         while (!opcion1.equals("-1")) {
             opcion1 = pantallas.PantallaInicio();

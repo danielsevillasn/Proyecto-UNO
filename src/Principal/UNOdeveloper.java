@@ -1,7 +1,8 @@
 package Principal;
-import MetodosSecundarios.DeveloperEngine;
+import MetodosSecundarios.Juego;
 public class UNOdeveloper {
     public static void main(String[] args) throws InterruptedException {
-        new DeveloperEngine().ejecutarSistemaCompleto();
+        Juego juego = new Juego();
+        juego.ejecutarSistemaCompletoDeveloper();
     }
 }
