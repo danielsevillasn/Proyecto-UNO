@@ -37,6 +37,7 @@ public class Datos {
 
     /**
      * Pide un entero y lo devuelve
+     * 
      * @param mensaje de petición de datos tipo entero
      * @return Dato introducido por teclado tipo entero
      */
@@ -54,7 +55,6 @@ public class Datos {
             }
 
             try {
-
                 return Integer.parseInt(entrada);
             } catch (NumberFormatException e) {
                 entradaIncorrecta();

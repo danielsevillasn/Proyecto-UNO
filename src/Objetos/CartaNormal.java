@@ -5,13 +5,14 @@ import Enumerados.Tipos;
 import Excepciones.CartaLanzadaNoValida;
 
 /**
- * Herencia de la clase carta que es parte del tipo normal y que tiene el polimorfismo de puedePonerseSobre 
+ * Herencia de la clase carta que es parte del tipo normal y que tiene el
+ * polimorfismo de puedePonerseSobre
  * 
  * @author DaniS y Libio
  */
-public class CartaNormal extends Carta{
+public class CartaNormal extends Carta {
 
-    public CartaNormal(){
+    public CartaNormal() {
         super();
     }
 
@@ -26,7 +27,8 @@ public class CartaNormal extends Carta{
      */
 
     /**
-     * Método para mirar la carta sobre la mesa y ver si la carta seleccionada por el jugador se puede sacar
+     * Método para mirar la carta sobre la mesa y ver si la carta seleccionada por
+     * el jugador se puede sacar
      *
      * @param mesa variable que nos indica que carta está sobre la mesa
      */
@@ -52,13 +54,14 @@ public class CartaNormal extends Carta{
             mismoNumero = false;
         }
 
-        if(mismoColor || mismoNumero){
+        if (mismoColor || mismoNumero) {
             sePuede = true;
         }
 
-        if(!sePuede){
-            throw new CartaLanzadaNoValida("La carta lanzada no es valida, lanza una carta que sea del mismo color o numero");
-        }else{
+        if (!sePuede) {
+            throw new CartaLanzadaNoValida(
+                    "La carta lanzada no es valida, lanza una carta que sea del mismo color o numero");
+        } else {
             return true;
         }
     }

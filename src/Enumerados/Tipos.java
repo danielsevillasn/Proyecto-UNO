@@ -1,7 +1,7 @@
 package Enumerados;
 
 /**
- * Enum que crea los tipos de carta, siendo especiales o 
+ * Enum que crea los tipos de carta, siendo especiales o
  * normales.
  * 
  * @author DaniS y Libio
