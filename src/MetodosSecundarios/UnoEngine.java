@@ -14,12 +14,12 @@ public class UnoEngine {
      * validación de jugadas y condiciones de victoria
      * Se inicia el tablero con todos sus componentes
      */
-    public static void partida(int cantidadActual, String[] nombresCargados) throws InterruptedException {
+    public static void partida(int cantidadActualJugadores, String[] nombresCargados) throws InterruptedException {
         // Inicialización de componentes de juego
         Tablero t = new Tablero();
         t.inicializar();
         Turno controlador = new Turno();
-        Jugador[] lista = new Jugador[cantidadActual];
+        Jugador[] lista = new Jugador[cantidadActualJugadores];
         boolean fin = false;
         boolean cartaValida;
         int opcionCarta;
@@ -30,7 +30,7 @@ public class UnoEngine {
         Carta cartaTirada;
 
         // Reparto inicial, 7 cartas por jugador
-        for (int i = 0; i < cantidadActual; i++) {
+        for (int i = 0; i < cantidadActualJugadores; i++) {
             lista[i] = new Jugador(nombresCargados[i]);
             for (int c = 0; c < 7; c++)
                 lista[i].recibirCarta(t.tirarCarta());
@@ -98,7 +98,7 @@ public class UnoEngine {
 
             // Si nadie ha ganado, pasamos al siguiente turno
             if (!fin)
-                controlador.siguiente(cantidadActual);
+                controlador.siguiente(cantidadActualJugadores);
         }
         // Mostrar pantalla de ganador
         pantallas.PantallaFinal();
@@ -108,40 +108,40 @@ public class UnoEngine {
      * Configura el número de jugadores para el juego
      * 
      * @param nombresCargados
-     * @param cantidadActual
+     * @param cantidadActualJugadores
      * @throws InterruptedException
      */
-    public static void configurarJugadores(String[] nombresCargados, int cantidadActual) throws InterruptedException {
+    public static int configurarJugadores(int cantidadActualJugadores) throws InterruptedException {
         int numJugadores;
         boolean rangoJugadores = false;
         pantallas.PantallaJugadores();
 
         do {
-            numJugadores = Datos.pedirEntero("¿Cuántos jugadores (2-4)? ");
-            if (numJugadores >= 2 && numJugadores <= 4) {
+            numJugadores = Datos.pedirEntero("¿Cuántos jugadores (2-6)? ");
+            if (numJugadores >= 2 && numJugadores <= 6) {
                 rangoJugadores = true;
             } else {
                 Datos.entradaIncorrecta();
             }
         } while (!rangoJugadores);
 
-        cantidadActual = numJugadores;
+        cantidadActualJugadores = numJugadores;
 
         // Nombres por defecto sobreescritos
-        nombresCargados = new String[cantidadActual];
-        for (int i = 0; i < cantidadActual; i++) {
-            nombresCargados[i] = Datos.pedirCadena("Nombre Jugador " + (i + 1) + ": ");
+        Juego.nombresCargados = new String[cantidadActualJugadores];
+        for (int i = 0; i < cantidadActualJugadores; i++) {
+            Juego.nombresCargados[i] = Datos.pedirCadena("Nombre Jugador " + (i + 1) + ": ");
         }
 
-        pantallas.Jugadores = String.valueOf(cantidadActual);
+        pantallas.Jugadores = "" + cantidadActualJugadores;
+        return cantidadActualJugadores;
     }
 
     /**
      * Método para seleccionar el modo de juego
      * 
-     * @param salir
      * @param ModoDeJuego
-     * @return
+     * @return ModoDeJuego
      */
     public static String modoDeJuegoSeleccionado(String ModoDeJuego) {
         if (ModoDeJuego.equals("1")) {

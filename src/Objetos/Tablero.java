@@ -21,13 +21,20 @@ public class Tablero {
      */
     public void inicializar() {
         Carta temp;
-        // Generamos las cartas recorriendo los Enums de Color y los números del 0 al 9
-        for (Color c : Color.values()) {
-            for (int i = 0; i <= 9; i++) {
-                // Se almacena el objeto hijo en un array de tipo padre.
-                chupona[topeChupona++] = new CartaNormal(i, c);
+        // Generamos las cartas recorriendo los Enums de Color, los números del 0 al 9 y
+        // un bucle que cree cartas duplicadas exceptuando del 0 como en la baraja
+        // original del UNO
+        for (int i = 0; i < 2; i++) {
+            for (Color c : Color.values()) {
+                for (int j = 0; j <= 9; j++) {
+                    // Se almacena el objeto hijo en un array de tipo padre.
+                    if (!(j == 0 && i == 1)) {
+                        chupona[topeChupona++] = new CartaNormal(j, c);
+                    }
+                }
             }
         }
+        // Actualmente hay 76 cartas en la baraja chupona, faltan especiales
 
         // Intercambia cada posición con otra aleatoria
         for (int i = 0; i < topeChupona; i++) {

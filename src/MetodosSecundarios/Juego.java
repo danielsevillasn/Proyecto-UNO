@@ -12,7 +12,7 @@ public class Juego {
     static Scanner s = new Scanner(System.in);
     // Configuración inicial por defecto
     public static String[] nombresCargados = { "Jugador 1", "Jugador 2" };
-    public static int cantidadActual = 2;
+    public static int cantidadActualJugadores = 2;
 
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
@@ -44,7 +44,7 @@ public class Juego {
                                 break;
                             case "2": // Configurar nombres y cantidad de jugadores
                                 Datos.saltoDeLineas();
-                                UnoEngine.configurarJugadores(nombresCargados, cantidadActual);
+                                cantidadActualJugadores = UnoEngine.configurarJugadores(cantidadActualJugadores);
                                 break;
                             case "3": // Mostrar instrucciones
                                 Datos.saltoDeLineas();
@@ -52,7 +52,7 @@ public class Juego {
                                 break;
                             case "4": // Iniciar una partida
                                 Datos.saltoDeLineas();
-                                UnoEngine.partida(cantidadActual, nombresCargados);
+                                UnoEngine.partida(cantidadActualJugadores, nombresCargados);
                                 break;
                             case "5": // Salir del programa
                                 salir = true;
