@@ -24,6 +24,7 @@ public class Jugador {
 
     /**
      * Método para recibir una carta aleatoria en tu mano
+     * 
      * @param carta
      */
     public void recibirCarta(Carta carta) {
@@ -33,8 +34,9 @@ public class Jugador {
     }
 
     /**
-     * Método para jugar las cartas y disminuir el tamaño 
+     * Método para jugar las cartas y disminuir el tamaño
      * de tu mano
+     * 
      * @param n
      * @return
      */

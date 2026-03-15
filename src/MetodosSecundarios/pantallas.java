@@ -25,7 +25,7 @@ public class pantallas {
      * @return Opción introducida por teclado tipo String
      */
     public static String PantallaMenu() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         System.out.println("==========Inicio=========");
         System.out.println("\t1- Modo de juego");
         System.out.println("\t2- Jugadores");
@@ -46,23 +46,19 @@ public class pantallas {
      * @return Opción introducida por teclado tipo String
      */
     public static String PantallaModosDeJuego() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         boolean salir = false;
         while (!salir) {
             System.out.println("=========Modos de juego===========");
             System.out.println("\t1. Clásico");
             System.out.println("\t2. Otra modalidad");
             System.out.println("\t3. Otra modalidad");
-            ModoDeJuego = Datos.pedirCadena("\tElija opción (1-3): ");
-            if (ModoDeJuego.equals("1")) {
-                ModoDeJuego = "Clásico";
-                salir = true;
-            } else if (ModoDeJuego.equals("2") || ModoDeJuego.equals("3")) {
-                ModoDeJuego = "Otro";
-                salir = true;
-            }
+
+            String opcion = Datos.pedirCadena("\tElija opción (1-3): ");
+            ModoDeJuego = UnoEngine.modoDeJuegoSeleccionado(opcion);
+            salir = true;
         }
-        return (ModoDeJuego);
+        return ModoDeJuego;
     }
 
     /**
@@ -72,7 +68,7 @@ public class pantallas {
      * @return cantidadActual valor inicial para la cantidad de jugadores
      */
     public static void PantallaJugadores() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         System.out.println("============Jugadores============");
     }
 
@@ -84,7 +80,6 @@ public class pantallas {
      * @return nada
      */
     public static void PantallaReglas() throws InterruptedException {
-        Datos.saltoDeLíneas();
         System.out.println("========== REGLAS DEL JUEGO UNO ==========");
         System.out.println();
         System.out.println("OBJETIVO DEL JUEGO:");
@@ -107,8 +102,7 @@ public class pantallas {
         System.out.println("- Solo sirven para coincidir por número o color, no tienen");
         System.out.println("  efectos especiales");
         System.out.println();
-        System.out.println("Pulse enter para continuar");
-        s.nextLine();
+        Datos.pulsaEnter();
     }
 
     /**
@@ -118,7 +112,7 @@ public class pantallas {
      * @return nada
      */
     public static void PantallaFinal() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         String AMARILLO = "\u001B[33m";
         String VERDE = "\u001B[32m";
         String RESET = "\u001B[0m";
@@ -138,6 +132,7 @@ public class pantallas {
         Thread.sleep(1000);
         System.out.printf(ROJO + "%40s%n" + RESET, mensajeJugador);
         Thread.sleep(2000);
+        Datos.pulsaEnter();
     }
 
     /**
@@ -147,6 +142,7 @@ public class pantallas {
      * @return nada
      */
     public static void PantallaUNO() throws InterruptedException {
+        Datos.saltoDeLineas();
         String AMARILLO = "\u001B[33m";
         String RESET = "\u001B[0m";
         String ROJO = "\u001B[31m";
@@ -179,7 +175,7 @@ public class pantallas {
      * @return Opción introducida por teclado tipo String
      */
     public static String PantallaInicio() throws InterruptedException {
-        Datos.saltoDeLíneas();
+        Datos.saltoDeLineas();
         System.out.println("==========Bienvenido/a a UNO=========");
         System.out.println("\t1- Jugar");
         System.out.println("\t2- Salir");

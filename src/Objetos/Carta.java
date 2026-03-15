@@ -13,8 +13,9 @@ public abstract class Carta implements Jugable {
     private final Color color;
     private final int numero;
     protected final Tipos tipo;
-    
-    //El final en ambos sirve para que cuando sea signe un valor este no se cambien en ningún momento de la partida
+
+    // El final en ambos sirve para que cuando sea signe un valor este no se cambien
+    // en ningún momento de la partida
 
     public Carta() {
         color = Color.AMARILLO;
@@ -38,7 +39,7 @@ public abstract class Carta implements Jugable {
 
     // public abstract void chuparCartas();
 
-    //toString para mostrar los colores de cada carta por pantalla
+    // toString para mostrar los colores de cada carta por pantalla
     @Override
     public String toString() {
         String c = switch (color) {
