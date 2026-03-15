@@ -26,9 +26,13 @@ public class Datos {
     public static String pedirCadena(String mensaje) throws InterruptedException {
         System.out.print(mensaje);
         String entrada = s.nextLine().trim();
-        if (entrada.equalsIgnoreCase("terminar")) {
+        if (entrada.equalsIgnoreCase("terminar1")) {
             Juego juego = new Juego();
             juego.ejecutarSistemaCompleto();
+            return ""; // cadena vacía
+        } else if (entrada.equalsIgnoreCase("terminar2")) {
+            Juego juego = new Juego();
+            juego.ejecutarSistemaCompletoDeveloper();
             return ""; // cadena vacía
         }
 
@@ -48,10 +52,14 @@ public class Datos {
             String entrada = s.nextLine().trim();
 
             // Para que el usuario vuelva a iniciar el juego cuando quiera
-            if (entrada.equalsIgnoreCase("terminar")) {
+            if (entrada.equalsIgnoreCase("terminar1")) {
                 Juego juego = new Juego();
                 juego.ejecutarSistemaCompleto(); // Vuelve a ejecutar el sistema
                 return 0; // No importa el valor
+            } else if (entrada.equalsIgnoreCase("terminar2")) {
+                Juego juego = new Juego();
+                juego.ejecutarSistemaCompletoDeveloper();
+                return 0; // cadena vacía
             }
 
             try {

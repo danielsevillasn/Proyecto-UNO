@@ -136,9 +136,6 @@ public class UnoEngine {
         pantallas.Jugadores = String.valueOf(cantidadActual);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////// Error
-    /// que hace que el modo de juego devuelto sea un número en lugar de clásico
-    /// u otro
     /**
      * Método para seleccionar el modo de juego
      * 
