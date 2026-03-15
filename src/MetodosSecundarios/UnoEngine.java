@@ -104,9 +104,9 @@ public class UnoEngine {
         pantallas.PantallaFinal();
     }
 
-
     /**
      * Configura el número de jugadores para el juego
+     * 
      * @param nombresCargados
      * @param cantidadActual
      * @throws InterruptedException
@@ -136,23 +136,22 @@ public class UnoEngine {
         pantallas.Jugadores = String.valueOf(cantidadActual);
     }
 
-
-    //////////////////////////////////////////////////////////////////////////////////////////Error que hace que el modo de juego devuelto sea un número en lugar de clásico u otro
-        /**
-         * Método para seleccionar el modo de juego
-         * @param salir
-         * @param ModoDeJuego
-         * @return
-         */
-        public static boolean modoDeJuegoSeleccionado(boolean salir, String ModoDeJuego) {
+    ////////////////////////////////////////////////////////////////////////////////////////// Error
+    /// que hace que el modo de juego devuelto sea un número en lugar de clásico
+    /// u otro
+    /**
+     * Método para seleccionar el modo de juego
+     * 
+     * @param salir
+     * @param ModoDeJuego
+     * @return
+     */
+    public static String modoDeJuegoSeleccionado(String ModoDeJuego) {
         if (ModoDeJuego.equals("1")) {
             ModoDeJuego = "Clásico";
-            salir = true;
-            //Aún se tienen que hacer los demás modos de juego
         } else if (ModoDeJuego.equals("2") || ModoDeJuego.equals("3")) {
             ModoDeJuego = "Otro";
-            salir = true;
         }
-        return salir;
+        return ModoDeJuego;
     }
 }

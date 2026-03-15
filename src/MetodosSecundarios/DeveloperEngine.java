@@ -20,6 +20,7 @@ public class DeveloperEngine {
     public void ejecutarSistemaCompleto() throws InterruptedException {
         String opcion1 = "";
         boolean salir = false;
+        Datos.milisegundos = 0;
         Juego.Sistema(opcion1, salir, nombresCargados, cantidadActual);
     }
 

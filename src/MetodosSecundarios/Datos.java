@@ -11,6 +11,7 @@ public class Datos {
     // Scanner (Objeto) estático que se podrá utilizar en todos los métodos de la
     // clase
     static Scanner s = new Scanner(System.in);
+    static int milisegundos = 1000;
 
     /**
      * Pide una cadena de caracteres y la devuelve
@@ -77,7 +78,7 @@ public class Datos {
      * Salto de líneas para cuando se cambie de menu/salto de escena
      */
     public static void saltoDeLineas() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(milisegundos);
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 }

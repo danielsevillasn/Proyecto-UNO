@@ -53,9 +53,9 @@ public class pantallas {
             System.out.println("\t1. Clásico");
             System.out.println("\t2. Otra modalidad");
             System.out.println("\t3. Otra modalidad");
-            
+
             String opcion = Datos.pedirCadena("\tElija opción (1-3): ");
-            ModoDeJuego = UnoEngine.modoDeJuegoSeleccionado(opcion); 
+            ModoDeJuego = UnoEngine.modoDeJuegoSeleccionado(opcion);
             salir = true;
         }
         return ModoDeJuego;
