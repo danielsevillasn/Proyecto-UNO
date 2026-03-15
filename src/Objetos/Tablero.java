@@ -3,40 +3,46 @@ package Objetos;
 import Enumerados.Color;
 
 /**
- * Clase tablero que imprime el tablero de juego
- * 
- * @author DaniS y Libio
+ * Clase tablero que gestiona el mazo de robo (chupona) y la pila de descarte.
+ * * @author DaniS y Libio
  */
 public class Tablero {
-    // Atributos
-    private final Carta[] chupona = new Carta[108]; // Mazo principal de donde los jugadores roban
-    private int topeChupona = 0; // Índice para controlar la cantidad de cartas en la chupona (Pila de la que se
-                                 // cogen cartas)
-    private final Carta[] descarte = new Carta[108]; // Mazo de descarte donde se juegan las cartas
-    private int topeDescarte = 0; // Índice para controlar la última carta jugada en la mesa
+
+    // Atributos/////////////////////
+    
+    private final Carta[] chupona = new Carta[108]; 
+    private int topeChupona = 0;
+    private final Carta[] descarte = new Carta[108]; 
+    private int topeDescarte = 0; 
+
+    // Metodos////////////////////////
+
+    // Constructor por defecto
+    /**
+     * Constructor por defecto para la clase Tablero
+     */
+    public Tablero() {
+    }
+
+    // Otros metodos
 
     /**
-     * Inicializa el juego creando las cartas por color y número,
-     * y posteriormente baraja el mazo resultante.
+     * Inicializa el juego creando las cartas por color y número (duplicando 
+     * todos los números excepto el 0 por color) y baraja el mazo resultante
+     * @param 'ninguno'
      */
     public void inicializar() {
         Carta temp;
-        // Generamos las cartas recorriendo los Enums de Color, los números del 0 al 9 y
-        // un bucle que cree cartas duplicadas exceptuando del 0 como en la baraja
-        // original del UNO
         for (int i = 0; i < 2; i++) {
             for (Color c : Color.values()) {
                 for (int j = 0; j <= 9; j++) {
-                    // Se almacena el objeto hijo en un array de tipo padre.
                     if (!(j == 0 && i == 1)) {
                         chupona[topeChupona++] = new CartaNormal(j, c);
                     }
                 }
             }
         }
-        // Actualmente hay 76 cartas en la baraja chupona, faltan especiales
 
-        // Intercambia cada posición con otra aleatoria
         for (int i = 0; i < topeChupona; i++) {
             int r = (int) (Math.random() * topeChupona);
             temp = chupona[i];
@@ -46,36 +52,31 @@ public class Tablero {
     }
 
     /**
-     * Roba la carta superior de la pila de cartas
-     * 
-     * @return El objeto Carta extraído o null si el mazo está vacío
+     * Extrae y devuelve la carta superior de la pila de robo (chupona).
+     * * @return El objeto Carta extraído o null si el mazo está vacío
      */
     public Carta tirarCarta() {
         if (topeChupona > 0) {
-            // Decrementa el tope y devuelve la carta en esa posición
             return chupona[--topeChupona];
         } else {
-            return null; // El mazo se ha agotado
+            return null;
         }
     }
 
     /**
-     * Coloca una carta sobre el montón de descarte.
-     * 
+     * Coloca una carta específica sobre el montón de descarte e incrementa el tope.
      * @param c Objeto Carta que el jugador lanza a la mesa.
+     * @return void
      */
     public void dejar(Carta c) {
         descarte[topeDescarte++] = c;
     }
 
     /**
-     * Permite consultar cuál es la carta que está actualmente en la cima del
-     * descarte.
-     * 
-     * @return El objeto Carta que se encuentra visible en la mesa.
+     * Permite consultar cuál es el objeto carta que está actualmente en la cima del descarte sin quitarla.
+     * * @return El objeto Carta que se encuentra visible en la mesa.
      */
     public Carta verCartaEnLaMesa() {
-        // Devuelve la última carta añadida sin extraerla del array
         return descarte[topeDescarte - 1];
     }
 }

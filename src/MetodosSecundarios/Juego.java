@@ -16,17 +16,29 @@ public class Juego {
 
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
+     * @throws InterruptedException que se lanza para la espera de tiempos
+     * @param 'ninguno'
      */
     public void ejecutarSistemaCompleto() throws InterruptedException {
         pantallas.PantallaUNO();
         Sistema();
     }
 
+    /**
+     * Método que ejecuta el sistema de desarrollador (sin tiempos de espera ni pantalla principal)
+     * @throws InterruptedException que se lanza para la espera de tiempos
+     * @param 'ninguno'
+     */
     public void ejecutarSistemaCompletoDeveloper() throws InterruptedException {
         Datos.milisegundos = 0;
         Sistema();
     }
 
+    /**
+     * Método que ejecuta el sistema de juego completo con sus menús
+     * @throws InterruptedException
+     * @param 'ninguno'
+     */
     public static void Sistema() throws InterruptedException {
         String opcion1 = "";
         boolean salir = false;

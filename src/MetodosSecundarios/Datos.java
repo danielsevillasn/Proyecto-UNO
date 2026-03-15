@@ -70,6 +70,9 @@ public class Datos {
         }
     }
 
+    /**
+     * Método que solo sirve para pulsar enter cuando lo pide por pantalla
+     */
     public static void pulsaEnter() {
         System.out.println("Pulsa enter para continuar");
         s.nextLine();

@@ -38,6 +38,7 @@ public abstract class Carta implements Jugable {
      * Implementación genérica del movimiento de cartas
      * Se puede poner sobre la mesa si coincide color o número
      * Lanza la excepcion de CartaLanzadaNoValida en caso de que la carta que se quiera lanzar no se peda
+     * @param 'ninguno'
      */
     @Override
     public boolean puedePonerseSobre(Carta mesa) {

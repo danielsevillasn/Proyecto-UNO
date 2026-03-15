@@ -76,7 +76,7 @@ public class pantallas {
      * Pantalla en la que sale todas las reglas del juego y del modo de juego
      * seleccionado
      * 
-     * @param 'nada'
+     * @param 'ninguno'
      * @return nada
      */
     public static void PantallaReglas() throws InterruptedException {
