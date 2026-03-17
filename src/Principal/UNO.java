@@ -1,5 +1,7 @@
 package Principal;
 
+import Excepciones.CartaLanzadaNoValida;
+import Excepciones.SalirDelJuego;
 import MetodosSecundarios.Juego;
 
 /**
@@ -9,8 +11,8 @@ import MetodosSecundarios.Juego;
  * @author DaniS y Libio
  */
 public class UNO {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida {
         Juego juego = new Juego();
-        juego.ejecutarSistemaCompleto();
+        juego.iniciarJuego();
     }
 }

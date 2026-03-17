@@ -1,6 +1,7 @@
 package MetodosSecundarios;
 
 import Excepciones.CartaLanzadaNoValida;
+import Excepciones.SalirDelJuego;
 import Objetos.Carta;
 import Objetos.Jugador;
 import Objetos.Tablero;
@@ -14,9 +15,9 @@ public class UnoEngine {
      * validación de jugadas y condiciones de victoria
      * Se inicia el tablero con todos sus componentes
      * @param 'ninguno'
-     * @throws InterruptedException excepcion que controla los tiempos
+     * @throws InterruptedException para los thread sleep
      */
-    public static void partida(int cantidadActualJugadores, String[] nombresCargados) throws InterruptedException {
+    public static void partida(int cantidadActualJugadores, String[] nombresCargados) throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida {
         // Inicialización de componentes de juego
         Tablero t = new Tablero();
         t.inicializar();
@@ -111,9 +112,9 @@ public class UnoEngine {
      * 
      * @param nombresCargados
      * @param cantidadActualJugadores
-     * @throws InterruptedException
+     * @throws InterruptedException para los thread sleep
      */
-    public static int configurarJugadores(int cantidadActualJugadores) throws InterruptedException {
+    public static int configurarJugadores(int cantidadActualJugadores) throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida {
         int numJugadores;
         boolean rangoJugadores = false;
         pantallas.PantallaJugadores();

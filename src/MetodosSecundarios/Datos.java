@@ -2,6 +2,9 @@ package MetodosSecundarios;
 
 import java.util.Scanner;
 
+import Excepciones.CartaLanzadaNoValida;
+import Excepciones.SalirDelJuego;
+
 /**
  * Clase para todos los métodos o funcionalidades propias de la Entrada/Salida
  * 
@@ -19,20 +22,19 @@ public class Datos {
      * 
      * @param mensaje de petición de datos tipo String
      * @return Dato introducido por teclado tipo string
+     * @throws InterruptedException para los thread sleep
+     * @throws SalirDelJuego 
      */
     // Los parámetros pueden ser variables u objetos y estos se diferencian en:
     // Los parámetros se copian y no se modifican en el código principal
     // Y los objetos se copian y si se modifican en el código principal
-    public static String pedirCadena(String mensaje) throws InterruptedException {
+    public static String pedirCadena(String mensaje) throws InterruptedException, CartaLanzadaNoValida, SalirDelJuego {
         System.out.print(mensaje);
         String entrada = s.nextLine().trim();
-        if (entrada.equalsIgnoreCase("terminar1")) {
+
+        if (entrada.equalsIgnoreCase("terminar")) {
             Juego juego = new Juego();
-            juego.ejecutarSistemaCompleto();
-            return ""; // cadena vacía
-        } else if (entrada.equalsIgnoreCase("terminar2")) {
-            Juego juego = new Juego();
-            juego.ejecutarSistemaCompletoDeveloper();
+            juego.iniciarJuego();
             return ""; // cadena vacía
         }
 
@@ -44,28 +46,31 @@ public class Datos {
      * 
      * @param mensaje de petición de datos tipo entero
      * @return Dato introducido por teclado tipo entero
+     * @throws InterruptedException para los thread sleep
+     * @throws SalirDelJuego
      */
-    public static int pedirEntero(String mensaje) throws InterruptedException {
+    public static int pedirEntero(String mensaje) throws InterruptedException, CartaLanzadaNoValida, SalirDelJuego {
 
         while (true) {
             System.out.print(mensaje);
             String entrada = s.nextLine().trim();
 
             // Para que el usuario vuelva a iniciar el juego cuando quiera
-            if (entrada.equalsIgnoreCase("terminar1")) {
-                Juego juego = new Juego();
-                juego.ejecutarSistemaCompleto(); // Vuelve a ejecutar el sistema
-                return 0; // No importa el valor
-            } else if (entrada.equalsIgnoreCase("terminar2")) {
-                Juego juego = new Juego();
-                juego.ejecutarSistemaCompletoDeveloper();
-                return 0; // cadena vacía
-            }
 
             try {
-                return Integer.parseInt(entrada);
-            } catch (NumberFormatException e) {
-                entradaIncorrecta();
+                if (entrada.equalsIgnoreCase("terminar")) {
+                    Juego juego = new Juego();
+                    juego.iniciarJuego();
+                    return 2; // cadena vacía
+                } else {
+                    try {
+                        return Integer.parseInt(entrada);
+                    } catch (NumberFormatException e) {
+                        entradaIncorrecta();
+                    }
+                }
+            } catch (SalirDelJuego e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -87,6 +92,8 @@ public class Datos {
 
     /**
      * Salto de líneas para cuando se cambie de menu/salto de escena
+     * 
+     * @throws InterruptedException para los thread sleep
      */
     public static void saltoDeLineas() throws InterruptedException {
         Thread.sleep(milisegundos);

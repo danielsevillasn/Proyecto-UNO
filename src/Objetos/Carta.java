@@ -3,15 +3,14 @@ package Objetos;
 import Enumerados.Color;
 import Enumerados.Tipos;
 import Interfaces.Jugable;
-import Excepciones.CartaLanzadaNoValida;
 
 /**
  * Clase Carta con implementación de herencias, enum e interfaz
  * * @author DaniS y Libio
  */
 public abstract class Carta implements Jugable {
-    private final Color color;
-    private final int numero;
+    protected final Color color;
+    protected final int numero;
     protected final Tipos tipo;
 
     public Carta() {
@@ -32,29 +31,6 @@ public abstract class Carta implements Jugable {
 
     public int getNumero() {
         return numero;
-    }
-
-    /**
-     * Implementación genérica del movimiento de cartas
-     * Se puede poner sobre la mesa si coincide color o número
-     * Lanza la excepcion de CartaLanzadaNoValida en caso de que la carta que se quiera lanzar no se peda
-     * @param 'ninguno'
-     */
-    @Override
-    public boolean puedePonerseSobre(Carta mesa) {
-        if (mesa == null) {
-            return true;
-        }
-
-        boolean mismoColor = (this.color == mesa.getColor());
-        boolean mismoNumero = (this.numero == mesa.getNumero());
-
-        if (mismoColor || mismoNumero) {
-            return true;
-        } else {
-            throw new CartaLanzadaNoValida(
-                    "La carta lanzada no es valida, lanza una carta que sea del mismo color o numero");
-        }
     }
 
     /**

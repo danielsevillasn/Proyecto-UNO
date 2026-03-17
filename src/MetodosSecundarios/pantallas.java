@@ -2,6 +2,9 @@ package MetodosSecundarios;
 
 import java.util.Scanner;
 
+import Excepciones.CartaLanzadaNoValida;
+import Excepciones.SalirDelJuego;
+
 /**
  * Clase para imprimir todas las pantallas del juego
  * 
@@ -23,8 +26,9 @@ public class pantallas {
      * 
      * @param 'ninguno'
      * @return Opción introducida por teclado tipo String
+     * @throws InterruptedException para los thread sleep
      */
-    public static String PantallaMenu() throws InterruptedException {
+    public static String PantallaMenu() throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida {
         Datos.saltoDeLineas();
         System.out.println("==========Inicio=========");
         System.out.println("\t1- Modo de juego");
@@ -44,8 +48,9 @@ public class pantallas {
      * 
      * @param 'ninguno'
      * @return Opción introducida por teclado tipo String
+     * @throws InterruptedException para los thread sleep
      */
-    public static String PantallaModosDeJuego() throws InterruptedException {
+    public static String PantallaModosDeJuego() throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida {
         Datos.saltoDeLineas();
         boolean salir = false;
         while (!salir) {
@@ -66,6 +71,7 @@ public class pantallas {
      * 
      * @param 'ninguno'
      * @return cantidadActual valor inicial para la cantidad de jugadores
+     * @throws InterruptedException para los thread sleep
      */
     public static void PantallaJugadores() throws InterruptedException {
         Datos.saltoDeLineas();
@@ -78,6 +84,7 @@ public class pantallas {
      * 
      * @param 'ninguno'
      * @return nada
+     * @throws InterruptedException para los thread sleep
      */
     public static void PantallaReglas() throws InterruptedException {
         System.out.println("========== REGLAS DEL JUEGO UNO ==========");
@@ -110,6 +117,7 @@ public class pantallas {
      * 
      * @param 'nada'
      * @return nada
+     * @throws InterruptedException para los thread sleep
      */
     public static void PantallaFinal() throws InterruptedException {
         Datos.saltoDeLineas();
@@ -140,6 +148,7 @@ public class pantallas {
      * 
      * @param 'nada'
      * @return nada
+     * @throws InterruptedException para los thread sleep
      */
     public static void PantallaUNO() throws InterruptedException {
         Datos.saltoDeLineas();
@@ -173,12 +182,27 @@ public class pantallas {
      * 
      * @param 'ninguno'
      * @return Opción introducida por teclado tipo String
+     * @throws InterruptedException para los thread sleep
      */
-    public static String PantallaInicio() throws InterruptedException {
+    public static String PantallaInicio() throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida {
         Datos.saltoDeLineas();
         System.out.println("==========Bienvenido/a a UNO=========");
         System.out.println("\t1- Jugar");
         System.out.println("\t2- Salir");
         return Datos.pedirCadena("\tElija opción (1-2): ");
+    }
+
+    public static int eleccionDeTipoDeEjecutar() throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida{
+        Datos.saltoDeLineas();
+        int resultado = 0;
+        System.out.println("Como quieres ejecutar el juego?");
+        System.out.println("\t1- Normal");
+        System.out.println("\t2- Developer");
+        System.out.println("\t0- Salir");
+        resultado = Datos.pedirEntero("\tElija opción (0-2): ");
+        if(resultado == 0){
+            throw new SalirDelJuego("Has salido del juego");
+        }
+        return resultado;
     }
 }
