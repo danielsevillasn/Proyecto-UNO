@@ -2,8 +2,7 @@ package MetodosSecundarios;
 
 import java.util.Scanner;
 
-import Excepciones.CartaLanzadaNoValida;
-import Excepciones.SalirDelJuego;
+import Excepciones.ReiniciarJuego;
 
 /**
  * Clase para todos los métodos o funcionalidades propias de la Entrada/Salida
@@ -23,19 +22,17 @@ public class Datos {
      * @param mensaje de petición de datos tipo String
      * @return Dato introducido por teclado tipo string
      * @throws InterruptedException para los thread sleep
-     * @throws SalirDelJuego 
+     * @throws SalirDelJuego
      */
     // Los parámetros pueden ser variables u objetos y estos se diferencian en:
     // Los parámetros se copian y no se modifican en el código principal
     // Y los objetos se copian y si se modifican en el código principal
-    public static String pedirCadena(String mensaje) throws InterruptedException, CartaLanzadaNoValida, SalirDelJuego {
+    public static String pedirCadena(String mensaje) throws InterruptedException, ReiniciarJuego {
         System.out.print(mensaje);
         String entrada = s.nextLine().trim();
 
-        if (entrada.equalsIgnoreCase("terminar")) {
-            Juego juego = new Juego();
-            juego.iniciarJuego();
-            return ""; // cadena vacía
+        if (entrada.equalsIgnoreCase("reiniciar")) {
+            throw new ReiniciarJuego("Regresando al menú principal...");
         }
 
         return entrada;
@@ -49,28 +46,21 @@ public class Datos {
      * @throws InterruptedException para los thread sleep
      * @throws SalirDelJuego
      */
-    public static int pedirEntero(String mensaje) throws InterruptedException, CartaLanzadaNoValida, SalirDelJuego {
+    public static int pedirEntero(String mensaje) throws InterruptedException, ReiniciarJuego {
 
         while (true) {
             System.out.print(mensaje);
             String entrada = s.nextLine().trim();
 
             // Para que el usuario vuelva a iniciar el juego cuando quiera
+            if (entrada.equalsIgnoreCase("reiniciar")) {
+                throw new ReiniciarJuego("Regresando al menú principal...");
+            }
 
             try {
-                if (entrada.equalsIgnoreCase("terminar")) {
-                    Juego juego = new Juego();
-                    juego.iniciarJuego();
-                    return 2; // cadena vacía
-                } else {
-                    try {
-                        return Integer.parseInt(entrada);
-                    } catch (NumberFormatException e) {
-                        entradaIncorrecta();
-                    }
-                }
-            } catch (SalirDelJuego e) {
-                System.out.println(e.getMessage());
+                return Integer.parseInt(entrada);
+            } catch (NumberFormatException e) {
+                entradaIncorrecta();
             }
         }
     }

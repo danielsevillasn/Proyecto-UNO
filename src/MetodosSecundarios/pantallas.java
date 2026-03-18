@@ -2,7 +2,7 @@ package MetodosSecundarios;
 
 import java.util.Scanner;
 
-import Excepciones.CartaLanzadaNoValida;
+import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
 
 /**
@@ -18,7 +18,7 @@ public class pantallas {
     // Variables necesarias para que los métodos de impresión funcionen
     public static String ModoDeJuego = "Clásico";
     public static String Jugadores = "2";
-    public static String NombreJugador = "Invitado";
+    public static String NombreJugador = "";
 
     /**
      * Muestra al usuario un menú de opciones; pide que teclee una de ellas y
@@ -28,7 +28,7 @@ public class pantallas {
      * @return Opción introducida por teclado tipo String
      * @throws InterruptedException para los thread sleep
      */
-    public static String PantallaMenu() throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida {
+    public static String PantallaMenu() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
         System.out.println("==========Inicio=========");
         System.out.println("\t1- Modo de juego");
@@ -50,7 +50,7 @@ public class pantallas {
      * @return Opción introducida por teclado tipo String
      * @throws InterruptedException para los thread sleep
      */
-    public static String PantallaModosDeJuego() throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida {
+    public static String PantallaModosDeJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
         boolean salir = false;
         while (!salir) {
@@ -184,7 +184,7 @@ public class pantallas {
      * @return Opción introducida por teclado tipo String
      * @throws InterruptedException para los thread sleep
      */
-    public static String PantallaInicio() throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida {
+    public static String PantallaInicio() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
         System.out.println("==========Bienvenido/a a UNO=========");
         System.out.println("\t1- Jugar");
@@ -192,7 +192,7 @@ public class pantallas {
         return Datos.pedirCadena("\tElija opción (1-2): ");
     }
 
-    public static int eleccionDeTipoDeEjecutar() throws InterruptedException, SalirDelJuego, CartaLanzadaNoValida{
+    public static int eleccionDeTipoDeEjecutar() throws InterruptedException, ReiniciarJuego, SalirDelJuego{
         Datos.saltoDeLineas();
         int resultado = 0;
         System.out.println("Como quieres ejecutar el juego?");
