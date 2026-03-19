@@ -9,22 +9,28 @@ import Interfaces.Jugable;
  * * @author DaniS y Libio
  */
 public abstract class Carta implements Jugable {
+    // Atributos/////////////////////
     protected final Color color;
     protected final int numero;
     protected final Tipos tipo;
 
+    // Metodos////////////////////////
+
+    // Constructor por defecto
     public Carta() {
         color = Color.AMARILLO;
         numero = 0;
         tipo = Tipos.NORMAL;
     }
 
+    // Constructor para instanciar objeto con dos parametros
     public Carta(int n, Color c, Tipos tipo) {
         this.numero = n;
         this.color = c;
         this.tipo = tipo;
     }
 
+    // Getter
     public Color getColor() {
         return color;
     }
@@ -32,10 +38,8 @@ public abstract class Carta implements Jugable {
     public int getNumero() {
         return numero;
     }
-
-    /**
-     * @toString que colorea la carta y la muestra por pantalla en el tablero
-     */
+    
+    // toString
     @Override
     public String toString() {
         String c = switch (color) {

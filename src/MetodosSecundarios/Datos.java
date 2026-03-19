@@ -13,7 +13,7 @@ public class Datos {
     // Scanner (Objeto) estático que se podrá utilizar en todos los métodos de la
     // clase
     static Scanner s = new Scanner(System.in);
-    static int milisegundos = 1000;
+    public static int milisegundos = 1000;
 
     /**
      * Pide una cadena de caracteres y la devuelve
@@ -24,13 +24,11 @@ public class Datos {
      * @throws InterruptedException para los thread sleep
      * @throws SalirDelJuego
      */
-    // Los parámetros pueden ser variables u objetos y estos se diferencian en:
-    // Los parámetros se copian y no se modifican en el código principal
-    // Y los objetos se copian y si se modifican en el código principal
     public static String pedirCadena(String mensaje) throws InterruptedException, ReiniciarJuego {
         System.out.print(mensaje);
         String entrada = s.nextLine().trim();
 
+        // Para que el usuario vuelva a iniciar el juego cuando quiera
         if (entrada.equalsIgnoreCase("reiniciar")) {
             throw new ReiniciarJuego("Regresando al menú principal...");
         }

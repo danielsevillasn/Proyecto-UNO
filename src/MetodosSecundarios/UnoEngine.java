@@ -2,6 +2,7 @@ package MetodosSecundarios;
 
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
+import Excepciones.SalirDelJuego;
 import Objetos.Carta;
 import Objetos.Jugador;
 import Objetos.Tablero;
@@ -14,10 +15,14 @@ public class UnoEngine {
      * Controla el flujo de turnos,
      * validación de jugadas y condiciones de victoria
      * Se inicia el tablero con todos sus componentes
-     * @param 'ninguno'
+     * 
+     * @param cantidadActualJugadores variable tipo int
+     * @param nombresCargados         array con todos los nombres
      * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    public static void partida(int cantidadActualJugadores, String[] nombresCargados) throws InterruptedException, ReiniciarJuego {
+    public static void partida(int cantidadActualJugadores, String[] nombresCargados)
+            throws InterruptedException, ReiniciarJuego {
         // Inicialización de componentes de juego
         Tablero t = new Tablero();
         t.inicializar();
@@ -44,8 +49,9 @@ public class UnoEngine {
 
         // Bucle de juego, hasta que alguien se quede sin cartas
         while (!fin) {
-            j = lista[controlador.actual];
+            j = lista[controlador.getActual()];
             System.out.println("\n--- TURNO DE: " + j.getNombre() + " ---");
+            System.out.println("    - "+controlador+" -");
             System.out.println("Mesa: " + t.verCartaEnLaMesa());
 
             // Mostrar la mano del jugador actual
@@ -78,7 +84,7 @@ public class UnoEngine {
                         cartaRobada = t.tirarCarta();
                         j.recibirCarta(cartaRobada);
                         System.out.println("!CHUPAS UNA CARTA!\n");
-                        Thread.sleep(1000);
+                        Thread.sleep(Datos.milisegundos);
                         System.out.println("Has recibido un: " + cartaRobada);
                         cartaValida = false;
                         break;
@@ -93,7 +99,7 @@ public class UnoEngine {
                 // Condición de victoria: 0 cartas
                 if (j.getNumCartas() == 0) {
                     fin = true;
-                    pantallas.NombreJugador = j.getNombre();
+                    Pantallas.nombreJugador = j.getNombre();
                 }
             }
             Datos.pulsaEnter();
@@ -104,20 +110,20 @@ public class UnoEngine {
                 controlador.siguiente(cantidadActualJugadores);
         }
         // Mostrar pantalla de ganador
-        pantallas.PantallaFinal();
+        Pantallas.PantallaFinal();
     }
 
     /**
      * Configura el número de jugadores para el juego
      * 
-     * @param nombresCargados
-     * @param cantidadActualJugadores
+     * @param cantidadActualJugadores variable tipo int
      * @throws InterruptedException para los thread sleep
+     * @throws SalirDelJuego        para salir del juego cuando se quiera
      */
     public static int configurarJugadores(int cantidadActualJugadores) throws InterruptedException, ReiniciarJuego {
         int numJugadores;
         boolean rangoJugadores = false;
-        pantallas.PantallaJugadores();
+        Pantallas.PantallaJugadores();
 
         do {
             numJugadores = Datos.pedirEntero("¿Cuántos jugadores (2-6)? ");
@@ -136,15 +142,15 @@ public class UnoEngine {
             Juego.nombresCargados[i] = Datos.pedirCadena("Nombre Jugador " + (i + 1) + ": ");
         }
 
-        pantallas.Jugadores = "" + cantidadActualJugadores;
+        Pantallas.jugadores = "" + cantidadActualJugadores;
         return cantidadActualJugadores;
     }
 
     /**
      * Método para seleccionar el modo de juego
      * 
-     * @param ModoDeJuego
-     * @return ModoDeJuego
+     * @param ModoDeJuego variable tipo String
+     * @return ModoDeJuego variable tipo String
      */
     public static String modoDeJuegoSeleccionado(String ModoDeJuego) {
         if (ModoDeJuego.equals("1")) {

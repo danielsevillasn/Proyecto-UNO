@@ -10,10 +10,10 @@ public class Tablero {
 
     // Atributos/////////////////////
     
-    private final Carta[] chupona = new Carta[108]; 
-    private int topeChupona = 0;
-    private final Carta[] descarte = new Carta[108]; 
-    private int topeDescarte = 0; 
+    private final Carta[] chupona;
+    private int topeChupona;
+    private final Carta[] descarte;
+    private int topeDescarte;
 
     // Metodos////////////////////////
 
@@ -22,10 +22,13 @@ public class Tablero {
      * Constructor por defecto para la clase Tablero
      */
     public Tablero() {
+        topeChupona = 0;
+        topeDescarte = 0;
+        chupona = new Carta[108];
+        descarte = new Carta[108];
     }
 
     // Otros metodos
-
     /**
      * Inicializa el juego creando las cartas por color y número (duplicando 
      * todos los números excepto el 0 por color) y baraja el mazo resultante

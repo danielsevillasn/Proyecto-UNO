@@ -6,14 +6,19 @@ package Objetos;
  * @author DaniS y Libio
  */
 public class Jugador {
+    // Atributos/////////////////////
     private final String nombre;
     public Carta[] mano = new Carta[20]; // Hay un límite de 20 cartas
-    protected int numCartas = 0;
+    private int numCartas = 0;
 
+    // Metodos////////////////////////
+
+    // Constructor para instanciar objeto con un parametro
     public Jugador(String nombre) {
         this.nombre = nombre;
     }
 
+    // Getter
     public String getNombre() {
         return nombre;
     }
@@ -22,6 +27,13 @@ public class Jugador {
         return numCartas;
     }
 
+    // Setter
+    public void setNumCartas(int numCartas) {
+        this.numCartas = numCartas;
+    }
+
+
+    // Otros metodos
     /**
      * Método para recibir una carta aleatoria en tu mano
      * 
@@ -48,4 +60,6 @@ public class Jugador {
         mano[--numCartas] = null;
         return carta;
     }
+
+
 }

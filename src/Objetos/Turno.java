@@ -6,8 +6,38 @@ package Objetos;
  * @author DaniS y Libio
  */
 public class Turno {
-    public int actual = 0;
+    // Atributos/////////////////////
+    private int actual;
+    private int contadorTurno;
 
+    // Metodos////////////////////////
+
+    // Constructor por defecto
+    public Turno(){
+        actual = 0;
+        contadorTurno = 1;
+    }
+    
+    // Getter
+    public int getActual() {
+        return actual;
+    }
+
+    public int getContadorTurno() {
+        return contadorTurno;
+    }
+
+    
+    // Setter
+    public void setActual(int actual) {
+        this.actual = actual;
+    }
+    
+    public void setContadorTurno(int contadorTurno) {
+        this.contadorTurno = contadorTurno;
+    }
+    
+    // Otros metodos
     /**
      * Sirve para crear turnos dependiendo de la cantidad de jugadores haciendo que
      * cuando llegue al ultimo jugador vuelva al primero
@@ -18,5 +48,12 @@ public class Turno {
      */
     public void siguiente(int total) {
         actual = (actual + 1) % total;
+        contadorTurno++;
+    }
+
+    // toString
+    @Override
+    public String toString() {
+        return "TURNO ACTUAL:" + contadorTurno;
     }
 }

@@ -10,15 +10,15 @@ import Excepciones.SalirDelJuego;
  * 
  * @author DaniS y Libio
  */
-public class pantallas {
+public class Pantallas {
     // Scanner (Objeto) estático que se podrá utilizar en todos los métodos de la
     // clase
     static Scanner s = new Scanner(System.in);
 
     // Variables necesarias para que los métodos de impresión funcionen
-    public static String ModoDeJuego = "Clásico";
-    public static String Jugadores = "2";
-    public static String NombreJugador = "";
+    public static String modoDeJuego = "Clásico";
+    public static String jugadores = "2";
+    public static String nombreJugador = "";
 
     /**
      * Muestra al usuario un menú de opciones; pide que teclee una de ellas y
@@ -27,6 +27,7 @@ public class pantallas {
      * @param 'ninguno'
      * @return Opción introducida por teclado tipo String
      * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
     public static String PantallaMenu() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
@@ -37,7 +38,7 @@ public class pantallas {
         System.out.println("\t4- Iniciar juego");
         System.out.println("\t5- Atrás <--");
         System.out.println("==========================");
-        System.out.println("Modo de juego: " + ModoDeJuego + "\tjugadores: " + Jugadores);
+        System.out.println("Modo de juego: " + modoDeJuego + "\tjugadores: " + jugadores);
 
         return (Datos.pedirCadena("\tElija opción (1-5): "));
     }
@@ -49,6 +50,7 @@ public class pantallas {
      * @param 'ninguno'
      * @return Opción introducida por teclado tipo String
      * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
     public static String PantallaModosDeJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
@@ -60,10 +62,10 @@ public class pantallas {
             System.out.println("\t3. Otra modalidad");
 
             String opcion = Datos.pedirCadena("\tElija opción (1-3): ");
-            ModoDeJuego = UnoEngine.modoDeJuegoSeleccionado(opcion);
+            modoDeJuego = UnoEngine.modoDeJuegoSeleccionado(opcion);
             salir = true;
         }
-        return ModoDeJuego;
+        return modoDeJuego;
     }
 
     /**
@@ -125,21 +127,21 @@ public class pantallas {
         String VERDE = "\u001B[32m";
         String RESET = "\u001B[0m";
         String ROJO = "\u001B[31m";
-        String mensajeJugador = "Jugador: " + NombreJugador + "!";
+        String mensajeJugador = "Jugador: " + nombreJugador + "!";
 
         System.out.println(VERDE);
-        Thread.sleep(1000);
+        Thread.sleep(Datos.milisegundos);
         System.out.println("  ██████   █████  ███    ██  █████  ███████ ████████ ███████ ");
         System.out.println(" ██       ██   ██ ████   ██ ██   ██ ██         ██    ██      ");
         System.out.println(" ██   ███ ███████ ██ ██  ██ ███████ ███████    ██    █████   ");
         System.out.println(" ██    ██ ██   ██ ██  ██ ██ ██   ██      ██    ██    ██      ");
         System.out.println("  ██████  ██   ██ ██   ████ ██   ██ ███████    ██    ███████ ");
         System.out.println();
-        Thread.sleep(1000);
+        Thread.sleep(Datos.milisegundos);
         System.out.printf(AMARILLO + "%37s%n" + RESET, "¡ENHORABUENA!");
-        Thread.sleep(1000);
+        Thread.sleep(Datos.milisegundos);
         System.out.printf(ROJO + "%40s%n" + RESET, mensajeJugador);
-        Thread.sleep(2000);
+        Thread.sleep(Datos.milisegundos+1000);
         Datos.pulsaEnter();
     }
 
@@ -183,6 +185,7 @@ public class pantallas {
      * @param 'ninguno'
      * @return Opción introducida por teclado tipo String
      * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
     public static String PantallaInicio() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
@@ -192,7 +195,17 @@ public class pantallas {
         return Datos.pedirCadena("\tElija opción (1-2): ");
     }
 
-    public static int eleccionDeTipoDeEjecutar() throws InterruptedException, ReiniciarJuego, SalirDelJuego{
+    /**
+     * Muestra al usuario un menú de opciones que permite ejecutar el juego de
+     * diferentes formas
+     * 
+     * @param 'ninguno'
+     * @return Opción introducida por teclado tipo int
+     * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
+     * @throws SalirDelJuego        para salir del juego cuando se quiera
+     */
+    public static int eleccionDeTipoDeEjecutar() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         Datos.saltoDeLineas();
         int resultado = 0;
         System.out.println("Como quieres ejecutar el juego?");
@@ -200,7 +213,7 @@ public class pantallas {
         System.out.println("\t2- Developer");
         System.out.println("\t0- Salir");
         resultado = Datos.pedirEntero("\tElija opción (0-2): ");
-        if(resultado == 0){
+        if (resultado == 0) {
             throw new SalirDelJuego("Has salido del juego");
         }
         return resultado;

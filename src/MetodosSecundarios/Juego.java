@@ -22,15 +22,15 @@ public class Juego {
      * Menú principal del sistema, que ejecuta el sistema completo
      * 
      * @throws InterruptedException para los thread sleep
-     * @throws SalirDelJuego        para salir del juego cuando se quiera
+     * @throws SalirDelJuego para salir del juego cuando se quiera
      * @param 'ninguno'
      */
     public static void iniciarJuego() throws InterruptedException, SalirDelJuego, ReiniciarJuego {
         Datos.saltoDeLineas();
         cantidadActualJugadores = 2;
-        pantallas.ModoDeJuego = "Clásico";
+        Pantallas.modoDeJuego = "Clásico";
         try {
-            modoDeTipoDeEjecutar = pantallas.eleccionDeTipoDeEjecutar();
+            modoDeTipoDeEjecutar = Pantallas.eleccionDeTipoDeEjecutar();
             if (modoDeTipoDeEjecutar == 1) {
                 ejecutarSistemaCompleto();
             } else if (modoDeTipoDeEjecutar == 2) {
@@ -48,7 +48,7 @@ public class Juego {
      * @param 'ninguno'
      */
     public static void ejecutarSistemaCompleto() throws InterruptedException, SalirDelJuego, ReiniciarJuego {
-        pantallas.PantallaUNO();
+        Pantallas.PantallaUNO();
         Sistema();
     }
 
@@ -57,6 +57,7 @@ public class Juego {
      * pantalla principal)
      * 
      * @throws InterruptedException para los thread sleep
+     * @throws SalirDelJuego para salir del juego cuando se quiera
      * @param 'ninguno'
      */
     public static void ejecutarSistemaCompletoDeveloper()
@@ -65,13 +66,17 @@ public class Juego {
         Sistema();
     }
 
+    /**
+     * Metodo que resetea el estado del juego al predeterminado cuando se reiniciar
+     * el juego
+     */
     public static void resetearEstado() {
         Juego.nombresCargados = new String[] { "Jugador 1", "Jugador 2" };
         Juego.cantidadActualJugadores = 2;
 
-        pantallas.ModoDeJuego = "Clásico";
-        pantallas.Jugadores = "2";
-        pantallas.NombreJugador = "Invitado";
+        Pantallas.modoDeJuego = "Clásico";
+        Pantallas.jugadores = "2";
+        Pantallas.nombreJugador = "Invitado";
 
         Datos.milisegundos = 1000;
 
@@ -82,6 +87,8 @@ public class Juego {
      * Método que ejecuta el sistema de juego completo con sus menús
      * 
      * @throws InterruptedException para los thread sleep
+     * @throws SalirDelJuego para salir del juego cuando se quiera
+     * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
      * @param 'ninguno'
      */
     public static void Sistema() throws InterruptedException, SalirDelJuego, ReiniciarJuego {
@@ -90,17 +97,18 @@ public class Juego {
         String opcionReinicio = "";
         String opcion2;
         try {
-            while (!opcion1.equals("-1")) {
+            while (true) {
 
-                opcion1 = pantallas.PantallaInicio();
+                opcion1 = Pantallas.PantallaInicio();
+                salir = false;
                 switch (opcion1) {
                     case "1":
                         while (!salir) {
-                            opcion2 = pantallas.PantallaMenu();
+                            opcion2 = Pantallas.PantallaMenu();
 
                             switch (opcion2) {
                                 case "1": // Configurar modo de juego
-                                    pantallas.ModoDeJuego = pantallas.PantallaModosDeJuego();
+                                    Pantallas.modoDeJuego = Pantallas.PantallaModosDeJuego();
                                     break;
                                 case "2": // Configurar nombres y cantidad de jugadores
                                     Datos.saltoDeLineas();
@@ -108,7 +116,7 @@ public class Juego {
                                     break;
                                 case "3": // Mostrar instrucciones
                                     Datos.saltoDeLineas();
-                                    pantallas.PantallaReglas();
+                                    Pantallas.PantallaReglas();
                                     break;
                                 case "4": // Iniciar una partida
                                     Datos.saltoDeLineas();
@@ -124,8 +132,7 @@ public class Juego {
                         }
                         break;
                     case "2":
-                        opcion1 = "-1";
-                        break;
+                        throw new SalirDelJuego("Has salido del juego");
                     default:
                         Datos.entradaIncorrecta();
                         break;
@@ -153,10 +160,13 @@ public class Juego {
                         break;
                 }
             }
-            System.out.println("\n"+e.getMessage());
+            System.out.println("\n" + e.getMessage());
             Datos.pulsaEnter();
             Juego.iniciarJuego();
+        } catch (SalirDelJuego e) {
+            System.out.println(e.getMessage());
         }
+
     }
 
 }
