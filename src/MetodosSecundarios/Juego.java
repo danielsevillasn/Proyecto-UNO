@@ -29,15 +29,23 @@ public class Juego {
         Datos.saltoDeLineas();
         cantidadActualJugadores = 2;
         Pantallas.modoDeJuego = "Clásico";
-        try {
-            modoDeTipoDeEjecutar = Pantallas.eleccionDeTipoDeEjecutar();
-            if (modoDeTipoDeEjecutar == 1) {
-                ejecutarSistemaCompleto();
-            } else if (modoDeTipoDeEjecutar == 2) {
-                ejecutarSistemaCompletoDeveloper();
+        while (true) {
+            try {
+                modoDeTipoDeEjecutar = Pantallas.eleccionDeTipoDeEjecutar();
+                if (modoDeTipoDeEjecutar == 1) {
+                    ejecutarSistemaCompleto();
+                    break;
+                } else if (modoDeTipoDeEjecutar == 2) {
+                    ejecutarSistemaCompletoDeveloper();
+                    break;
+                }else{
+                    System.out.println("Opcion invalidad, introduce un numero entero del 0-2");
+                    Thread.sleep(Datos.milisegundos);
+                }
+            } catch (SalirDelJuego e) {
+                System.out.println(e.getMessage());
+                break;
             }
-        } catch (SalirDelJuego e) {
-            System.out.println(e.getMessage());
         }
     }
 
