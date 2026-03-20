@@ -12,6 +12,7 @@ import MetodosSecundarios.Juego;
  */
 public class UNO {
     public static void main(String[] args) throws InterruptedException, SalirDelJuego, ReiniciarJuego {
+        //Metodo estático de la clase Juego que inicia el flujo del juego
         Juego.iniciarJuego();
     }
 }

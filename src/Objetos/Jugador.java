@@ -37,7 +37,7 @@ public class Jugador {
     /**
      * Método para recibir una carta aleatoria en tu mano
      * 
-     * @param carta
+     * @param carta objeto carta que es la carta a recibir
      */
     public void recibirCarta(Carta carta) {
         if (carta != null) {
@@ -49,8 +49,8 @@ public class Jugador {
      * Método para jugar las cartas y disminuir el tamaño
      * de tu mano
      * 
-     * @param n
-     * @return
+     * @param n numero entero que representa el numero de la carta
+     * @return carta objeto carta que es la carta buscada
      */
     public Carta jugarCarta(int n) {
         Carta carta = mano[n];

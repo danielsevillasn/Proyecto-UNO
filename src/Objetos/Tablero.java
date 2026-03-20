@@ -18,9 +18,6 @@ public class Tablero {
     // Metodos////////////////////////
 
     // Constructor por defecto
-    /**
-     * Constructor por defecto para la clase Tablero
-     */
     public Tablero() {
         topeChupona = 0;
         topeDescarte = 0;
@@ -32,6 +29,7 @@ public class Tablero {
     /**
      * Inicializa el juego creando las cartas por color y número (duplicando 
      * todos los números excepto el 0 por color) y baraja el mazo resultante
+     * 
      * @param 'ninguno'
      */
     public void inicializar() {
@@ -56,7 +54,8 @@ public class Tablero {
 
     /**
      * Extrae y devuelve la carta superior de la pila de robo (chupona).
-     * * @return El objeto Carta extraído o null si el mazo está vacío
+     * @return El objeto Carta extraído o null si el mazo está vacío
+     * @param 'ninguno'
      */
     public Carta tirarCarta() {
         if (topeChupona > 0) {
@@ -69,7 +68,6 @@ public class Tablero {
     /**
      * Coloca una carta específica sobre el montón de descarte e incrementa el tope.
      * @param c Objeto Carta que el jugador lanza a la mesa.
-     * @return void
      */
     public void dejar(Carta c) {
         descarte[topeDescarte++] = c;
@@ -77,7 +75,8 @@ public class Tablero {
 
     /**
      * Permite consultar cuál es el objeto carta que está actualmente en la cima del descarte sin quitarla.
-     * * @return El objeto Carta que se encuentra visible en la mesa.
+     * @return El objeto Carta que se encuentra visible en la mesa.
+     * @param 'ninguno'
      */
     public Carta verCartaEnLaMesa() {
         return descarte[topeDescarte - 1];

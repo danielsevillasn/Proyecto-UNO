@@ -3,6 +3,7 @@ package MetodosSecundarios;
 import java.util.Scanner;
 
 import Excepciones.ReiniciarJuego;
+import Excepciones.SalirDelJuego;
 
 /**
  * Clase para todos los métodos o funcionalidades propias de la Entrada/Salida
@@ -65,6 +66,7 @@ public class Datos {
 
     /**
      * Método que solo sirve para pulsar enter cuando lo pide por pantalla
+     * @param 'ninguno'
      */
     public static void pulsaEnter() {
         System.out.println("Pulsa enter para continuar");
@@ -73,6 +75,7 @@ public class Datos {
 
     /**
      * Solamente es un mensaje para entradas incorrectas
+     * @param 'ninguno'
      */
     public static void entradaIncorrecta() {
         System.out.println("Mensaje no válido, introduce los valores sugeridos.");
@@ -82,6 +85,7 @@ public class Datos {
      * Salto de líneas para cuando se cambie de menu/salto de escena
      * 
      * @throws InterruptedException para los thread sleep
+     * @param 'ninguno'
      */
     public static void saltoDeLineas() throws InterruptedException {
         Thread.sleep(milisegundos);

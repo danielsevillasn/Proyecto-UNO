@@ -72,7 +72,6 @@ public class Pantallas {
      * Pantalla en la que ingresas los nombres y la cantidad de jugadores
      * 
      * @param 'ninguno'
-     * @return cantidadActual valor inicial para la cantidad de jugadores
      * @throws InterruptedException para los thread sleep
      */
     public static void PantallaJugadores() throws InterruptedException {
@@ -85,7 +84,6 @@ public class Pantallas {
      * seleccionado
      * 
      * @param 'ninguno'
-     * @return nada
      * @throws InterruptedException para los thread sleep
      */
     public static void PantallaReglas() throws InterruptedException {
@@ -118,7 +116,6 @@ public class Pantallas {
      * Pantalla en la que sale "Ganaste" con el nombre del ganador
      * 
      * @param 'nada'
-     * @return nada
      * @throws InterruptedException para los thread sleep
      */
     public static void PantallaFinal() throws InterruptedException {
@@ -149,7 +146,6 @@ public class Pantallas {
      * Pantalla en la que sale UNO en grande para dar inicio al programa
      * 
      * @param 'nada'
-     * @return nada
      * @throws InterruptedException para los thread sleep
      */
     public static void PantallaUNO() throws InterruptedException {
@@ -205,7 +201,7 @@ public class Pantallas {
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      * @throws SalirDelJuego        para salir del juego cuando se quiera
      */
-    public static int eleccionDeTipoDeEjecutar() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
+    public static int eleccionDeEjecucion() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         Datos.saltoDeLineas();
         int resultado = 0;
         System.out.println("Como quieres ejecutar el juego?");

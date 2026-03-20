@@ -16,7 +16,7 @@ public class Juego {
     // Configuración inicial por defecto
     public static String[] nombresCargados = { "Jugador 1", "Jugador 2" };
     public static int cantidadActualJugadores;
-    private static int modoDeTipoDeEjecutar;
+    private static int modoEjecucion;
 
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
@@ -31,11 +31,11 @@ public class Juego {
         Pantallas.modoDeJuego = "Clásico";
         while (true) {
             try {
-                modoDeTipoDeEjecutar = Pantallas.eleccionDeTipoDeEjecutar();
-                if (modoDeTipoDeEjecutar == 1) {
+                modoEjecucion = Pantallas.eleccionDeEjecucion();
+                if (modoEjecucion == 1) {
                     ejecutarSistemaCompleto();
                     break;
-                } else if (modoDeTipoDeEjecutar == 2) {
+                } else if (modoEjecucion == 2) {
                     ejecutarSistemaCompletoDeveloper();
                     break;
                 }else{
@@ -53,6 +53,8 @@ public class Juego {
      * Menú principal del sistema, que ejecuta el sistema completo
      * 
      * @throws InterruptedException para los thread sleep
+     * @throws SalirDelJuego para salir del juego cuando se quiera
+     * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
      * @param 'ninguno'
      */
     public static void ejecutarSistemaCompleto() throws InterruptedException, SalirDelJuego, ReiniciarJuego {
@@ -66,6 +68,7 @@ public class Juego {
      * 
      * @throws InterruptedException para los thread sleep
      * @throws SalirDelJuego para salir del juego cuando se quiera
+     * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
      * @param 'ninguno'
      */
     public static void ejecutarSistemaCompletoDeveloper()
@@ -77,6 +80,7 @@ public class Juego {
     /**
      * Metodo que resetea el estado del juego al predeterminado cuando se reiniciar
      * el juego
+     * @param 'ninguno'
      */
     public static void resetearEstado() {
         Juego.nombresCargados = new String[] { "Jugador 1", "Jugador 2" };

@@ -44,7 +44,7 @@ public class Turno {
      * Por ejemplo, si esta en el 4 jugador y pasa al siguiente, la operación seria
      * 3+1 % 4, lo cual da 0, pasando así al jugador 0 o el primero
      * 
-     * @param total
+     * @param total numero entero que representa la cantidad total de jugadores
      */
     public void siguiente(int total) {
         actual = (actual + 1) % total;
