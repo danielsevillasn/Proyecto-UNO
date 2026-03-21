@@ -3,7 +3,6 @@ package MetodosSecundarios;
 import java.util.Scanner;
 
 import Excepciones.ReiniciarJuego;
-import Excepciones.SalirDelJuego;
 
 /**
  * Clase para todos los métodos o funcionalidades propias de la Entrada/Salida
@@ -23,16 +22,14 @@ public class Datos {
      * @param mensaje de petición de datos tipo String
      * @return Dato introducido por teclado tipo string
      * @throws InterruptedException para los thread sleep
-     * @throws SalirDelJuego
+     * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
      */
     public static String pedirCadena(String mensaje) throws InterruptedException, ReiniciarJuego {
         System.out.print(mensaje);
         String entrada = s.nextLine().trim();
 
         // Para que el usuario vuelva a iniciar el juego cuando quiera
-        if (entrada.equalsIgnoreCase("reiniciar")) {
-            throw new ReiniciarJuego("Regresando al menú principal...");
-        }
+        solicitarReinicio(entrada);
 
         return entrada;
     }
@@ -43,7 +40,7 @@ public class Datos {
      * @param mensaje de petición de datos tipo entero
      * @return Dato introducido por teclado tipo entero
      * @throws InterruptedException para los thread sleep
-     * @throws SalirDelJuego
+     * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
      */
     public static int pedirEntero(String mensaje) throws InterruptedException, ReiniciarJuego {
 
@@ -52,9 +49,7 @@ public class Datos {
             String entrada = s.nextLine().trim();
 
             // Para que el usuario vuelva a iniciar el juego cuando quiera
-            if (entrada.equalsIgnoreCase("reiniciar")) {
-                throw new ReiniciarJuego("Regresando al menú principal...");
-            }
+            solicitarReinicio(entrada);
 
             try {
                 return Integer.parseInt(entrada);
@@ -66,6 +61,7 @@ public class Datos {
 
     /**
      * Método que solo sirve para pulsar enter cuando lo pide por pantalla
+     * 
      * @param 'ninguno'
      */
     public static void pulsaEnter() {
@@ -75,6 +71,7 @@ public class Datos {
 
     /**
      * Solamente es un mensaje para entradas incorrectas
+     * 
      * @param 'ninguno'
      */
     public static void entradaIncorrecta() {
@@ -90,5 +87,17 @@ public class Datos {
     public static void saltoDeLineas() throws InterruptedException {
         Thread.sleep(milisegundos);
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
+
+    /**
+     * Método que lanza la excepcion reiniciar juego si se introduce terminar
+     * 
+     * @param entrada valor tipo String que representa la entrada de informacion
+     * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
+     */
+    public static void solicitarReinicio(String entrada) throws ReiniciarJuego {
+        if (entrada.equalsIgnoreCase("reiniciar")) {
+            throw new ReiniciarJuego("Regresando al menú principal...");
+        }
     }
 }
