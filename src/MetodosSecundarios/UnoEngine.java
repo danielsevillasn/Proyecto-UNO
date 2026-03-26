@@ -16,6 +16,7 @@ public class UnoEngine {
     private static boolean cartaValida = false;
     private static int opcionCarta = -1;
     private static int cantidadActualJugadores;
+    private static Jugador jugador;
 
     /**
      * Lógica principal de la partida
@@ -66,22 +67,21 @@ public class UnoEngine {
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
     private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego {
-        Jugador jugador;
         while (!fin) {
             jugador = lista[controladorTurnos.getActual()];
 
-            verTablero(jugador);
+            verTablero();
 
             while (true) {
                 opcionCarta = Datos.pedirEntero("Acción: ");
                 if (opcionCarta == jugador.getNumCartas()) {
                     // Opción Robar
-                    robarCarta(jugador);
+                    robarCarta();
                     cartaValida = false;
                     break;
                 } else {
                     try {
-                        cartaValida = cartaSacada(jugador);
+                        cartaValida = cartaSacada();
                         break;
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("La carta que quieres lanzar no esta dentro del limite de la baraja");
@@ -89,13 +89,13 @@ public class UnoEngine {
                         System.out.println("No existe la carta seleccionada");
                     } catch (CartaLanzadaNoValida e) {
                         System.out.println(e.getMessage());
-                        cartaSacadaNoValida(jugador);
+                        cartaSacadaNoValida();
                         break;
                     }
                 }
             }
 
-            cartaSacadaValida(jugador);
+            cartaSacadaValida();
 
             Datos.pulsaEnter();
             Datos.saltoDeLineas();
@@ -111,7 +111,7 @@ public class UnoEngine {
      * 
      * @param jugador objeto jugador que representa al jugador que le toca
      */
-    private static void verTablero(Jugador jugador) {
+    private static void verTablero() {
         System.out.println("\n--- TURNO DE: " + jugador.getNombre() + " ---");
         System.out.println("    - " + controladorTurnos + " -");
         System.out.println("Mesa: " + tablero.verCartaEnLaMesa());
@@ -128,7 +128,7 @@ public class UnoEngine {
      * 
      * @param jugador objeto jugador que representa al jugador que le toca
      */
-    private static void robarCarta(Jugador jugador) {
+    private static void robarCarta() {
         Carta cartaRobada;
         cartaRobada = tablero.tirarCarta();
         jugador.recibirCarta(cartaRobada);
@@ -140,14 +140,12 @@ public class UnoEngine {
      * 
      * @param jugador objeto jugador que representa al jugador que le toca
      */
-    private static boolean cartaSacada(Jugador jugador) throws CartaLanzadaNoValida {
-        boolean cartaValida;
+    private static boolean cartaSacada() throws CartaLanzadaNoValida {
         Carta cartaSeleccionada;
         Carta cartaEnMesa;
         cartaSeleccionada = jugador.mano[opcionCarta];
         cartaEnMesa = tablero.verCartaEnLaMesa();
-        cartaValida = cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
-        return cartaValida;
+        return cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
     }
 
     /**
@@ -155,7 +153,7 @@ public class UnoEngine {
      * 
      * @param jugador objeto jugador que representa al jugador que le toca
      */
-    private static void cartaSacadaValida(Jugador jugador) {
+    private static void cartaSacadaValida() {
         Carta cartaTirada;
         if (cartaValida) {
             cartaTirada = jugador.jugarCarta(opcionCarta);
@@ -175,7 +173,7 @@ public class UnoEngine {
      * @param jugador objeto jugador que representa al jugador que le toca
      * @throws InterruptedException para los thread sleep
      */
-    private static void cartaSacadaNoValida(Jugador jugador) throws InterruptedException {
+    private static void cartaSacadaNoValida() throws InterruptedException {
         Carta cartaRobada;
         cartaRobada = tablero.tirarCarta();
         jugador.recibirCarta(cartaRobada);

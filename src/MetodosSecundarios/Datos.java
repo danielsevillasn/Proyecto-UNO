@@ -25,8 +25,15 @@ public class Datos {
      * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
      */
     public static String pedirCadena(String mensaje) throws InterruptedException, ReiniciarJuego {
-        System.out.print(mensaje);
-        String entrada = s.nextLine().trim();
+        String entrada;
+        while (true) {
+            System.out.print(mensaje);
+            entrada = s.nextLine().trim();
+            if(!entrada.isEmpty()){
+                break;
+            }
+            System.out.println("No se puede introducir un valor nulo");
+        }
 
         // Para que el usuario vuelva a iniciar el juego cuando quiera
         solicitarReinicio(entrada);
