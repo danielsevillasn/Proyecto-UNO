@@ -20,6 +20,12 @@ public class Pantallas {
     public static String jugadores = "2";
     public static String nombreJugador = "";
 
+    //Variables estaticas que permiten cambiar de color a la hora de imprimir por pantalla
+    private static final String AMARILLO = "\u001B[33m";
+    private static final String RESET = "\u001B[0m";
+    private static final String ROJO = "\u001B[31m";
+    private static final String VERDE = "\u001B[32m";
+
     /**
      * Muestra al usuario un menú de opciones; pide que teclee una de ellas y
      * devuelve la Opción introducida
@@ -84,9 +90,8 @@ public class Pantallas {
      * seleccionado
      * 
      * @param 'ninguno'
-     * @throws InterruptedException para los thread sleep
      */
-    public static void PantallaReglas() throws InterruptedException {
+    public static void PantallaReglas(){
         System.out.println("========== REGLAS DEL JUEGO UNO ==========");
         System.out.println();
         System.out.println("OBJETIVO DEL JUEGO:");
@@ -120,10 +125,6 @@ public class Pantallas {
      */
     public static void PantallaFinal() throws InterruptedException {
         Datos.saltoDeLineas();
-        String AMARILLO = "\u001B[33m";
-        String VERDE = "\u001B[32m";
-        String RESET = "\u001B[0m";
-        String ROJO = "\u001B[31m";
         String mensajeJugador = "Jugador: " + nombreJugador + "!";
 
         System.out.println(VERDE);
@@ -137,7 +138,7 @@ public class Pantallas {
         Thread.sleep(Datos.milisegundos);
         System.out.printf(AMARILLO + "%37s%n" + RESET, "¡ENHORABUENA!");
         Thread.sleep(Datos.milisegundos);
-        System.out.printf(ROJO + "\t\t\t"+mensajeJugador + RESET);
+        System.out.print(ROJO + "\t\t\t"+mensajeJugador + RESET);
         Thread.sleep(Datos.milisegundos+1000);
         System.out.println();
         Datos.pulsaEnter();
@@ -151,9 +152,6 @@ public class Pantallas {
      */
     public static void PantallaUNO() throws InterruptedException {
         Datos.saltoDeLineas();
-        String AMARILLO = "\u001B[33m";
-        String RESET = "\u001B[0m";
-        String ROJO = "\u001B[31m";
 
         System.out.println(AMARILLO);
         Thread.sleep(1000);

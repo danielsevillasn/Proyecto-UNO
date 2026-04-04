@@ -1,7 +1,6 @@
 package Principal;
 
 import Excepciones.ReiniciarJuego;
-import Excepciones.SalirDelJuego;
 import MetodosSecundarios.Juego;
 
 /**
@@ -11,7 +10,7 @@ import MetodosSecundarios.Juego;
  * @author DaniS y Libio
  */
 public class UNO {
-    public static void main(String[] args) throws InterruptedException, SalirDelJuego, ReiniciarJuego {
+    public static void main(String[] args) throws InterruptedException, ReiniciarJuego {
         //Metodo estático de la clase Juego que inicia el flujo del juego
         Juego.iniciarJuego();
     }

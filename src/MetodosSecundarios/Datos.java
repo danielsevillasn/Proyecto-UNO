@@ -21,10 +21,9 @@ public class Datos {
      * 
      * @param mensaje de petición de datos tipo String
      * @return Dato introducido por teclado tipo string
-     * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
      */
-    public static String pedirCadena(String mensaje) throws InterruptedException, ReiniciarJuego {
+    public static String pedirCadena(String mensaje) throws ReiniciarJuego {
         String entrada;
         while (true) {
             System.out.print(mensaje);
@@ -46,10 +45,9 @@ public class Datos {
      * 
      * @param mensaje de petición de datos tipo entero
      * @return Dato introducido por teclado tipo entero
-     * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
      */
-    public static int pedirEntero(String mensaje) throws InterruptedException, ReiniciarJuego {
+    public static int pedirEntero(String mensaje) throws ReiniciarJuego {
 
         while (true) {
             System.out.print(mensaje);

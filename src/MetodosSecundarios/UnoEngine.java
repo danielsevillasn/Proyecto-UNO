@@ -24,8 +24,7 @@ public class UnoEngine {
      * validación de jugadas y condiciones de victoria
      * Se inicia el tablero con todos sus componentes
      * 
-     * @param cantidadActualJugadores variable tipo int
-     * @param nombresCargados         array con todos los nombres
+     * @param nombresCargados         array con todos los nombres (por referencia)
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
@@ -50,7 +49,7 @@ public class UnoEngine {
     /**
      * Metodo para repartir las cartas iniciales a todos los jugadores
      * 
-     * @param nombresCargados nombres de los jugadores
+     * @param nombresCargados nombres de los jugadores (por referencia)
      */
     private static void repartoInicial(String[] nombresCargados) {
         for (int i = 0; i < cantidadActualJugadores; i++) {
@@ -63,40 +62,25 @@ public class UnoEngine {
     /**
      * Metodo que reproduce el flujo de la partida
      * 
+     * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
     private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego {
         while (!fin) {
+            // Escoge al jugador correspondiente, basado en el turno actual
             jugador = lista[controladorTurnos.getActual()];
 
+            // Imprime el tablero, con el turno, el jugador y las cartas
             verTablero();
 
-            while (true) {
-                opcionCarta = Datos.pedirEntero("Acción: ");
-                if (opcionCarta == jugador.getNumCartas()) {
-                    // Opción Robar
-                    robarCarta();
-                    cartaValida = false;
-                    break;
-                } else {
-                    try {
-                        cartaValida = cartaSacada();
-                        break;
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("La carta que quieres lanzar no esta dentro del limite de la baraja");
-                    } catch (NullPointerException e) {
-                        System.out.println("No existe la carta seleccionada");
-                    } catch (CartaLanzadaNoValida e) {
-                        System.out.println(e.getMessage());
-                        cartaSacadaNoValida();
-                        break;
-                    }
-                }
-            }
+            // Resolucion de la carta que quieres sacar
+            accionSacarCarta();
 
+            // Validación carta sacada
             cartaSacadaValida();
 
+            // Cambio de turno
             Datos.pulsaEnter();
             Datos.saltoDeLineas();
 
@@ -107,9 +91,42 @@ public class UnoEngine {
     }
 
     /**
+     * Método que sirve para sacar la carta que quieres o para robar carta
+     * 
+     * @param 'ninguno'
+     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
+     * @throws InterruptedException para los thread sleep
+     */
+    private static void accionSacarCarta() throws ReiniciarJuego, InterruptedException {
+        boolean salir = false;
+        while (!salir) {
+            opcionCarta = Datos.pedirEntero("Acción: ");
+            if (opcionCarta == jugador.getNumCartas()) {
+                // Opción Robar
+                robarCarta();
+                cartaValida = false;
+                salir = true;
+            } else {
+                try {
+                    cartaValida = cartaSacada();
+                    salir = true;
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("La carta que quieres lanzar no esta dentro del limite de la baraja");
+                } catch (NullPointerException e) {
+                    System.out.println("No existe la carta seleccionada");
+                } catch (CartaLanzadaNoValida e) {
+                    System.out.println(e.getMessage());
+                    cartaSacadaNoValida();
+                    salir = true;
+                }
+            }
+        }
+    }
+
+    /**
      * Método que muestra la interfaz gráfica del tablero excepto la de la accion
      * 
-     * @param jugador objeto jugador que representa al jugador que le toca
+     * @param 'ninguno'
      */
     private static void verTablero() {
         System.out.println("\n--- TURNO DE: " + jugador.getNombre() + " ---");
@@ -126,7 +143,7 @@ public class UnoEngine {
     /**
      * Método que roba una carta de la baraja chupona
      * 
-     * @param jugador objeto jugador que representa al jugador que le toca
+     * @param 'ninguno'
      */
     private static void robarCarta() {
         Carta cartaRobada;
@@ -138,7 +155,7 @@ public class UnoEngine {
     /**
      * Método que mira si la carta que se acaba de tirar es valida o no
      * 
-     * @param jugador objeto jugador que representa al jugador que le toca
+     * @param 'ninguno'
      */
     private static boolean cartaSacada() throws CartaLanzadaNoValida {
         Carta cartaSeleccionada;
@@ -151,7 +168,7 @@ public class UnoEngine {
     /**
      * Método que funciona si la carta sacada es valida y la tira
      * 
-     * @param jugador objeto jugador que representa al jugador que le toca
+     * @param 'ninguno'
      */
     private static void cartaSacadaValida() {
         Carta cartaTirada;
@@ -170,7 +187,7 @@ public class UnoEngine {
     /**
      * Método que funciona si la carta sacada no es valida y chupa una carta
      * 
-     * @param jugador objeto jugador que representa al jugador que le toca
+     * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      */
     private static void cartaSacadaNoValida() throws InterruptedException {
@@ -186,7 +203,8 @@ public class UnoEngine {
     /**
      * Configura el número de jugadores para el juego
      * 
-     * @param cantidadActualJugadores variable tipo int
+     * @param 'ninguno'
+     * @return valor entero que representa la cantidad actual de jugadores
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
@@ -209,13 +227,14 @@ public class UnoEngine {
     }
 
     /**
-     * Método que pide el numero de jugadores y que comprueba que no se pase del rango habilitado
+     * Método que pide el numero de jugadores y que comprueba que no se pase del
+     * rango habilitado
      * 
+     * @param 'ninguno'
      * @return valor entero que representa el numero de jugadores
-     * @throws InterruptedException para los thread sleep
-     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
+     * @throws ReiniciarJuego para reinciar el juego cuando se quiera
      */
-    private static int pedirNumJugadores() throws InterruptedException, ReiniciarJuego {
+    private static int pedirNumJugadores() throws ReiniciarJuego {
         int numJugadores;
         boolean rangoJugadores = false;
         do {
@@ -232,8 +251,10 @@ public class UnoEngine {
     /**
      * Método para seleccionar el modo de juego
      * 
-     * @param ModoDeJuego variable tipo String que representa que modo de juego esta seleccionado
-     * @return ModoDeJuego variable tipo String que representa que modo de juego se ha seleccionado
+     * @param ModoDeJuego variable tipo String que representa que modo de juego esta
+     *                    seleccionado
+     * @return ModoDeJuego variable tipo String que representa que modo de juego se
+     *         ha seleccionado
      */
     public static String modoDeJuegoSeleccionado(String ModoDeJuego) {
         if (ModoDeJuego.equals("1")) {

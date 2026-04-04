@@ -17,14 +17,14 @@ public abstract class Carta implements Jugable {
     // Metodos////////////////////////
 
     // Constructor por defecto
-    public Carta() {
+    protected Carta() {
         color = Color.AMARILLO;
         numero = 0;
         tipo = Tipos.NORMAL;
     }
 
     // Constructor para instanciar objeto con dos parametros
-    public Carta(int n, Color c, Tipos tipo) {
+    protected Carta(int n, Color c, Tipos tipo) {
         this.numero = n;
         this.color = c;
         this.tipo = tipo;

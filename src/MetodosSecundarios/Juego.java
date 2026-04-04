@@ -14,9 +14,8 @@ public class Juego {
 
     static Scanner s = new Scanner(System.in);
     // Configuración inicial por defecto
-    public static String[] nombresCargados = { "Jugador 1", "Jugador 2" };
+    protected static String[] nombresCargados = { "Jugador 1", "Jugador 2" };
     public static int cantidadActualJugadores;
-    private static int modoEjecucion;
 
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
@@ -41,22 +40,28 @@ public class Juego {
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
     public static void menuInicio() throws InterruptedException, ReiniciarJuego {
-        while (true) {
+        int modoEjecucion;
+        boolean salir = false;
+        while (!salir) {
             try {
                 modoEjecucion = Pantallas.eleccionDeEjecucion();
-                if (modoEjecucion == 1) {
-                    ejecutarSistemaCompleto();
-                    break;
-                } else if (modoEjecucion == 2) {
-                    ejecutarSistemaCompletoDeveloper();
-                    break;
-                } else {
-                    System.out.println("Opcion invalidad, introduce un numero entero del 0-2");
-                    Thread.sleep(Datos.milisegundos);
+                switch (modoEjecucion) {
+                    case 1:
+                        ejecutarSistemaCompleto();
+                        salir = true;
+                        break;
+                    case 2:
+                        ejecutarSistemaCompletoDeveloper();
+                        salir = true;
+                        break;
+                    default:
+                        System.out.println("Opcion invalidad, introduce un numero entero del 0-2");
+                        Thread.sleep(Datos.milisegundos);
+                        break;
                 }
             } catch (SalirDelJuego e) {
                 System.out.println(e.getMessage());
-                break;
+                salir = true;
             }
         }
     }
@@ -66,10 +71,9 @@ public class Juego {
      * 
      * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
-     * @throws SalirDelJuego        para salir del juego cuando se quiera
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
-    public static void ejecutarSistemaCompleto() throws InterruptedException, SalirDelJuego, ReiniciarJuego {
+    public static void ejecutarSistemaCompleto() throws InterruptedException, ReiniciarJuego {
         Pantallas.PantallaUNO();
         Sistema();
     }
@@ -80,11 +84,10 @@ public class Juego {
      * 
      * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
-     * @throws SalirDelJuego        para salir del juego cuando se quiera
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
     public static void ejecutarSistemaCompletoDeveloper()
-            throws InterruptedException, SalirDelJuego, ReiniciarJuego {
+            throws InterruptedException, ReiniciarJuego {
         Datos.milisegundos = 0;
         Sistema();
     }
@@ -182,10 +185,9 @@ public class Juego {
      * Menu que muestra como quieres reiniciar el sistema
      * 
      * @param 'ninguno'
-     * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
-    public static void menuReinicio() throws InterruptedException, ReiniciarJuego {
+    public static void menuReinicio() throws ReiniciarJuego {
         boolean salir = false;
         String opcionReinicio = "";
         while (!salir) {
