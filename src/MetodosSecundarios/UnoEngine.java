@@ -130,7 +130,7 @@ public class UnoEngine {
      */
     private static void verTablero() {
         System.out.println("\n--- TURNO DE: " + jugador.getNombre() + " ---");
-        System.out.println("    - " + controladorTurnos + " -");
+        System.out.println("  - " + controladorTurnos + " -");
         System.out.println("Mesa: " + tablero.verCartaEnLaMesa());
 
         // Mostrar la mano del jugador actual
