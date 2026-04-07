@@ -2,6 +2,7 @@ package MetodosSecundarios;
 
 import java.util.Scanner;
 
+import Excepciones.ModoDeJuegoNoValido;
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
 
@@ -20,7 +21,8 @@ public class Pantallas {
     public static String jugadores = "2";
     public static String nombreJugador = "";
 
-    //Variables estaticas que permiten cambiar de color a la hora de imprimir por pantalla
+    // Variables estaticas que permiten cambiar de color a la hora de imprimir por
+    // pantalla
     private static final String AMARILLO = "\u001B[33m";
     private static final String RESET = "\u001B[0m";
     private static final String ROJO = "\u001B[31m";
@@ -37,6 +39,7 @@ public class Pantallas {
      */
     public static String PantallaMenu() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
+
         System.out.println("==========Inicio=========");
         System.out.println("\t1- Modo de juego");
         System.out.println("\t2- Jugadores");
@@ -58,20 +61,44 @@ public class Pantallas {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    public static String PantallaModosDeJuego() throws InterruptedException, ReiniciarJuego {
+    public static void PantallaModosDeJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
         boolean salir = false;
-        while (!salir) {
-            System.out.println("=========Modos de juego===========");
-            System.out.println("\t1. Clásico");
-            System.out.println("\t2. Otra modalidad");
-            System.out.println("\t3. Otra modalidad");
 
-            String opcion = Datos.pedirCadena("\tElija opción (1-3): ");
-            modoDeJuego = UnoEngine.modoDeJuegoSeleccionado(opcion);
-            salir = true;
+        System.out.println("=========Modos de juego===========");
+        System.out.println("\t1. Clásico");
+        System.out.println("\t2. Otra modalidad");
+        System.out.println("\t3. Otra modalidad");
+
+        while (!salir) {
+            try {
+                int opcion = Datos.pedirEntero("\tElija opción (1-3): ");
+                modoDeJuegoSeleccionado(opcion);
+                salir = true;
+            } catch (ModoDeJuegoNoValido e) {
+                System.out.println(e.getMessage());
+            }
         }
-        return modoDeJuego;
+
+    }
+
+    /**
+     * Método para seleccionar el modo de juego
+     * 
+     * @param ModoDeJuego variable tipo String que representa que modo de juego esta
+     *                    seleccionado
+     * @return ModoDeJuego variable tipo String que representa que modo de juego se
+     *         ha seleccionado
+     * @throws ModoDeJuegoNoValido para opciones no válidas
+     */
+    public static void modoDeJuegoSeleccionado(int opcion) throws ModoDeJuegoNoValido {
+        if (opcion == 1) {
+            modoDeJuego = "Clásico";
+        } else if (opcion == 2 || opcion == 3) {
+            modoDeJuego = "Otro";
+        } else {
+            throw new ModoDeJuegoNoValido("Tienes que introducir una opción entre 1 y 3");
+        }
     }
 
     /**
@@ -82,6 +109,7 @@ public class Pantallas {
      */
     public static void PantallaJugadores() throws InterruptedException {
         Datos.saltoDeLineas();
+
         System.out.println("============Jugadores============");
     }
 
@@ -90,8 +118,11 @@ public class Pantallas {
      * seleccionado
      * 
      * @param 'ninguno'
+     * @throws InterruptedException para los thread sleep
      */
-    public static void PantallaReglas(){
+    public static void PantallaReglas() throws InterruptedException {
+        Datos.saltoDeLineas();
+
         System.out.println("========== REGLAS DEL JUEGO UNO ==========");
         System.out.println();
         System.out.println("OBJETIVO DEL JUEGO:");
@@ -125,6 +156,7 @@ public class Pantallas {
      */
     public static void PantallaFinal() throws InterruptedException {
         Datos.saltoDeLineas();
+
         String mensajeJugador = "Jugador: " + nombreJugador + "!";
 
         System.out.println(VERDE);
@@ -138,8 +170,8 @@ public class Pantallas {
         Thread.sleep(Datos.milisegundos);
         System.out.printf(AMARILLO + "%37s%n" + RESET, "¡ENHORABUENA!");
         Thread.sleep(Datos.milisegundos);
-        System.out.print(ROJO + "\t\t\t"+mensajeJugador + RESET);
-        Thread.sleep(Datos.milisegundos+1000);
+        System.out.print(ROJO + "\t\t\t" + mensajeJugador + RESET);
+        Thread.sleep(Datos.milisegundos + 1000);
         System.out.println();
         Datos.pulsaEnter();
     }
@@ -184,6 +216,7 @@ public class Pantallas {
      */
     public static String PantallaInicio() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
+
         System.out.println("==========Bienvenido/a a UNO=========");
         System.out.println("\t1- Jugar");
         System.out.println("\t2- Salir");
@@ -202,6 +235,7 @@ public class Pantallas {
      */
     public static int eleccionDeEjecucion() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         Datos.saltoDeLineas();
+
         int resultado = 0;
         System.out.println("Como quieres ejecutar el juego?");
         System.out.println("\t1- Normal");

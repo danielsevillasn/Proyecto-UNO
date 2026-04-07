@@ -1,14 +1,14 @@
 package Excepciones;
 
 /**
- * Excepcion que se lanza cuando la carta lanzada no es valida
+ * Excepcion que se lanza cuando el modo de juego no es valido
  * 
  * @author DaniS y Libio
  */
-public class CartaLanzadaNoValida extends Exception {
+public class ModoDeJuegoNoValido extends Exception{
     // Constructor que cuanfo se utiliza getMessage() imprime el mensaje impuesto
     // donde se inicializo la excepcion
-    public CartaLanzadaNoValida(String mensaje) {
+    public ModoDeJuegoNoValido(String mensaje) {
         super(mensaje);
     }
 }

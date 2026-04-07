@@ -247,21 +247,4 @@ public class UnoEngine {
         } while (!rangoJugadores);
         return numJugadores;
     }
-
-    /**
-     * Método para seleccionar el modo de juego
-     * 
-     * @param ModoDeJuego variable tipo String que representa que modo de juego esta
-     *                    seleccionado
-     * @return ModoDeJuego variable tipo String que representa que modo de juego se
-     *         ha seleccionado
-     */
-    public static String modoDeJuegoSeleccionado(String ModoDeJuego) {
-        if (ModoDeJuego.equals("1")) {
-            ModoDeJuego = "Clásico";
-        } else if (ModoDeJuego.equals("2") || ModoDeJuego.equals("3")) {
-            ModoDeJuego = "Otro";
-        }
-        return ModoDeJuego;
-    }
 }

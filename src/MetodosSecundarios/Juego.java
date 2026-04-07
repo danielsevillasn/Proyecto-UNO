@@ -16,6 +16,7 @@ public class Juego {
     // Configuración inicial por defecto
     protected static String[] nombresCargados = { "Jugador 1", "Jugador 2" };
     public static int cantidadActualJugadores;
+    private static boolean salir;
 
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
@@ -41,7 +42,7 @@ public class Juego {
      */
     public static void menuInicio() throws InterruptedException, ReiniciarJuego {
         int modoEjecucion;
-        boolean salir = false;
+        salir = false;
         while (!salir) {
             try {
                 modoEjecucion = Pantallas.eleccionDeEjecucion();
@@ -55,7 +56,7 @@ public class Juego {
                         salir = true;
                         break;
                     default:
-                        System.out.println("Opcion invalidad, introduce un numero entero del 0-2");
+                        Datos.entradaIncorrecta();
                         Thread.sleep(Datos.milisegundos);
                         break;
                 }
@@ -101,14 +102,12 @@ public class Juego {
      */
     public static void Sistema() throws InterruptedException, ReiniciarJuego {
         String opcion1 = "";
-        boolean salir = false;
         try {
             while (true) {
                 opcion1 = Pantallas.PantallaInicio();
-                salir = false;
                 switch (opcion1) {
                     case "1":
-                        flujoDelSistema(salir);
+                        flujoDelSistema();
                         break;
                     case "2":
                         throw new SalirDelJuego("Has salido del juego");
@@ -134,21 +133,20 @@ public class Juego {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
-    public static void flujoDelSistema(boolean salir) throws InterruptedException, ReiniciarJuego {
+    public static void flujoDelSistema() throws InterruptedException, ReiniciarJuego {
         String opcion2;
+        salir = false;
         while (!salir) {
             opcion2 = Pantallas.PantallaMenu();
 
             switch (opcion2) {
                 case "1": // Configurar modo de juego
-                    Pantallas.modoDeJuego = Pantallas.PantallaModosDeJuego();
+                    Pantallas.PantallaModosDeJuego();
                     break;
                 case "2": // Configurar nombres y cantidad de jugadores
-                    Datos.saltoDeLineas();
                     cantidadActualJugadores = UnoEngine.configurarJugadores();
                     break;
                 case "3": // Mostrar instrucciones
-                    Datos.saltoDeLineas();
                     Pantallas.PantallaReglas();
                     break;
                 case "4": // Iniciar una partida
@@ -185,10 +183,10 @@ public class Juego {
      * Menu que muestra como quieres reiniciar el sistema
      * 
      * @param 'ninguno'
-     * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
+     * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
      */
     public static void menuReinicio() throws ReiniciarJuego {
-        boolean salir = false;
+        salir = false;
         String opcionReinicio = "";
         while (!salir) {
             System.out.println("Quieres reiniciar el estado del juego (Nombres, modo y jugadores)?");

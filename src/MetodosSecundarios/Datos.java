@@ -28,7 +28,7 @@ public class Datos {
         while (true) {
             System.out.print(mensaje);
             entrada = s.nextLine().trim();
-            if(!entrada.isEmpty()){
+            if (!entrada.isEmpty()) {
                 break;
             }
             System.out.println("No se puede introducir un valor nulo");
@@ -91,7 +91,9 @@ public class Datos {
      */
     public static void saltoDeLineas() throws InterruptedException {
         Thread.sleep(milisegundos);
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        for(int i = 0; i<20;i++){
+            System.out.println("");
+        }
     }
 
     /**
