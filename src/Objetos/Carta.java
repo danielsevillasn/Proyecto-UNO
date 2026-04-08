@@ -2,13 +2,14 @@ package Objetos;
 
 import Enumerados.Color;
 import Enumerados.Tipos;
-import Interfaces.AccionesCarta;
+import Excepciones.CartaLanzadaNoValida;
+import Interfaces.EfectosCarta;
 
 /**
  * Clase Carta con implementación de herencias, enum e interfaz
  * * @author DaniS y Libio
  */
-public abstract class Carta implements AccionesCarta {
+public abstract class Carta implements EfectosCarta {
     // Atributos/////////////////////
     protected final Color color;
     protected final int numero;
@@ -43,4 +44,9 @@ public abstract class Carta implements AccionesCarta {
         return tipo;
     }
     
+    /**
+     * @param mesa La carta que está actualmente en el centro del tablero.
+     * @return true si la carta actual cumple las reglas para ser jugada.
+     */
+    public abstract boolean puedePonerseSobre(Carta mesa) throws CartaLanzadaNoValida;
 }
