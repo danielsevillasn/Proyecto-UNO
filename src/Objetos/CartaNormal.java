@@ -56,4 +56,16 @@ public class CartaNormal extends Carta {
                     "La carta lanzada no es valida, lanza una carta que sea del mismo color o numero");
         }
     }
+
+    //ToString
+    @Override
+    public String toString() {
+        String c = switch (color) {
+            case ROJO -> "\u001B[31m";
+            case AZUL -> "\u001B[34m";
+            case VERDE -> "\u001B[32m";
+            case AMARILLO -> "\u001B[33m";
+        };
+        return c + "[" + color + " " + numero + "]" + "\u001B[0m";
+    }
 }

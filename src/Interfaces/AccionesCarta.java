@@ -8,10 +8,12 @@ import Objetos.Carta;
  * 
  * @author DaniS y Libio
  */
-public interface Jugable {
+public interface AccionesCarta {
     /**
      * @param mesa La carta que está actualmente en el centro del tablero.
      * @return true si la carta actual cumple las reglas para ser jugada.
      */
     boolean puedePonerseSobre(Carta mesa) throws CartaLanzadaNoValida;
+
+    void 
 }
