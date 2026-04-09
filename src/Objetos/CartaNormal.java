@@ -78,12 +78,23 @@ public class CartaNormal extends Carta {
     // ToString
     @Override
     public String toString() {
-        String c = switch (color) {
-            case ROJO -> "\u001B[31m";
-            case AZUL -> "\u001B[34m";
-            case VERDE -> "\u001B[32m";
-            case AMARILLO -> "\u001B[33m";
-        };
+        String c = "";
+        switch (color) {
+            case ROJO: 
+                c = "\u001B[31m";
+            case AZUL:
+                c = "\u001B[34m";
+            case VERDE:
+                c= "\u001B[32m";
+            case AMARILLO:
+                c = "\u001B[33m";
+            case NEGRO:
+                c = "\u001b[47;30m"; //Color negro con fondo blanco
+        
+            default:
+                break;
+        }
+
         return c + "[" + color + " " + numero + "]" + "\u001B[0m";
     }
 
