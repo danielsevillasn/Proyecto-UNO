@@ -3,30 +3,27 @@ package Objetos;
 import Enumerados.Color;
 import Enumerados.Tipos;
 import Excepciones.CartaLanzadaNoValida;
-import Interfaces.EfectosCarta;
+import MetodosSecundarios.Calculos;
 
 /**
  * Clase Carta con implementación de herencias, enum e interfaz
  * * @author DaniS y Libio
  */
-public abstract class Carta implements EfectosCarta {
+public abstract class Carta {
     // Atributos/////////////////////
     protected final Color color;
-    protected final int numero;
     protected final Tipos tipo;
 
     // Metodos////////////////////////
 
     // Constructor por defecto
     protected Carta() {
-        color = Color.AMARILLO;
-        numero = 0;
-        tipo = Tipos.NORMAL;
+        color = Color.values()[Calculos.aleatorio(0, 3)];
+        tipo = Tipos.values()[Calculos.aleatorio(0, 1)];
     }
 
     // Constructor para instanciar objeto con dos parametros
-    protected Carta(int n, Color c, Tipos tipo) {
-        this.numero = n;
+    protected Carta(Color c, Tipos tipo) {
         this.color = c;
         this.tipo = tipo;
     }
@@ -34,10 +31,6 @@ public abstract class Carta implements EfectosCarta {
     // Getter
     public Color getColor() {
         return color;
-    }
-
-    public int getNumero() {
-        return numero;
     }
 
     public Tipos getTipo() {

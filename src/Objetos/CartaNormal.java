@@ -3,23 +3,38 @@ package Objetos;
 import Enumerados.Color;
 import Enumerados.Tipos;
 import Excepciones.CartaLanzadaNoValida;
+import MetodosSecundarios.Calculos;
 
 /**
  * Herencia de la clase carta
  * * @author DaniS y Libio
  */
 public class CartaNormal extends Carta {
+    // Atributos/////////////////////
+    private int numero;
 
     // Metodos////////////////////////
 
     // Constructor por defecto
     public CartaNormal() {
         super();
+        numero = Calculos.aleatorio(0, 9);
     }
 
     // Constructor para instanciar objeto con dos parametros
     public CartaNormal(int n, Color c) {
-        super(n, c, Tipos.NORMAL);
+        super(c, Tipos.NORMAL);
+        numero = n;
+    }
+
+    // Getter
+    public int getNumero() {
+        return numero;
+    }
+
+    // Setter
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     // Otros metodos
@@ -45,7 +60,7 @@ public class CartaNormal extends Carta {
             mismoColor = true;
         }
 
-        if (numero == mesa.getNumero()) {
+        if (mesa instanceof CartaNormal) {
             mismoNumero = true;
         }
 
@@ -57,7 +72,7 @@ public class CartaNormal extends Carta {
         }
     }
 
-    //ToString
+    // ToString
     @Override
     public String toString() {
         String c = switch (color) {
@@ -68,4 +83,5 @@ public class CartaNormal extends Carta {
         };
         return c + "[" + color + " " + numero + "]" + "\u001B[0m";
     }
+
 }
