@@ -56,12 +56,15 @@ public class CartaNormal extends Carta {
             return true;
         }
 
-        if (color == mesa.getColor()) {
+        if (color == mesa.getColor() || color == Color.NEGRO) {
             mismoColor = true;
         }
 
         if (mesa instanceof CartaNormal) {
-            mismoNumero = true;
+            CartaNormal c = (CartaNormal) mesa;
+            if(c.getNumero() == numero){
+                mismoNumero = true;
+            }
         }
 
         if (mismoColor || mismoNumero) {
