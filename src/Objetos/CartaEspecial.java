@@ -101,15 +101,15 @@ public class CartaEspecial extends Carta implements EfectosCarta {
 
         switch (tiposEspeciales) {
             case BLOQUEO:
-                simbolo = "BLOQUEO";
+                simbolo = " Ø ";
             case REVERSA:
-                simbolo = "REVERSA";
+                simbolo = " <-> ";
             case CHUPATE2:
-                simbolo = "+2";
+                simbolo = " +2 ";
             case CHUPATE4:
-                simbolo = "+4";
+                simbolo = " +4 ";
             case CAMBIOCOLOR:
-                simbolo = "CAMBIOCOLOR";
+                simbolo = " ### ";
             default:
                 break;
         }

@@ -82,14 +82,19 @@ public class CartaNormal extends Carta {
         switch (color) {
             case ROJO: 
                 c = "\u001B[31m";
+                break;
             case AZUL:
                 c = "\u001B[34m";
+                break;
             case VERDE:
                 c= "\u001B[32m";
+                break;
             case AMARILLO:
                 c = "\u001B[33m";
+                break;
             case NEGRO:
                 c = "\u001b[47;30m"; //Color negro con fondo blanco
+                break;
         
             default:
                 break;

@@ -35,10 +35,10 @@ public class Tablero {
     public void inicializar() {
         Carta temp;
         for (int i = 0; i < 2; i++) {
-            for (Color c : Color.values()) {
-                for (int j = 0; j <= 9; j++) {
-                    if (!(j == 0 && i == 1)) {
-                        chupona[topeChupona++] = new CartaNormal(j, c);
+            for (int j = 0; j< 4;j++) {
+                for (int k = 0; k <= 9; k++) {
+                    if (!(k == 0 && i == 1)) {
+                        chupona[topeChupona++] = new CartaNormal(j, Color.values()[j]);
                     }
                 }
             }

@@ -2,6 +2,7 @@ package MetodosSecundarios;
 
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
+import Excepciones.BarajaLlena;
 import Objetos.Carta;
 import Objetos.Jugador;
 import Objetos.Tablero;
@@ -24,7 +25,7 @@ public class UnoEngine {
      * validación de jugadas y condiciones de victoria
      * Se inicia el tablero con todos sus componentes
      * 
-     * @param nombresCargados         array con todos los nombres (por referencia)
+     * @param nombresCargados array con todos los nombres (por referencia)
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
@@ -52,10 +53,15 @@ public class UnoEngine {
      * @param nombresCargados nombres de los jugadores (por referencia)
      */
     private static void repartoInicial(String[] nombresCargados) {
-        for (int i = 0; i < cantidadActualJugadores; i++) {
-            lista[i] = new Jugador(nombresCargados[i]);
-            for (int c = 0; c < 7; c++)
-                lista[i].recibirCarta(tablero.tirarCarta());
+        try {
+            for (int i = 0; i < cantidadActualJugadores; i++) {
+                lista[i] = new Jugador(nombresCargados[i]);
+                for (int c = 0; c < 7; c++) {
+                    lista[i].recibirCarta(tablero.tirarCarta());
+                }
+            }
+        } catch (BarajaLlena e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -148,8 +154,12 @@ public class UnoEngine {
     private static void robarCarta() {
         Carta cartaRobada;
         cartaRobada = tablero.tirarCarta();
-        jugador.recibirCarta(cartaRobada);
-        System.out.println("Has recibido un: " + cartaRobada);
+        try {
+            jugador.recibirCarta(cartaRobada);
+            System.out.println("Has recibido un: " + cartaRobada);
+        } catch (BarajaLlena e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -193,7 +203,11 @@ public class UnoEngine {
     private static void cartaSacadaNoValida() throws InterruptedException {
         Carta cartaRobada;
         cartaRobada = tablero.tirarCarta();
-        jugador.recibirCarta(cartaRobada);
+        try {
+            jugador.recibirCarta(cartaRobada);
+        } catch (BarajaLlena e) {
+            System.out.println("\n" + e.getMessage());
+        }
         System.out.println("!CHUPAS UNA CARTA!\n");
         Thread.sleep(Datos.milisegundos);
         System.out.println("Has recibido un: " + cartaRobada);
