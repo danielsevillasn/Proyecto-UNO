@@ -2,8 +2,10 @@ package MetodosSecundarios;
 
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
+import Enumerados.Tipos;
 import Excepciones.BarajaLlena;
 import Objetos.Carta;
+import Objetos.CartaEspecial;
 import Objetos.Jugador;
 import Objetos.Tablero;
 import Objetos.Turno;
@@ -184,6 +186,11 @@ public class UnoEngine {
         Carta cartaTirada;
         if (cartaValida) {
             cartaTirada = jugador.jugarCarta(opcionCarta);
+
+            if (cartaTirada.getTipo() == Tipos.ESPECIAL) {
+                efectosCartasEspeciales(cartaTirada);
+            }
+
             tablero.dejar(cartaTirada);
             System.out.println("La carta que has tirado es: " + cartaTirada);
             // Si el jugador se queda sin cartas el juego termina
@@ -191,6 +198,45 @@ public class UnoEngine {
                 fin = true;
                 Pantallas.nombreJugador = jugador.getNombre();
             }
+        }
+    }
+
+    /**
+     * Método que recoge todos los efectos de las cartas especiales implementadas y
+     * los hace funcionar
+     * 
+     * @param cartaTirada Carta que ha sido tirada por el jugador
+     */
+    private static void efectosCartasEspeciales(Carta cartaTirada) {
+        CartaEspecial c = (CartaEspecial) cartaTirada;
+        switch (c.getTiposEspeciales()) {
+            case REVERSA:
+
+                controladorTurnos.cambiarSentido();
+
+                // Si son solo 2 jugadores entonces saltamos el turno del jugador que le
+                // precedia
+                if (cantidadActualJugadores == 2) {
+                    controladorTurnos.siguiente(cantidadActualJugadores);
+                }
+                System.out.println("¡El sentido ha cambiado!");
+                break;
+            case BLOQUEO:
+                controladorTurnos.siguiente(cantidadActualJugadores);
+                System.out.println("Se ha saltado el turno del siguiente jugador.");
+                break;
+            case CHUPATE2:
+
+                break;
+            case CHUPATE4:
+
+                break;
+            case CAMBIOCOLOR:
+
+                break;
+
+            default:
+                break;
         }
     }
 

@@ -4,10 +4,9 @@ import Enumerados.Color;
 import Enumerados.Tipos;
 import Enumerados.TiposEspeciales;
 import Excepciones.CartaLanzadaNoValida;
-import Interfaces.EfectosCarta;
 import MetodosSecundarios.Calculos;
 
-public class CartaEspecial extends Carta implements EfectosCarta {
+public class CartaEspecial extends Carta {
     // Atributos/////////////////////
     private TiposEspeciales tiposEspeciales;
 
@@ -72,11 +71,6 @@ public class CartaEspecial extends Carta implements EfectosCarta {
         }
     }
 
-    @Override
-    public void efecto() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'efecto'");
-    }
 
     // toString
     @Override
@@ -101,15 +95,15 @@ public class CartaEspecial extends Carta implements EfectosCarta {
 
         switch (tiposEspeciales) {
             case BLOQUEO:
-                simbolo = " Ø ";
+                simbolo = "BLOQUEO";
             case REVERSA:
-                simbolo = " <-> ";
+                simbolo = "REVERSA";
             case CHUPATE2:
-                simbolo = " +2 ";
+                simbolo = "+2";
             case CHUPATE4:
-                simbolo = " +4 ";
+                simbolo = "+4";
             case CAMBIOCOLOR:
-                simbolo = " ### ";
+                simbolo = "CAMBIOCOLOR";
             default:
                 break;
         }

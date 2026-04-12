@@ -9,6 +9,7 @@ public class Turno {
     // Atributos/////////////////////
     private int actual;
     private int contadorTurno;
+    private int sentido;
 
     // Metodos////////////////////////
 
@@ -16,6 +17,7 @@ public class Turno {
     public Turno(){
         actual = 0;
         contadorTurno = 1;
+        this.sentido = 1;
     }
     
     // Getter
@@ -47,8 +49,17 @@ public class Turno {
      * @param total numero entero que representa la cantidad total de jugadores
      */
     public void siguiente(int total) {
-        actual = (actual + 1) % total;
+        actual = (actual + sentido + total) % total; // Sumamos 'total' antes del % para evitar resultados negativos
         contadorTurno++;
+    }
+
+    /**
+     * Método que sirve para cambiar el sentido de la partida, si el sentido es 1 va para adelante
+     * si el sentido es -1 hacia atrás
+     * @param 'nada'
+     */
+    public void cambiarSentido() {
+        this.sentido *= -1;
     }
 
     // toString
