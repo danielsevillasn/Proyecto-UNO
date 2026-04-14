@@ -11,7 +11,7 @@ import MetodosSecundarios.Calculos;
  */
 public abstract class Carta {
     // Atributos/////////////////////
-    protected final Color color;
+    protected Color color;
     protected final Tipos tipo;
 
     // Metodos////////////////////////
@@ -36,10 +36,16 @@ public abstract class Carta {
     public Tipos getTipo() {
         return tipo;
     }
-    
+
+    // Setter
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     /**
      * @param mesa La carta que está actualmente en el centro del tablero.
      * @return true si la carta actual cumple las reglas para ser jugada.
      */
     public abstract boolean puedePonerseSobre(Carta mesa) throws CartaLanzadaNoValida;
+
 }
