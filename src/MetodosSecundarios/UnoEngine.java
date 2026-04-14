@@ -181,8 +181,10 @@ public class UnoEngine {
      * Método que funciona si la carta sacada es valida y la tira
      * 
      * @param 'ninguno'
+     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
+     * @throws InterruptedException para los thread sleep
      */
-    private static void cartaSacadaValida() {
+    private static void cartaSacadaValida() throws InterruptedException, ReiniciarJuego {
         Carta cartaTirada;
         if (cartaValida) {
             cartaTirada = jugador.jugarCarta(opcionCarta);
@@ -206,9 +208,12 @@ public class UnoEngine {
      * los hace funcionar
      * 
      * @param cartaTirada Carta que ha sido tirada por el jugador
+     * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    private static void efectosCartasEspeciales(Carta cartaTirada) {
+    private static void efectosCartasEspeciales(Carta cartaTirada) throws InterruptedException, ReiniciarJuego {
         CartaEspecial c = (CartaEspecial) cartaTirada;
+        Jugador jugadorChupete;
         switch (c.getTiposEspeciales()) {
             case REVERSA:
 
@@ -226,7 +231,18 @@ public class UnoEngine {
                 System.out.println("Se ha saltado el turno del siguiente jugador.");
                 break;
             case CHUPATE2:
-
+                // Si son solo 2 jugadores entonces chupa el jugador que le precedia
+                if (cantidadActualJugadores == 2) {
+                    if (controladorTurnos.getActual() == 0) {
+                        jugadorChupete = lista[controladorTurnos.getActual() + 1];
+                    } else {
+                        jugadorChupete = lista[controladorTurnos.getActual() - 1];
+                    }
+                    chuparCartas(2, jugadorChupete);
+                } else {
+                    jugadorChupete = lista[hallarIdJugador()];
+                    chuparCartas(2, jugadorChupete);
+                }
                 break;
             case CHUPATE4:
 
@@ -238,6 +254,33 @@ public class UnoEngine {
             default:
                 break;
         }
+    }
+
+    private static void chuparCartas(int numeroCartas, Jugador j) throws InterruptedException {
+        Carta cartaRobada;
+        for (int i = 0; i < numeroCartas; i++) {
+            cartaRobada = tablero.tirarCarta();
+            try {
+                j.recibirCarta(cartaRobada);
+            } catch (BarajaLlena e) {
+                System.out.println("\n" + e.getMessage());
+            }
+            System.out.println("!CHUPAS UNA CARTA!\n");
+            System.out.println("Has recibido un: " + cartaRobada);
+        }
+        Thread.sleep(Datos.milisegundos);
+    }
+
+    private static int hallarIdJugador() throws ReiniciarJuego {
+        String nombreJugadorChupete;
+        int id = 0;
+        nombreJugadorChupete = Datos.pedirCadena("Dame el jugador que quieres que chupe: ");
+        for (int i = 0; i < lista.length; i++) {
+            if (lista[i].getNombre().equalsIgnoreCase(nombreJugadorChupete)) {
+                id = i;
+            }
+        }
+        return id;
     }
 
     /**

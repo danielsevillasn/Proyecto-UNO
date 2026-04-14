@@ -1,6 +1,5 @@
 package Objetos;
 import Excepciones.BarajaLlena;
-import Objetos.Turno;
 
 /**
  * Clase jugador que guarda los nombres y la baraja de cartas
