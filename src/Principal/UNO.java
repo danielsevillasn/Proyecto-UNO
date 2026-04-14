@@ -4,8 +4,7 @@ import Excepciones.ReiniciarJuego;
 import MetodosSecundarios.Juego;
 
 /**
- * Inicializa el juego UNO, creando un objeto de la clase JuegoUno y llamando a
- * su método ejecutarSistemaCompleto()
+ * Inicializa el juego UNO
  * 
  * @author DaniS y Libio
  */

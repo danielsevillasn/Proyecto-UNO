@@ -214,6 +214,7 @@ public class UnoEngine {
     private static void efectosCartasEspeciales(Carta cartaTirada) throws InterruptedException, ReiniciarJuego {
         CartaEspecial c = (CartaEspecial) cartaTirada;
         Jugador jugadorChupete;
+        Jugador jugadorSaltado;
         switch (c.getTiposEspeciales()) {
             case REVERSA:
 
@@ -227,24 +228,24 @@ public class UnoEngine {
                 System.out.println("¡El sentido ha cambiado!");
                 break;
             case BLOQUEO:
+                jugadorSaltado = lista[hallarIdJugador()]; // Consultamos quién va a ser bloqueado
+                System.out.println("¡" + jugadorSaltado.getNombre() + " ha sido bloqueado y pierde su turno!");
                 controladorTurnos.siguiente(cantidadActualJugadores);
-                System.out.println("Se ha saltado el turno del siguiente jugador.");
                 break;
             case CHUPATE2:
-                // Si son solo 2 jugadores entonces chupa el jugador que le precedia
-                if (cantidadActualJugadores == 2) {
-                    if (controladorTurnos.getActual() == 0) {
-                        jugadorChupete = lista[controladorTurnos.getActual() + 1];
-                    } else {
-                        jugadorChupete = lista[controladorTurnos.getActual() - 1];
-                    }
-                    chuparCartas(2, jugadorChupete);
-                } else {
-                    jugadorChupete = lista[hallarIdJugador()];
-                    chuparCartas(2, jugadorChupete);
-                }
+
+                jugadorChupete = lista[hallarIdJugador()];
+                chuparCartas(2, jugadorChupete);
+                controladorTurnos.siguiente(cantidadActualJugadores);
+                System.out.println("¡" + jugadorChupete.getNombre() + " chupa dos cartas y pierde su turno!");
+
                 break;
             case CHUPATE4:
+
+                jugadorChupete = lista[hallarIdJugador()];
+                chuparCartas(4, jugadorChupete);
+                controladorTurnos.siguiente(cantidadActualJugadores);
+                System.out.println("¡" + jugadorChupete.getNombre() + " chupa cuatro cartas y pierde su turno!");
 
                 break;
             case CAMBIOCOLOR:
@@ -265,22 +266,20 @@ public class UnoEngine {
             } catch (BarajaLlena e) {
                 System.out.println("\n" + e.getMessage());
             }
-            System.out.println("!CHUPAS UNA CARTA!\n");
             System.out.println("Has recibido un: " + cartaRobada);
         }
         Thread.sleep(Datos.milisegundos);
     }
 
-    private static int hallarIdJugador() throws ReiniciarJuego {
-        String nombreJugadorChupete;
-        int id = 0;
-        nombreJugadorChupete = Datos.pedirCadena("Dame el jugador que quieres que chupe: ");
-        for (int i = 0; i < lista.length; i++) {
-            if (lista[i].getNombre().equalsIgnoreCase(nombreJugadorChupete)) {
-                id = i;
-            }
-        }
-        return id;
+    private static int hallarIdJugador() {
+        // Si el sentido es el normal entonces
+        int actual = controladorTurnos.getActual();
+        int sentido = controladorTurnos.getSentido(); // 1 o -1
+
+        // Sumamos la cantidad de jugadores para evitar números negativos al restar
+        // El operador % (módulo) asegura que el índice siempre esté en el rango
+        // correcto
+        return (actual + sentido + cantidadActualJugadores) % cantidadActualJugadores;
     }
 
     /**

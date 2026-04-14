@@ -38,7 +38,7 @@ public class Tablero {
             for (int j = 0; j< 4;j++) {
                 for (int k = 0; k <= 9; k++) {
                     if (!(k == 0 && i == 1)) {
-                        chupona[topeChupona++] = new CartaNormal(j, Color.values()[j]);
+                        chupona[topeChupona++] = new CartaNormal(k, Color.values()[j]);
                     }
                 }
             }

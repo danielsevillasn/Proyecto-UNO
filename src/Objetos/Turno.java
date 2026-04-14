@@ -28,7 +28,10 @@ public class Turno {
     public int getContadorTurno() {
         return contadorTurno;
     }
-
+    
+    public int getSentido() {
+        return sentido;
+    }
     
     // Setter
     public void setActual(int actual) {
@@ -39,6 +42,10 @@ public class Turno {
         this.contadorTurno = contadorTurno;
     }
     
+    public void setSentido(int sentido) {
+        this.sentido = sentido;
+    }
+
     // Otros metodos
     /**
      * Sirve para crear turnos dependiendo de la cantidad de jugadores haciendo que
