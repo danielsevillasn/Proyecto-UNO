@@ -295,12 +295,12 @@ public class UnoEngine {
     private static void chupate(int numeroCartas, Carta cartaTirada) throws InterruptedException, ReiniciarJuego {
         Jugador jugadorChupete;
         jugadorChupete = lista[hallarIdJugador()];
-        chuparCartas(numeroCartas, jugadorChupete);
-        controladorTurnos.siguiente(cantidadActualJugadores);
-        System.out.println("¡" + jugadorChupete.getNombre() + " chupa dos cartas y pierde su turno!");
         if (numeroCartas == 4) {
             cambiarColor(cartaTirada);
         }
+        chuparCartas(numeroCartas, jugadorChupete);
+        controladorTurnos.siguiente(cantidadActualJugadores);
+        System.out.println("¡" + jugadorChupete.getNombre() + " chupa "+numeroCartas+" cartas y pierde su turno!");
     }
 
     /**
@@ -331,31 +331,37 @@ public class UnoEngine {
      * @throws ReiniciarJuego para reinciar el juego cuando se quiera
      */
     private static void cambiarColor(Carta cartaTirada) throws ReiniciarJuego {
-        System.out.println("A que color quieres cambiar?");
-        System.out.println("1- Rojo");
-        System.out.println("2- Amarillo");
-        System.out.println("3- Verde");
-        System.out.println("4- Azul");
-
-        int opcion = Datos.pedirEntero("Elige un color(1-4):");
-        switch (opcion) {
-            case 1:
-                cartaTirada.setColor(Color.ROJO);
-                break;
-            case 2:
-                cartaTirada.setColor(Color.AMARILLO);
-                break;
-            case 3:
-                cartaTirada.setColor(Color.VERDE);
-                break;
-            case 4:
-                cartaTirada.setColor(Color.AZUL);
-                break;
-
-            default:
-                System.out.println("Esa opcion no es válida");
-                break;
-        }
+        boolean datoValido = false;
+        do{
+            System.out.println("A que color quieres cambiar?");
+            System.out.println("1- Rojo");
+            System.out.println("2- Amarillo");
+            System.out.println("3- Verde");
+            System.out.println("4- Azul");
+    
+            int opcion = Datos.pedirEntero("Elige un color(1-4):");
+            switch (opcion) {
+                case 1:
+                    cartaTirada.setColor(Color.ROJO);
+                    datoValido = true;
+                    break;
+                case 2:
+                    cartaTirada.setColor(Color.AMARILLO);
+                    datoValido = true;
+                    break;
+                case 3:
+                    cartaTirada.setColor(Color.VERDE);
+                    datoValido = true;
+                    break;
+                case 4:
+                    cartaTirada.setColor(Color.AZUL);
+                    datoValido = true;
+                    break;
+                default:
+                    System.out.println("Esa opcion no es válida");
+                    break;
+            }
+        }while(!datoValido);
     }
 
     /**

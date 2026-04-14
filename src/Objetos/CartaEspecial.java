@@ -80,31 +80,36 @@ public class CartaEspecial extends Carta {
         switch (color) {
             case ROJO:
                 c = "\u001B[31m";
+                break;
             case AZUL:
                 c = "\u001B[34m";
+                break;
             case VERDE:
                 c = "\u001B[32m";
+                break;
             case AMARILLO:
                 c = "\u001B[33m";
+                break;
             case NEGRO:
                 c = "\u001b[47;30m"; // Color negro con fondo blanco
-
-            default:
                 break;
         }
 
         switch (tiposEspeciales) {
             case BLOQUEO:
                 simbolo = "BLOQUEO";
+                break;
             case REVERSA:
                 simbolo = "REVERSA";
+                break;
             case CHUPATE2:
                 simbolo = "+2";
+                break;
             case CHUPATE4:
                 simbolo = "+4";
+                break;
             case CAMBIOCOLOR:
                 simbolo = "CAMBIOCOLOR";
-            default:
                 break;
         }
 
