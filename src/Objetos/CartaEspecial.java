@@ -18,8 +18,8 @@ public class CartaEspecial extends Carta {
     }
 
     // Constructor para instanciar objeto con tres parametros
-    public CartaEspecial(Color c, Tipos tipo, TiposEspeciales tiposEspeciales) {
-        super(c, tipo);
+    public CartaEspecial(TiposEspeciales tiposEspeciales, Color c) {
+        super(c, Tipos.ESPECIAL);
         this.tiposEspeciales = tiposEspeciales;
     }
 
