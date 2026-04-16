@@ -4,7 +4,6 @@ import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
 import Enumerados.Color;
 import Enumerados.Tipos;
-import Excepciones.BarajaLlena;
 import Objetos.Carta;
 import Objetos.CartaEspecial;
 import Objetos.CartaNormal;
@@ -57,19 +56,11 @@ public class UnoEngine {
      * @param nombresCargados nombres de los jugadores (por referencia)
      */
     private static void repartoInicial(String[] nombresCargados) {
-        try {
-            for (int i = 0; i < cantidadActualJugadores; i++) {
-                lista[i] = new Jugador(nombresCargados[i]);
-                for (int c = 0; c < 7; c++) {
-                    // Comprueba con una carta aleatoria que no este la baraja llena
-                    lista[i].recibirCarta(new CartaNormal());
-                    lista[i].descartarCartaFinal();
-                    // Si no esta llena entonces la recibe pero previamente la descarta
-                    lista[i].recibirCarta(tablero.tirarCarta());
-                }
+        for (int i = 0; i < cantidadActualJugadores; i++) {
+            lista[i] = new Jugador(nombresCargados[i]);
+            for (int c = 0; c < 7; c++) {
+                lista[i].recibirCarta(tablero.tirarCarta());
             }
-        } catch (BarajaLlena e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -162,11 +153,9 @@ public class UnoEngine {
     private static void robarCarta() {
         Carta cartaRobada;
         cartaRobada = tablero.tirarCarta();
-        try {
+        if(!jugador.tieneManoLlena()){
             jugador.recibirCarta(cartaRobada);
             System.out.println("Has recibido un: " + cartaRobada);
-        } catch (BarajaLlena e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -318,18 +307,11 @@ public class UnoEngine {
     private static void chuparCartas(int numeroCartas, Jugador j) throws InterruptedException {
         Carta cartaRobada = new CartaNormal();
         for (int i = 0; i < numeroCartas; i++) {
-            try {
-                // Comprueba con una carta aleatoria que no este la baraja llena
-                j.recibirCarta(cartaRobada);
-                j.descartarCartaFinal();
-                // Si no esta llena entonces la recibe pero previamente la descarta
+            if(!j.tieneManoLlena()){
                 cartaRobada = tablero.tirarCarta();
                 j.recibirCarta(cartaRobada);
-            } catch (BarajaLlena e) {
-                System.out.println("\n" + e.getMessage());
-                break;
+                System.out.println("Recibe un: " + cartaRobada);
             }
-            System.out.println("Recibe un: " + cartaRobada);
         }
         Thread.sleep(Datos.milisegundos);
     }
@@ -383,10 +365,8 @@ public class UnoEngine {
     private static void cartaSacadaNoValida() throws InterruptedException {
         Carta cartaRobada;
         cartaRobada = tablero.tirarCarta();
-        try {
+        if(!jugador.tieneManoLlena()){
             jugador.recibirCarta(cartaRobada);
-        } catch (BarajaLlena e) {
-            System.out.println("\n" + e.getMessage());
         }
         System.out.println("!CHUPAS UNA CARTA!\n");
         Thread.sleep(Datos.milisegundos);

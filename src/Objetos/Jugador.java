@@ -1,5 +1,4 @@
 package Objetos;
-import Excepciones.BarajaLlena;
 
 /**
  * Clase jugador que guarda los nombres y la baraja de cartas
@@ -9,7 +8,7 @@ import Excepciones.BarajaLlena;
 public class Jugador {
     // Atributos/////////////////////
     private final String nombre;
-    public Carta[] mano = new Carta[20]; // Hay un límite de 20 cartas
+    public Carta[] mano = new Carta[21]; // Hay un límite de 20 cartas
     private int numCartas = 0;
 
     // Metodos////////////////////////
@@ -33,17 +32,13 @@ public class Jugador {
         this.numCartas = numCartas;
     }
 
-
     // Otros metodos
     /**
      * Método para recibir una carta aleatoria en tu mano
      * 
      * @param carta objeto carta que es la carta a recibir
      */
-    public void recibirCarta(Carta carta) throws BarajaLlena {
-        if (numCartas >= 20) {
-            throw new BarajaLlena("Error, tu mano supera el limite de 20 cartas");
-        }
+    public void recibirCarta(Carta carta){
         if (carta != null) {
             mano[numCartas++] = carta;
         }
@@ -65,7 +60,16 @@ public class Jugador {
         return carta;
     }
 
-    public void descartarCartaFinal(){
-        mano[mano.length-1] = null;
+    /**
+     * Método que devuelve un booleano dependiendo de si el jugador tiene la baraja llena o no
+     * 
+     * @return
+     */
+    public boolean tieneManoLlena() {
+        if(numCartas >= mano.length){
+            System.out.println("El jugador tiene la mano llena");
+            return true;
+        }
+        return false;
     }
 }
