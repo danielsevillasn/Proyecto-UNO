@@ -1,6 +1,7 @@
 package MetodosSecundarios;
 
 import Excepciones.CartaLanzadaNoValida;
+import Excepciones.NombreUsuarioNoValido;
 import Excepciones.ReiniciarJuego;
 import Enumerados.Color;
 import Enumerados.Tipos;
@@ -153,7 +154,7 @@ public class UnoEngine {
     private static void robarCarta() {
         Carta cartaRobada;
         cartaRobada = tablero.tirarCarta();
-        if(!jugador.tieneManoLlena()){
+        if (!jugador.tieneManoLlena()) {
             jugador.recibirCarta(cartaRobada);
             System.out.println("Has recibido un: " + cartaRobada);
         }
@@ -307,7 +308,7 @@ public class UnoEngine {
     private static void chuparCartas(int numeroCartas, Jugador j) throws InterruptedException {
         Carta cartaRobada = new CartaNormal();
         for (int i = 0; i < numeroCartas; i++) {
-            if(!j.tieneManoLlena()){
+            if (!j.tieneManoLlena()) {
                 cartaRobada = tablero.tirarCarta();
                 j.recibirCarta(cartaRobada);
                 System.out.println("Recibe un: " + cartaRobada);
@@ -365,7 +366,7 @@ public class UnoEngine {
     private static void cartaSacadaNoValida() throws InterruptedException {
         Carta cartaRobada;
         cartaRobada = tablero.tirarCarta();
-        if(!jugador.tieneManoLlena()){
+        if (!jugador.tieneManoLlena()) {
             jugador.recibirCarta(cartaRobada);
         }
         System.out.println("!CHUPAS UNA CARTA!\n");
@@ -392,12 +393,65 @@ public class UnoEngine {
 
         // Nombres por defecto sobreescritos
         Juego.nombresCargados = new String[cantidadActualJugadores];
-        for (int i = 0; i < cantidadActualJugadores; i++) {
-            Juego.nombresCargados[i] = Datos.pedirCadena("Nombre Jugador " + (i + 1) + ": ");
-        }
+        pedirNombreJugadores();
 
         Pantallas.jugadores = "" + cantidadActualJugadores;
         return cantidadActualJugadores;
+    }
+
+    /**
+     * Método que pide el nombre de los jugadores, valida segun las condiciones
+     * impuestas que esta correcto y lo mete en el array de los nombres del juego
+     * 
+     * @throws ReiniciarJuego para reinciar el juego cuando se quiera
+     */
+    private static void pedirNombreJugadores() throws ReiniciarJuego {
+        boolean nombreValido;
+        String nombre;
+        for (int i = 0; i < cantidadActualJugadores; i++) {
+            nombreValido = false;
+            do {
+                try {
+                    nombre = Datos.pedirCadena("Nombre Jugador " + (i + 1) + ": ");
+
+                    validacionNombre(nombre);
+
+                    Juego.nombresCargados[i] = nombre;
+                    nombreValido = true;
+                } catch (NombreUsuarioNoValido e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("Para que tu usuario sea válido, debe cumplir:");
+
+                    //Imprime las sugerencias del array list sugerencias
+                    for (String sugerencia : e.getSugerencias()) {
+                        System.out.println("- " + sugerencia);
+                    }
+                }
+            } while (!nombreValido);
+        }
+    }
+
+    /**
+     * Método que valida el nombre de un usuario de tal forma que siga las
+     * condiciones impuestas en la excepcion
+     * 
+     * @param nombreUsuario variable tipo String que representa el nombre del
+     *                      usuario
+     * @throws NombreUsuarioNoValido excepcion que recoge todas las condiciones para
+     *                               luego mostrarlas en caso de que no se cumplan
+     */
+    public static void validacionNombre(String nombreUsuario) throws NombreUsuarioNoValido {
+        //Inicalizamos la excepcion pasando por parametro el nombre
+        NombreUsuarioNoValido nombreUsuarioNoValido = new NombreUsuarioNoValido(nombreUsuario);
+
+        // Si la excepción detecta que se ha cumplido alguna condicion, por lo cual hay sugerencias, lanzamos una excepcion
+        if (!nombreUsuarioNoValido.getSugerencias().isEmpty()) {
+            throw nombreUsuarioNoValido;
+        }
+
+        //Si la excepcion no ocurre entonces el usuario se registra
+        System.out.println("Usuario " + nombreUsuario + " registrado con éxito.");
+        Datos.pulsaEnter();
     }
 
     /**

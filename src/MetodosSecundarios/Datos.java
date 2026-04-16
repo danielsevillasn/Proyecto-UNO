@@ -70,6 +70,7 @@ public class Datos {
      * @param 'ninguno'
      */
     public static void pulsaEnter() {
+        System.out.println();
         System.out.println("Pulsa enter para continuar");
         s.nextLine();
     }
