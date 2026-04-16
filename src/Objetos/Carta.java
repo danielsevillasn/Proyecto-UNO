@@ -2,30 +2,28 @@ package Objetos;
 
 import Enumerados.Color;
 import Enumerados.Tipos;
-import Interfaces.Jugable;
+import Excepciones.CartaLanzadaNoValida;
+import MetodosSecundarios.Calculos;
 
 /**
  * Clase Carta con implementación de herencias, enum e interfaz
  * * @author DaniS y Libio
  */
-public abstract class Carta implements Jugable {
+public abstract class Carta {
     // Atributos/////////////////////
-    protected final Color color;
-    protected final int numero;
+    protected Color color;
     protected final Tipos tipo;
 
     // Metodos////////////////////////
 
     // Constructor por defecto
     protected Carta() {
-        color = Color.AMARILLO;
-        numero = 0;
-        tipo = Tipos.NORMAL;
+        color = Color.values()[Calculos.aleatorio(0, 3)];
+        tipo = Tipos.values()[Calculos.aleatorio(0, 1)];
     }
 
     // Constructor para instanciar objeto con dos parametros
-    protected Carta(int n, Color c, Tipos tipo) {
-        this.numero = n;
+    protected Carta(Color c, Tipos tipo) {
         this.color = c;
         this.tipo = tipo;
     }
@@ -35,19 +33,19 @@ public abstract class Carta implements Jugable {
         return color;
     }
 
-    public int getNumero() {
-        return numero;
+    public Tipos getTipo() {
+        return tipo;
     }
-    
-    // toString
-    @Override
-    public String toString() {
-        String c = switch (color) {
-            case ROJO -> "\u001B[31m";
-            case AZUL -> "\u001B[34m";
-            case VERDE -> "\u001B[32m";
-            case AMARILLO -> "\u001B[33m";
-        };
-        return c + "[" + color + " " + numero + "]" + "\u001B[0m";
+
+    // Setter
+    public void setColor(Color color) {
+        this.color = color;
     }
+
+    /**
+     * @param mesa La carta que está actualmente en el centro del tablero.
+     * @return true si la carta actual cumple las reglas para ser jugada.
+     */
+    public abstract boolean puedePonerseSobre(Carta mesa) throws CartaLanzadaNoValida;
+
 }

@@ -1,6 +1,7 @@
 package Objetos;
 
 import Enumerados.Color;
+import Enumerados.TiposEspeciales;
 
 /**
  * Clase tablero que gestiona el mazo de robo (chupona) y la pila de descarte.
@@ -9,7 +10,7 @@ import Enumerados.Color;
 public class Tablero {
 
     // Atributos/////////////////////
-    
+
     private final Carta[] chupona;
     private int topeChupona;
     private final Carta[] descarte;
@@ -27,25 +28,44 @@ public class Tablero {
 
     // Otros metodos
     /**
-     * Inicializa el juego creando las cartas por color y número (duplicando 
+     * Inicializa el juego creando las cartas por color y número (duplicando
      * todos los números excepto el 0 por color) y baraja el mazo resultante
      * 
      * @param 'ninguno'
      */
     public void inicializar() {
         Carta temp;
+
+        // Sirve para meter las cartas normales en el mazo
         for (int i = 0; i < 2; i++) {
-            for (Color c : Color.values()) {
-                for (int j = 0; j <= 9; j++) {
-                    if (!(j == 0 && i == 1)) {
-                        chupona[topeChupona++] = new CartaNormal(j, c);
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k <= 9; k++) {
+                    if (!(k == 0 && i == 1)) {
+                        chupona[topeChupona++] = new CartaNormal(k, Color.values()[j]);
                     }
                 }
             }
         }
+        // Sirve para meter las cartas especiales que tienen colores en el mazo
+        // Bloqueo, Reversa y chupate dos duplicados por color
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 4; k++) {
+                    chupona[topeChupona++] = new CartaEspecial(TiposEspeciales.values()[j], Color.values()[k]);
+                }
+            }
+        }
+
+        // Sirve para meter las cartas especiales que tienen color negro en el mazo
+        // Cambio color y chupate cuatro deben aparecer 4 veces cada una
+        for (int i = 0; i < 4; i++) {
+            chupona[topeChupona++] = new CartaEspecial(TiposEspeciales.values()[3], Color.NEGRO);
+            chupona[topeChupona++] = new CartaEspecial(TiposEspeciales.values()[4], Color.NEGRO);
+        }
 
         for (int i = 0; i < topeChupona; i++) {
-            int r = (int) (Math.random() * topeChupona);
+            // Genera un índice aleatorio entre 0 e i
+            int r = (int) (Math.random() * (i + 1));
             temp = chupona[i];
             chupona[i] = chupona[r];
             chupona[r] = temp;
@@ -54,6 +74,7 @@ public class Tablero {
 
     /**
      * Extrae y devuelve la carta superior de la pila de robo (chupona).
+     * 
      * @return El objeto Carta extraído o null si el mazo está vacío
      * @param 'ninguno'
      */
@@ -67,6 +88,7 @@ public class Tablero {
 
     /**
      * Coloca una carta específica sobre el montón de descarte e incrementa el tope.
+     * 
      * @param c Objeto Carta que el jugador lanza a la mesa.
      */
     public void dejar(Carta c) {
@@ -74,7 +96,9 @@ public class Tablero {
     }
 
     /**
-     * Permite consultar cuál es el objeto carta que está actualmente en la cima del descarte sin quitarla.
+     * Permite consultar cuál es el objeto carta que está actualmente en la cima del
+     * descarte sin quitarla.
+     * 
      * @return El objeto Carta que se encuentra visible en la mesa.
      * @param 'ninguno'
      */

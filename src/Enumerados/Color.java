@@ -6,5 +6,5 @@ package Enumerados;
  * @author DaniS y Libio
  */
 public enum Color {
-    ROJO, AZUL, VERDE, AMARILLO
+    ROJO, AZUL, VERDE, AMARILLO, NEGRO
 }

@@ -1,4 +1,5 @@
 package Objetos;
+import Excepciones.BarajaLlena;
 
 /**
  * Clase jugador que guarda los nombres y la baraja de cartas
@@ -39,7 +40,10 @@ public class Jugador {
      * 
      * @param carta objeto carta que es la carta a recibir
      */
-    public void recibirCarta(Carta carta) {
+    public void recibirCarta(Carta carta) throws BarajaLlena {
+        if (numCartas >= 20) {
+            throw new BarajaLlena("Error, tu mano supera el limite de 20 cartas");
+        }
         if (carta != null) {
             mano[numCartas++] = carta;
         }
@@ -60,6 +64,4 @@ public class Jugador {
         mano[--numCartas] = null;
         return carta;
     }
-
-
 }

@@ -3,23 +3,38 @@ package Objetos;
 import Enumerados.Color;
 import Enumerados.Tipos;
 import Excepciones.CartaLanzadaNoValida;
+import MetodosSecundarios.Calculos;
 
 /**
  * Herencia de la clase carta
  * * @author DaniS y Libio
  */
 public class CartaNormal extends Carta {
+    // Atributos/////////////////////
+    private int numero;
 
     // Metodos////////////////////////
 
     // Constructor por defecto
     public CartaNormal() {
         super();
+        numero = Calculos.aleatorio(0, 9);
     }
 
     // Constructor para instanciar objeto con dos parametros
     public CartaNormal(int n, Color c) {
-        super(n, c, Tipos.NORMAL);
+        super(c, Tipos.NORMAL);
+        numero = n;
+    }
+
+    // Getter
+    public int getNumero() {
+        return numero;
+    }
+
+    // Setter
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     // Otros metodos
@@ -41,12 +56,15 @@ public class CartaNormal extends Carta {
             return true;
         }
 
-        if (color == mesa.getColor()) {
+        if (color == mesa.getColor() || color == Color.NEGRO) {
             mismoColor = true;
         }
 
-        if (numero == mesa.getNumero()) {
-            mismoNumero = true;
+        if (mesa instanceof CartaNormal) {
+            CartaNormal c = (CartaNormal) mesa;
+            if(c.getNumero() == numero){
+                mismoNumero = true;
+            }
         }
 
         if (mismoColor || mismoNumero) {
@@ -56,4 +74,33 @@ public class CartaNormal extends Carta {
                     "La carta lanzada no es valida, lanza una carta que sea del mismo color o numero");
         }
     }
+
+    // ToString
+    @Override
+    public String toString() {
+        String c = "";
+        switch (color) {
+            case ROJO: 
+                c = "\u001B[31m";
+                break;
+            case AZUL:
+                c = "\u001B[34m";
+                break;
+            case VERDE:
+                c= "\u001B[32m";
+                break;
+            case AMARILLO:
+                c = "\u001B[33m";
+                break;
+            case NEGRO:
+                c = "\u001b[47;30m"; //Color negro con fondo blanco
+                break;
+        
+            default:
+                break;
+        }
+
+        return c + "[" + color + " " + numero + "]" + "\u001B[0m";
+    }
+
 }
