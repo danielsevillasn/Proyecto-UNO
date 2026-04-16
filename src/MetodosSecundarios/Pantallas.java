@@ -82,10 +82,9 @@ public class Pantallas {
      * @throws ReiniciarJuego para reinciar el juego cuando se quiera
      */
     public static void modoDeJuegoSeleccionado() throws ReiniciarJuego {
-        boolean salir;
-        int opcion = Datos.pedirEntero("\tElija opción (1-3): ");
-        do {
-            salir = false;
+        boolean salir = false;
+        while (!salir) {
+            int opcion = Datos.pedirEntero("\tElija opción (1-3): ");
             switch (opcion) {
                 case 1:
                     modoDeJuego = "Clásico";
@@ -104,7 +103,7 @@ public class Pantallas {
                     System.out.println("La opcion introducida no es valida, elige entre el 1 y el 3");
                     break;
             }
-        } while (!salir);
+        }
     }
 
     /**
