@@ -51,9 +51,10 @@ public abstract class Carta {
     public abstract boolean puedePonerseSobre(Carta mesa) throws CartaLanzadaNoValida;
 
     /**
-     * Sirve para extraer el codigo A
+     * Sirve para extraer el codigo Ansi del enumerado color de tal forma que cambia
+     * de color lo imprimido
      * 
-     * @return
+     * @return devuelve el String del codigo Ansi
      */
     public String getFormatoColor() {
         return color.getCodigoAnsi();

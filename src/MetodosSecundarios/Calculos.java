@@ -3,7 +3,7 @@ package MetodosSecundarios;
 /**
  * Lógica matemática y algoritmos.
  * Contiene metodos como:
- * aleatorio y esPrimo
+ * aleatorio
  * 
  * @author Dani S
  */
