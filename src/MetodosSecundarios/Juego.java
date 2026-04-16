@@ -110,7 +110,7 @@ public class Juego {
                         flujoDelSistema();
                         break;
                     case "2":
-                        throw new SalirDelJuego("Has salido del juego");
+                        throw new SalirDelJuego();
                     default:
                         Datos.entradaIncorrecta();
                         break;

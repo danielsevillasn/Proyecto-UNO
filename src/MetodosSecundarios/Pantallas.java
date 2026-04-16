@@ -2,7 +2,6 @@ package MetodosSecundarios;
 
 import java.util.Scanner;
 
-import Excepciones.ModoDeJuegoNoValido;
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
 
@@ -63,22 +62,13 @@ public class Pantallas {
      */
     public static void PantallaModosDeJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
-        boolean salir = false;
 
         System.out.println("=========Modos de juego===========");
         System.out.println("\t1. Clásico");
         System.out.println("\t2. Otra modalidad");
         System.out.println("\t3. Otra modalidad");
 
-        while (!salir) {
-            try {
-                int opcion = Datos.pedirEntero("\tElija opción (1-3): ");
-                modoDeJuegoSeleccionado(opcion);
-                salir = true;
-            } catch (ModoDeJuegoNoValido e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        modoDeJuegoSeleccionado();
 
     }
 
@@ -89,16 +79,32 @@ public class Pantallas {
      *                    seleccionado
      * @return ModoDeJuego variable tipo String que representa que modo de juego se
      *         ha seleccionado
-     * @throws ModoDeJuegoNoValido para opciones no válidas
+     * @throws ReiniciarJuego para reinciar el juego cuando se quiera
      */
-    public static void modoDeJuegoSeleccionado(int opcion) throws ModoDeJuegoNoValido {
-        if (opcion == 1) {
-            modoDeJuego = "Clásico";
-        } else if (opcion == 2 || opcion == 3) {
-            modoDeJuego = "Otro";
-        } else {
-            throw new ModoDeJuegoNoValido("Tienes que introducir una opción entre 1 y 3");
-        }
+    public static void modoDeJuegoSeleccionado() throws ReiniciarJuego {
+        boolean salir;
+        int opcion = Datos.pedirEntero("\tElija opción (1-3): ");
+        do {
+            salir = false;
+            switch (opcion) {
+                case 1:
+                    modoDeJuego = "Clásico";
+                    salir = true;
+                    break;
+                case 2:
+                    modoDeJuego = "Otro";
+                    salir = true;
+                    break;
+                case 3:
+                    modoDeJuego = "Otro";
+                    salir = true;
+                    break;
+
+                default:
+                    System.out.println("La opcion introducida no es valida, elige entre el 1 y el 3");
+                    break;
+            }
+        } while (!salir);
     }
 
     /**
@@ -256,7 +262,7 @@ public class Pantallas {
         System.out.println("\t0- Salir");
         resultado = Datos.pedirEntero("\tElija opción (0-2): ");
         if (resultado == 0) {
-            throw new SalirDelJuego("Has salido del juego");
+            throw new SalirDelJuego();
         }
         return resultado;
     }

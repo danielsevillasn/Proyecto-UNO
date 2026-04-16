@@ -393,6 +393,7 @@ public class UnoEngine {
 
         // Nombres por defecto sobreescritos
         Juego.nombresCargados = new String[cantidadActualJugadores];
+
         pedirNombreJugadores();
 
         Pantallas.jugadores = "" + cantidadActualJugadores;
@@ -422,13 +423,14 @@ public class UnoEngine {
                     System.out.println(e.getMessage());
                     System.out.println("Para que tu usuario sea válido, debe cumplir:");
 
-                    //Imprime las sugerencias del array list sugerencias
+                    // Imprime las sugerencias del array list sugerencias
                     for (String sugerencia : e.getSugerencias()) {
                         System.out.println("- " + sugerencia);
                     }
                 }
             } while (!nombreValido);
         }
+        Datos.pulsaEnter();
     }
 
     /**
@@ -441,17 +443,17 @@ public class UnoEngine {
      *                               luego mostrarlas en caso de que no se cumplan
      */
     public static void validacionNombre(String nombreUsuario) throws NombreUsuarioNoValido {
-        //Inicalizamos la excepcion pasando por parametro el nombre
+        // Inicalizamos la excepcion pasando por parametro el nombre
         NombreUsuarioNoValido nombreUsuarioNoValido = new NombreUsuarioNoValido(nombreUsuario);
 
-        // Si la excepción detecta que se ha cumplido alguna condicion, por lo cual hay sugerencias, lanzamos una excepcion
+        // Si la excepción detecta que se ha cumplido alguna condicion, por lo cual hay
+        // sugerencias, lanzamos una excepcion
         if (!nombreUsuarioNoValido.getSugerencias().isEmpty()) {
             throw nombreUsuarioNoValido;
         }
 
-        //Si la excepcion no ocurre entonces el usuario se registra
+        // Si la excepcion no ocurre entonces el usuario se registra
         System.out.println("Usuario " + nombreUsuario + " registrado con éxito.");
-        Datos.pulsaEnter();
     }
 
     /**
