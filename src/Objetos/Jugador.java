@@ -64,4 +64,8 @@ public class Jugador {
         mano[--numCartas] = null;
         return carta;
     }
+
+    public void descartarCartaFinal(){
+        mano[mano.length-1] = null;
+    }
 }

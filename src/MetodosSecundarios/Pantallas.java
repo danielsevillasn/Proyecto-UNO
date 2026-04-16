@@ -148,10 +148,10 @@ public class Pantallas {
         System.out.println("- Son cartas que tienen habilidades especiales en el flujo de la partida");
         System.out.println("- REVERSA ( <-> ): Sirve para cambiar el sentido de los turnos. Esta carta tiene colores");
         System.out.println("- BLOQUEO ( Ø ): Sirve para bloquear el siguiente turno, es decir, impedir ");
-        System.out.println("  que el próximo jgador juegue su turno. Esta carta tiene colores");
+        System.out.println("  que el próximo jugador juegue su turno. Esta carta tiene colores");
         System.out.println("- CHUPA 2: Carta especial que sirve para obligar al siguiente jugador ");
         System.out.println("  coger dos cartas de la chupona. Esta carta tiene colores");
-        System.out.println("- CHUPA 4: Carta especial que hace que el próximo juador tenga que ");
+        System.out.println("- CHUPA 4: Carta especial que hace que el próximo jugador tenga que ");
         System.out.println("  coger 4 cartas de la baraja de chupona. Además esta carta no tiene color ");
         System.out.println("  lo que significa que se puede lanzar cuando quieras. También al ");
         System.out.println("  lanzar esta carta puedes cambiar el color al que tú quieras.");

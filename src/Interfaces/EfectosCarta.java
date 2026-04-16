@@ -1,7 +1,7 @@
 package Interfaces;
 
 /**
- * Interfaz que habilita el método puedePonerseSobre para su utilización
+ * Interfaz que habilita el método efecto para su utilización
  * 
  * @author DaniS y Libio
  */

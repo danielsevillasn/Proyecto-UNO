@@ -13,6 +13,7 @@ public abstract class Carta {
     // Atributos/////////////////////
     protected Color color;
     protected final Tipos tipo;
+    protected static final String RESETCOLOR = "\u001B[0m";
 
     // Metodos////////////////////////
 
@@ -42,10 +43,26 @@ public abstract class Carta {
         this.color = color;
     }
 
+    // Otros metodos
     /**
      * @param mesa La carta que está actualmente en el centro del tablero.
      * @return true si la carta actual cumple las reglas para ser jugada.
      */
     public abstract boolean puedePonerseSobre(Carta mesa) throws CartaLanzadaNoValida;
+
+    /**
+     * Sirve para extraer el codigo A
+     * 
+     * @return
+     */
+    public String getFormatoColor() {
+        return color.getCodigoAnsi();
+    }
+
+    // ToString
+    @Override
+    public String toString() {
+        return getFormatoColor() + "[" + color + " ";
+    }
 
 }

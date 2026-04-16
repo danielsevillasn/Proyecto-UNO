@@ -7,6 +7,7 @@ import Enumerados.Tipos;
 import Excepciones.BarajaLlena;
 import Objetos.Carta;
 import Objetos.CartaEspecial;
+import Objetos.CartaNormal;
 import Objetos.Jugador;
 import Objetos.Tablero;
 import Objetos.Turno;
@@ -60,6 +61,10 @@ public class UnoEngine {
             for (int i = 0; i < cantidadActualJugadores; i++) {
                 lista[i] = new Jugador(nombresCargados[i]);
                 for (int c = 0; c < 7; c++) {
+                    // Comprueba con una carta aleatoria que no este la baraja llena
+                    lista[i].recibirCarta(new CartaNormal());
+                    lista[i].descartarCartaFinal();
+                    // Si no esta llena entonces la recibe pero previamente la descarta
                     lista[i].recibirCarta(tablero.tirarCarta());
                 }
             }
@@ -222,10 +227,10 @@ public class UnoEngine {
                 bloqueo();
                 break;
             case CHUPATE2:
-                chupate(2,cartaTirada);
+                chupate(2, cartaTirada);
                 break;
             case CHUPATE4:
-                chupate(4,cartaTirada);
+                chupate(4, cartaTirada);
                 break;
             case CAMBIOCOLOR:
                 cambiarColor(cartaTirada);
@@ -298,9 +303,9 @@ public class UnoEngine {
         if (numeroCartas == 4) {
             cambiarColor(cartaTirada);
         }
+        System.out.println("¡" + jugadorChupete.getNombre() + " chupa " + numeroCartas + " cartas y pierde su turno!");
         chuparCartas(numeroCartas, jugadorChupete);
         controladorTurnos.siguiente(cantidadActualJugadores);
-        System.out.println("¡" + jugadorChupete.getNombre() + " chupa "+numeroCartas+" cartas y pierde su turno!");
     }
 
     /**
@@ -311,15 +316,20 @@ public class UnoEngine {
      * @throws InterruptedException para los thread sleep
      */
     private static void chuparCartas(int numeroCartas, Jugador j) throws InterruptedException {
-        Carta cartaRobada;
+        Carta cartaRobada = new CartaNormal();
         for (int i = 0; i < numeroCartas; i++) {
-            cartaRobada = tablero.tirarCarta();
             try {
+                // Comprueba con una carta aleatoria que no este la baraja llena
+                j.recibirCarta(cartaRobada);
+                j.descartarCartaFinal();
+                // Si no esta llena entonces la recibe pero previamente la descarta
+                cartaRobada = tablero.tirarCarta();
                 j.recibirCarta(cartaRobada);
             } catch (BarajaLlena e) {
                 System.out.println("\n" + e.getMessage());
+                break;
             }
-            System.out.println("Has recibido un: " + cartaRobada);
+            System.out.println("Recibe un: " + cartaRobada);
         }
         Thread.sleep(Datos.milisegundos);
     }
@@ -332,13 +342,13 @@ public class UnoEngine {
      */
     private static void cambiarColor(Carta cartaTirada) throws ReiniciarJuego {
         boolean datoValido = false;
-        do{
+        do {
             System.out.println("A que color quieres cambiar?");
             System.out.println("1- Rojo");
             System.out.println("2- Amarillo");
             System.out.println("3- Verde");
             System.out.println("4- Azul");
-    
+
             int opcion = Datos.pedirEntero("Elige un color(1-4):");
             switch (opcion) {
                 case 1:
@@ -361,7 +371,7 @@ public class UnoEngine {
                     System.out.println("Esa opcion no es válida");
                     break;
             }
-        }while(!datoValido);
+        } while (!datoValido);
     }
 
     /**

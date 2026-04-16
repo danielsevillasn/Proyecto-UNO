@@ -18,18 +18,4 @@ public class Calculos {
     public static int aleatorio(int min, int max) {
         return ((int) (Math.random() * (max + 1 - min) + min));
     }
-
-    /**
-     * Comprueba si un número entero es primo.
-     * 
-     * @param numero El número a comprobar
-     * @return true si es primo, false si no lo es
-     */
-    public static boolean esPrimo(int numero) {
-        if (numero <= 1) return false;
-        for (int i = 2; i <= Math.sqrt(numero); i++) {
-            if (numero % i == 0) return false;
-        }
-        return true;
-    }
 }

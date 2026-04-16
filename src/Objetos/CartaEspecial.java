@@ -75,26 +75,7 @@ public class CartaEspecial extends Carta {
     // toString
     @Override
     public String toString() {
-        String c = "";
         String simbolo = "";
-        switch (color) {
-            case ROJO:
-                c = "\u001B[31m";
-                break;
-            case AZUL:
-                c = "\u001B[34m";
-                break;
-            case VERDE:
-                c = "\u001B[32m";
-                break;
-            case AMARILLO:
-                c = "\u001B[33m";
-                break;
-            case NEGRO:
-                c = "\u001b[47;30m"; // Color negro con fondo blanco
-                break;
-        }
-
         switch (tiposEspeciales) {
             case BLOQUEO:
                 simbolo = "BLOQUEO";
@@ -113,7 +94,7 @@ public class CartaEspecial extends Carta {
                 break;
         }
 
-        return c + "[" + color + " " + simbolo + "]" + "\u001B[0m";
+        return super.toString() + simbolo + "]" + RESETCOLOR;
     }
 
 }
