@@ -62,7 +62,7 @@ public class CartaNormal extends Carta {
 
         if (mesa instanceof CartaNormal) {
             CartaNormal c = (CartaNormal) mesa;
-            if(c.getNumero() == numero){
+            if (c.getNumero() == numero) {
                 mismoNumero = true;
             }
         }

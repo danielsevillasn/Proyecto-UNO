@@ -29,7 +29,7 @@ public class NombreUsuarioNoValido extends Exception {
 
     // Otros metodos
     /**
-     * Método que agrega sugerencias cuando se cumple alguna condicion específica 
+     * Método que agrega sugerencias cuando se cumple alguna condicion específica
      */
     private void configurarSugerencias() {
         if (nombreRechazado.length() < 3) {

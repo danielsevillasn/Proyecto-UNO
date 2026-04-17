@@ -14,12 +14,12 @@ public class Turno {
     // Metodos////////////////////////
 
     // Constructor por defecto
-    public Turno(){
+    public Turno() {
         actual = 0;
         contadorTurno = 1;
         this.sentido = 1;
     }
-    
+
     // Getter
     public int getActual() {
         return actual;
@@ -28,20 +28,20 @@ public class Turno {
     public int getContadorTurno() {
         return contadorTurno;
     }
-    
+
     public int getSentido() {
         return sentido;
     }
-    
+
     // Setter
     public void setActual(int actual) {
         this.actual = actual;
     }
-    
+
     public void setContadorTurno(int contadorTurno) {
         this.contadorTurno = contadorTurno;
     }
-    
+
     public void setSentido(int sentido) {
         this.sentido = sentido;
     }
@@ -61,8 +61,10 @@ public class Turno {
     }
 
     /**
-     * Método que sirve para cambiar el sentido de la partida, si el sentido es 1 va para adelante
+     * Método que sirve para cambiar el sentido de la partida, si el sentido es 1 va
+     * para adelante
      * si el sentido es -1 hacia atrás
+     * 
      * @param 'nada'
      */
     public void cambiarSentido() {

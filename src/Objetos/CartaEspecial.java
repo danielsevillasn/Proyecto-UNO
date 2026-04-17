@@ -71,7 +71,6 @@ public class CartaEspecial extends Carta {
         }
     }
 
-
     // toString
     @Override
     public String toString() {

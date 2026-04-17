@@ -6,11 +6,11 @@ package Excepciones;
  * @author DaniS y Libio
  */
 public class SalirDelJuego extends Exception {
-    //Constructor por defecto
+    // Constructor por defecto
     public SalirDelJuego() {
         super("Has salido del juego");
     }
-    
+
     // Constructor que cuanfo se utiliza getMessage() imprime el mensaje impuesto
     // donde se inicializo la excepcion
     public SalirDelJuego(String mensaje) {

@@ -38,7 +38,7 @@ public class Jugador {
      * 
      * @param carta objeto carta que es la carta a recibir
      */
-    public void recibirCarta(Carta carta){
+    public void recibirCarta(Carta carta) {
         if (carta != null) {
             mano[numCartas++] = carta;
         }
@@ -61,12 +61,13 @@ public class Jugador {
     }
 
     /**
-     * Método que devuelve un booleano dependiendo de si el jugador tiene la baraja llena o no
+     * Método que devuelve un booleano dependiendo de si el jugador tiene la baraja
+     * llena o no
      * 
-     * @return
+     * @return valor boleano que determina si la mano esta llena o no
      */
     public boolean tieneManoLlena() {
-        if(numCartas >= mano.length){
+        if (numCartas >= mano.length) {
             System.out.println("El jugador tiene la mano llena");
             return true;
         }
