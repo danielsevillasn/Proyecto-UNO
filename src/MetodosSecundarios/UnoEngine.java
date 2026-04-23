@@ -194,7 +194,7 @@ public class UnoEngine {
             // Si el jugador se queda sin cartas el juego termina
             if (jugador.getNumCartas() == 0) {
                 fin = true;
-                Pantallas.nombreJugador = jugador.getNombre();
+                Menus.nombreJugador = jugador.getNombre();
             }
         }
     }
@@ -385,9 +385,8 @@ public class UnoEngine {
      */
     public static int configurarJugadores() throws InterruptedException, ReiniciarJuego {
         int numJugadores;
-        Pantallas.PantallaJugadores();
 
-        numJugadores = pedirNumJugadores();
+        numJugadores = Menus.menuJugadores();
 
         cantidadActualJugadores = numJugadores;
 
@@ -396,7 +395,7 @@ public class UnoEngine {
 
         pedirNombreJugadores();
 
-        Pantallas.jugadores = "" + cantidadActualJugadores;
+        Menus.jugadores = "" + cantidadActualJugadores;
         return cantidadActualJugadores;
     }
 
@@ -454,27 +453,5 @@ public class UnoEngine {
 
         // Si la excepcion no ocurre entonces el usuario se registra
         System.out.println("Usuario " + nombreUsuario + " registrado con éxito.");
-    }
-
-    /**
-     * Método que pide el numero de jugadores y que comprueba que no se pase del
-     * rango habilitado
-     * 
-     * @param 'ninguno'
-     * @return valor entero que representa el numero de jugadores
-     * @throws ReiniciarJuego para reinciar el juego cuando se quiera
-     */
-    private static int pedirNumJugadores() throws ReiniciarJuego {
-        int numJugadores;
-        boolean rangoJugadores = false;
-        do {
-            numJugadores = Datos.pedirEntero("¿Cuántos jugadores (2-6)? ");
-            if (numJugadores >= 2 && numJugadores <= 6) {
-                rangoJugadores = true;
-            } else {
-                Datos.entradaIncorrecta();
-            }
-        } while (!rangoJugadores);
-        return numJugadores;
     }
 }

@@ -28,7 +28,7 @@ public class Juego {
     public static void iniciarJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
         cantidadActualJugadores = 2;
-        Pantallas.modoDeJuego = "Clásico";
+        Menus.modoDeJuego = "Clásico";
 
         menuInicio();
     }
@@ -45,7 +45,7 @@ public class Juego {
         salir = false;
         while (!salir) {
             try {
-                modoEjecucion = Pantallas.eleccionDeEjecucion();
+                modoEjecucion = Menus.menuEjecucion();
                 switch (modoEjecucion) {
                     case 1:
                         ejecutarSistemaCompleto();
@@ -104,7 +104,7 @@ public class Juego {
         String opcion1 = "";
         try {
             while (true) {
-                opcion1 = Pantallas.PantallaInicio();
+                opcion1 = Menus.menuBienvenida();
                 switch (opcion1) {
                     case "1":
                         flujoDelSistema();
@@ -137,11 +137,11 @@ public class Juego {
         String opcion2;
         salir = false;
         while (!salir) {
-            opcion2 = Pantallas.PantallaMenu();
+            opcion2 = Menus.menuInicio();
 
             switch (opcion2) {
                 case "1": // Configurar modo de juego
-                    Pantallas.PantallaModosDeJuego();
+                    Menus.menuModoDeJuego();
                     break;
                 case "2": // Configurar nombres y cantidad de jugadores
                     cantidadActualJugadores = UnoEngine.configurarJugadores();
@@ -175,35 +175,8 @@ public class Juego {
         Thread.sleep(2000);
         Datos.saltoDeLineas();
 
-        menuReinicio();
+        Menus.menuReinicio();
 
-    }
-
-    /**
-     * Menu que muestra como quieres reiniciar el sistema
-     * 
-     * @param 'ninguno'
-     * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
-     */
-    public static void menuReinicio() throws ReiniciarJuego {
-        salir = false;
-        String opcionReinicio = "";
-        while (!salir) {
-            System.out.println("Quieres reiniciar el estado del juego (Nombres, modo y jugadores)?");
-            opcionReinicio = Datos.pedirCadena("Ingrese \"s\" si sí o \"n\" si no: ");
-            switch (opcionReinicio) {
-                case "s":
-                    resetearEstado();
-                    salir = true;
-                    break;
-                case "n":
-                    salir = true;
-                    break;
-                default:
-                    System.out.println("El mensaje introducido no es un \"s\" o un \"n\" ");
-                    break;
-            }
-        }
     }
 
     /**
@@ -216,9 +189,9 @@ public class Juego {
         Juego.nombresCargados = new String[] { "Jugador 1", "Jugador 2" };
         Juego.cantidadActualJugadores = 2;
 
-        Pantallas.modoDeJuego = "Clásico";
-        Pantallas.jugadores = "2";
-        Pantallas.nombreJugador = "Invitado";
+        Menus.modoDeJuego = "Clásico";
+        Menus.jugadores = "2";
+        Menus.nombreJugador = "Invitado";
 
         Datos.milisegundos = 1000;
 
