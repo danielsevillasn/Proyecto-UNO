@@ -86,6 +86,9 @@ public class UnoEngine {
             // Validación carta sacada
             cartaSacadaValida();
 
+            Thread.sleep(Datos.milisegundos);
+            System.out.println("\n  * " + tablero + " *");
+            Thread.sleep(Datos.milisegundos);
             // Cambio de turno
             Datos.pulsaEnter();
             Datos.saltoDeLineas();

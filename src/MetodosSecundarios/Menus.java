@@ -135,8 +135,8 @@ public class Menus {
         System.out.println("============Jugadores============");
 
         do {
-            numJugadores = Datos.pedirEntero("¿Cuántos jugadores (2-6)? ");
-            if (numJugadores >= 2 && numJugadores <= 6) {
+            numJugadores = Datos.pedirEntero("¿Cuántos jugadores (2-8)? ");
+            if (numJugadores >= 2 && numJugadores <= 8) {
                 rangoJugadores = true;
             } else {
                 Datos.entradaIncorrecta();

@@ -105,4 +105,10 @@ public class Tablero {
     public Carta verCartaEnLaMesa() {
         return descarte[topeDescarte - 1];
     }
+
+    //ToString
+    @Override
+    public String toString() {
+        return "Numero de cartas en la baraja chupona = " + topeChupona +" cartas";
+    }
 }
