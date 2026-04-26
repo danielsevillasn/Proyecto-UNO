@@ -3,6 +3,7 @@ package MetodosSecundarios;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Enumerados.ModoEjecucion;
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
 
@@ -29,6 +30,7 @@ public class Juego {
     public static void iniciarJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
         cantidadActualJugadores = 2;
+        nombresCargados.clear();
         nombresCargados.add("Jugador1");
         nombresCargados.add("Jugador2");
         Menus.modoDeJuego = "Clásico";
@@ -49,12 +51,19 @@ public class Juego {
         while (!salir) {
             try {
                 modoEjecucion = Menus.menuEjecucion();
-                if (modoEjecucion == 1 || modoEjecucion == 2){
-                    ejecutarSistemaCompleto(modoEjecucion);
-                    salir = true;
-                }else{
-                    Datos.entradaIncorrecta();
-                    Thread.sleep(Datos.milisegundos);
+                switch (modoEjecucion) {
+                    case 1:
+                        ejecutarSistemaCompleto(ModoEjecucion.NORMAL);
+                        salir = true;
+                        break;
+                    case 2:
+                        ejecutarSistemaCompleto(ModoEjecucion.DEVELOPER);
+                        salir = true;
+                        break;
+                    default:
+                        Datos.entradaIncorrecta();
+                        Thread.sleep(Datos.milisegundos);
+                        break;
                 }
             } catch (SalirDelJuego e) {
                 System.out.println(e.getMessage());
@@ -66,12 +75,12 @@ public class Juego {
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
      * 
-     * @param 'ninguno'
+     * @param modo de tipo ModoEjecucion el cual es un enumerado de unicamente dos valores
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
-    public static void ejecutarSistemaCompleto(int modo) throws InterruptedException, ReiniciarJuego {
-        if ( modo == 1){
+    public static void ejecutarSistemaCompleto(ModoEjecucion modo) throws InterruptedException, ReiniciarJuego {
+        if (modo == ModoEjecucion.NORMAL){
             Pantallas.PantallaUNO();
         }else{
             Datos.milisegundos = 0;
