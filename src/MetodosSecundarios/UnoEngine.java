@@ -3,6 +3,9 @@ package MetodosSecundarios;
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.NombreUsuarioNoValido;
 import Excepciones.ReiniciarJuego;
+
+import java.util.ArrayList;
+
 import Enumerados.Color;
 import Enumerados.Tipos;
 import Objetos.Carta;
@@ -33,7 +36,7 @@ public class UnoEngine {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    public static void partida(String[] nombresCargados) throws InterruptedException, ReiniciarJuego {
+    public static void partida(ArrayList<String> nombresCargados) throws InterruptedException, ReiniciarJuego {
         // Inicialización de componentes de juego
         tablero = new Tablero();
         controladorTurnos = new Turno();
@@ -56,9 +59,9 @@ public class UnoEngine {
      * 
      * @param nombresCargados nombres de los jugadores (por referencia)
      */
-    private static void repartoInicial(String[] nombresCargados) {
+    private static void repartoInicial(ArrayList<String> nombresCargados) {
         for (int i = 0; i < cantidadActualJugadores; i++) {
-            lista[i] = new Jugador(nombresCargados[i]);
+            lista[i] = new Jugador(nombresCargados.get(i));
             for (int c = 0; c < 7; c++) {
                 lista[i].recibirCarta(tablero.tirarCarta());
             }
@@ -393,9 +396,6 @@ public class UnoEngine {
 
         cantidadActualJugadores = numJugadores;
 
-        // Nombres por defecto sobreescritos
-        Juego.nombresCargados = new String[cantidadActualJugadores];
-
         pedirNombreJugadores();
 
         Menus.jugadores = "" + cantidadActualJugadores;
@@ -419,7 +419,7 @@ public class UnoEngine {
 
                     validacionNombre(nombre);
 
-                    Juego.nombresCargados[i] = nombre;
+                    Juego.nombresCargados.set(i, nombre);
                     nombreValido = true;
                 } catch (NombreUsuarioNoValido e) {
                     System.out.println(e.getMessage());

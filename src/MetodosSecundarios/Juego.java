@@ -1,5 +1,6 @@
 package MetodosSecundarios;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Excepciones.ReiniciarJuego;
@@ -14,7 +15,7 @@ public class Juego {
 
     static Scanner s = new Scanner(System.in);
     // Configuración inicial por defecto
-    protected static String[] nombresCargados = { "Jugador 1", "Jugador 2" };
+    protected static ArrayList<String> nombresCargados = new ArrayList<String>();
     public static int cantidadActualJugadores;
     private static boolean salir;
 
@@ -28,6 +29,8 @@ public class Juego {
     public static void iniciarJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
         cantidadActualJugadores = 2;
+        nombresCargados.add("Jugador1");
+        nombresCargados.add("Jugador2");
         Menus.modoDeJuego = "Clásico";
 
         menuInicio();
@@ -46,19 +49,12 @@ public class Juego {
         while (!salir) {
             try {
                 modoEjecucion = Menus.menuEjecucion();
-                switch (modoEjecucion) {
-                    case 1:
-                        ejecutarSistemaCompleto();
-                        salir = true;
-                        break;
-                    case 2:
-                        ejecutarSistemaCompletoDeveloper();
-                        salir = true;
-                        break;
-                    default:
-                        Datos.entradaIncorrecta();
-                        Thread.sleep(Datos.milisegundos);
-                        break;
+                if (modoEjecucion == 1 || modoEjecucion == 2){
+                    ejecutarSistemaCompleto(modoEjecucion);
+                    salir = true;
+                }else{
+                    Datos.entradaIncorrecta();
+                    Thread.sleep(Datos.milisegundos);
                 }
             } catch (SalirDelJuego e) {
                 System.out.println(e.getMessage());
@@ -74,22 +70,12 @@ public class Juego {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
-    public static void ejecutarSistemaCompleto() throws InterruptedException, ReiniciarJuego {
-        Pantallas.PantallaUNO();
-        Sistema();
-    }
-
-    /**
-     * Método que ejecuta el sistema de desarrollador (sin tiempos de espera ni
-     * pantalla principal)
-     * 
-     * @param 'ninguno'
-     * @throws InterruptedException para los thread sleep
-     * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
-     */
-    public static void ejecutarSistemaCompletoDeveloper()
-            throws InterruptedException, ReiniciarJuego {
-        Datos.milisegundos = 0;
+    public static void ejecutarSistemaCompleto(int modo) throws InterruptedException, ReiniciarJuego {
+        if ( modo == 1){
+            Pantallas.PantallaUNO();
+        }else{
+            Datos.milisegundos = 0;
+        }
         Sistema();
     }
 
@@ -186,8 +172,8 @@ public class Juego {
      * @param 'ninguno'
      */
     public static void resetearEstado() {
-        Juego.nombresCargados = new String[] { "Jugador 1", "Jugador 2" };
-        Juego.cantidadActualJugadores = 2;
+        nombresCargados.clear();
+        cantidadActualJugadores = 2;
 
         Menus.modoDeJuego = "Clásico";
         Menus.jugadores = "2";

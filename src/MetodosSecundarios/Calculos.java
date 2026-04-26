@@ -5,7 +5,7 @@ package MetodosSecundarios;
  * Contiene metodos como:
  * aleatorio
  * 
- * @author Dani S
+ * @author Dani S y Libio
  */
 public class Calculos {
     /**
