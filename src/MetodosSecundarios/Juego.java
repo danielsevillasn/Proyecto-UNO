@@ -75,7 +75,7 @@ public class Juego {
     /**
      * Menú principal del sistema, que ejecuta el sistema completo
      * 
-     * @param modo de tipo ModoEjecucion el cual es un enumerado de unicamente dos valores
+     * @param modo el modo de ejecución (NORMAL o DEVELOPER)
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */

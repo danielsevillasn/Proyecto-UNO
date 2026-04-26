@@ -397,7 +397,7 @@ public class UnoEngine {
         cantidadActualJugadores = numJugadores;
         
         Juego.nombresCargados.clear();
-        
+
         pedirNombreJugadores();
 
         Menus.jugadores = "" + cantidadActualJugadores;
@@ -421,7 +421,7 @@ public class UnoEngine {
 
                     validacionNombre(nombre);
 
-                    Juego.nombresCargados.add(i, nombre);
+                    Juego.nombresCargados.add(nombre);
                     nombreValido = true;
                 } catch (NombreUsuarioNoValido e) {
                     System.out.println(e.getMessage());
