@@ -2,6 +2,7 @@ package Objetos;
 
 import Enumerados.Color;
 import Enumerados.TiposEspeciales;
+import MetodosSecundarios.Calculos;
 
 /**
  * Clase tablero que gestiona el mazo de robo (chupona) y la pila de descarte.
@@ -33,10 +34,21 @@ public class Tablero {
      * 
      * @param 'ninguno'
      */
-    public void inicializar() {
-        Carta temp;
+    public void inicializarBaraja() {
 
-        // Sirve para meter las cartas normales en el mazo
+        inicializarCartasNormales();
+
+        inicializarCartasEspeciales();
+
+        mezclarBaraja();
+    }
+
+    /**
+     * Sirve para meter las cartas normales en el mazo
+     * 
+     * @param 'nada'
+     */
+    private void inicializarCartasNormales() {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k <= 9; k++) {
@@ -46,7 +58,14 @@ public class Tablero {
                 }
             }
         }
-        // Sirve para meter las cartas especiales que tienen colores en el mazo
+    }
+
+    /**
+     * Sirve para meter las cartas especiales que tienen colores en el mazo
+     * 
+     * @param 'nada'
+     */
+    private void inicializarCartasEspeciales() {
         // Bloqueo, Reversa y chupate dos duplicados por color
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 3; j++) {
@@ -56,16 +75,23 @@ public class Tablero {
             }
         }
 
-        // Sirve para meter las cartas especiales que tienen color negro en el mazo
         // Cambio color y chupate cuatro deben aparecer 4 veces cada una
         for (int i = 0; i < 4; i++) {
             chupona[topeChupona++] = new CartaEspecial(TiposEspeciales.values()[3], Color.NEGRO);
             chupona[topeChupona++] = new CartaEspecial(TiposEspeciales.values()[4], Color.NEGRO);
         }
+    }
 
+    /**
+     * Mezcla la baraja empleando numeros aleatorios
+     * 
+     * @param 'nada'
+     */
+    private void mezclarBaraja() {
+        Carta temp;
         for (int i = 0; i < topeChupona; i++) {
             // Genera un índice aleatorio entre 0 e i
-            int r = (int) (Math.random() * (i + 1));
+            int r = Calculos.aleatorio(0, i);
             temp = chupona[i];
             chupona[i] = chupona[r];
             chupona[r] = temp;
@@ -106,9 +132,9 @@ public class Tablero {
         return descarte[topeDescarte - 1];
     }
 
-    //ToString
+    // ToString
     @Override
     public String toString() {
-        return "Numero de cartas en la baraja chupona = " + topeChupona +" cartas";
+        return "Numero de cartas en la baraja chupona = " + topeChupona + " cartas";
     }
 }

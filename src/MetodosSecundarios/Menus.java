@@ -78,7 +78,6 @@ public class Menus {
         System.out.println("=========Modos de juego===========");
         System.out.println("\t1. Clásico");
         System.out.println("\t2. Otra modalidad");
-        System.out.println("\t3. Otra modalidad");
 
         modoDeJuegoSeleccionado();
 
@@ -103,10 +102,6 @@ public class Menus {
                     salir = true;
                     break;
                 case 2:
-                    modoDeJuego = "Otro";
-                    salir = true;
-                    break;
-                case 3:
                     modoDeJuego = "Otro";
                     salir = true;
                     break;

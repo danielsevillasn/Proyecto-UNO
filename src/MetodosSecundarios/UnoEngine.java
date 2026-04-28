@@ -40,7 +40,7 @@ public class UnoEngine {
         // Inicialización de componentes de juego
         tablero = new Tablero();
         controladorTurnos = new Turno();
-        tablero.inicializar();
+        tablero.inicializarBaraja();
         fin = false;
         cantidadActualJugadores = Juego.cantidadActualJugadores;
         lista = new Jugador[cantidadActualJugadores];
