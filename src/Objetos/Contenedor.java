@@ -81,6 +81,8 @@ public class Contenedor<T extends Carta> {
 
     /**
      * Utiliza el método de utilidad de Collections para mezclar los elementos
+     * 
+     * @param 'nada'
      */
     public void barajar() {
         Collections.shuffle(lista);
@@ -89,6 +91,7 @@ public class Contenedor<T extends Carta> {
     /**
      * Devuelve la cantidad de elementos actuales
      * 
+     * @param 'nada'
      * @return Tamaño de la lista
      */
     public int size() {

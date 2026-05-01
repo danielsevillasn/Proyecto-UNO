@@ -73,7 +73,7 @@ public class Jugador {
      * @return valor boleano que determina si la mano esta llena o no
      */
     public boolean tieneManoLlena() {
-        if (mano.size() >= 21) {
+        if (mano.size() >= limiteMano) {
             System.out.println("El jugador tiene la mano llena");
             return true;
         }

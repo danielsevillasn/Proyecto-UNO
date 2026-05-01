@@ -80,7 +80,7 @@ public class Tablero {
     }
 
     /**
-     *  Saca la última carta del mazo de robo
+     * Saca la última carta del mazo de robo
      * 
      * @return El objeto Carta extraído o null si el mazo está vacío
      * @param 'ninguno'
