@@ -3,6 +3,8 @@ package Objetos;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Excepciones.ContenedorLleno;
+
 /**
  * Clase genérica que sirve como base para cualquier colección de cartas.
  * Implementa la lógica de almacenamiento dinámico y barajado.
@@ -11,16 +13,17 @@ import java.util.Collections;
  * @param <T> El tipo de carta que almacenará (debe extender de Carta)
  */
 public class Contenedor<T extends Carta> {
-    // Lista dinámica que cumple con los apuntes sobre Colecciones
+    // Atributos/////////////////////
     protected ArrayList<T> lista;
 
-    /**
-     * Constructor por defecto que inicializa la lista
-     */
+    // Metodos////////////////////////
+
+    // Constructor por defecto
     public Contenedor() {
         this.lista = new ArrayList<>();
     }
 
+    // Otros metodos
     /**
      * Añade una carta a la colección
      * 
@@ -29,6 +32,20 @@ public class Contenedor<T extends Carta> {
     public void añadir(T carta) {
         if (carta != null) {
             lista.add(carta);
+        }
+    }
+
+    /**
+     * Añade una carta a la colección dependiendo de un limite
+     * 
+     * @param carta Objeto de tipo T a añadir
+     * @throws ContenedorLleno Excepcion que salta cuando el contedor esta lleno
+     */
+    public void añadir(T carta, int limite) throws ContenedorLleno {
+        if (carta != null && (limite == -1 || lista.size() < limite)) {
+            lista.add(carta);
+        } else if (limite > -1) {
+            throw new ContenedorLleno("Contenedor lleno");
         }
     }
 
@@ -42,7 +59,7 @@ public class Contenedor<T extends Carta> {
         if (indice >= 0 && indice < lista.size()) {
             return lista.remove(indice);
         }
-        return null;
+        throw new IndexOutOfBoundsException("Índice fuera de rango: " + indice);
     }
 
     /**

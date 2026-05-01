@@ -1,5 +1,7 @@
 package Objetos;
 
+import Excepciones.ContenedorLleno;
+
 /**
  * Clase que representa al jugador y su mano de cartas.
  * 
@@ -48,9 +50,11 @@ public class Jugador {
      * @param carta Objeto carta a añadir
      */
     public void recibirCarta(Carta carta) {
-        // Nota: Con Contenedor (ArrayList) ya no hay límite de 20,
-        // pero mantenemos la estructura por tus apuntes.
-        mano.añadir(carta);
+        try{
+            mano.añadir(carta,21);
+        }catch(ContenedorLleno e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
