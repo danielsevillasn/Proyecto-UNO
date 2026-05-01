@@ -1,7 +1,8 @@
 package Excepciones;
 
 /**
- * Excepcion que se lanza cuando la carta lanzada no es valida
+ * Excepción que se lanza cuando se intenta añadir una carta y el contenedor
+ * está lleno
  * 
  * @author DaniS y Libio
  */

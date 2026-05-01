@@ -11,6 +11,7 @@ public class Jugador {
     // Atributos/////////////////////
     private final String nombre;
     private Contenedor<Carta> mano;
+    private final int limiteMano;
 
     // Metodos////////////////////////
 
@@ -18,6 +19,7 @@ public class Jugador {
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.mano = new Contenedor<>();
+        limiteMano = 21;
     }
 
     // Getter
@@ -51,7 +53,7 @@ public class Jugador {
      */
     public void recibirCarta(Carta carta) {
         try{
-            mano.añadir(carta,21);
+            mano.añadir(carta,limiteMano);
         }catch(ContenedorLleno e){
             System.out.println(e.getMessage());
         }
