@@ -1,21 +1,21 @@
 package Objetos;
 
 /**
- * Clase jugador que guarda los nombres y la baraja de cartas
+ * Clase que representa al jugador y su mano de cartas.
  * 
  * @author DaniS y Libio
  */
 public class Jugador {
     // Atributos/////////////////////
     private final String nombre;
-    public Carta[] mano = new Carta[21]; // Hay un límite de 20 cartas
-    private int numCartas = 0;
+    private Contenedor<Carta> mano;
 
     // Metodos////////////////////////
 
     // Constructor para instanciar objeto con un parametro
     public Jugador(String nombre) {
         this.nombre = nombre;
+        this.mano = new Contenedor<>();
     }
 
     // Getter
@@ -24,40 +24,33 @@ public class Jugador {
     }
 
     public int getNumCartas() {
-        return numCartas;
+        return mano.size();
     }
 
-    // Setter
-    public void setNumCartas(int numCartas) {
-        this.numCartas = numCartas;
+    public Contenedor<Carta> getMano() {
+        return mano;
     }
 
     // Otros metodos
     /**
-     * Método para recibir una carta aleatoria en tu mano
+     * Juega una carta de la mano
      * 
-     * @param carta objeto carta que es la carta a recibir
+     * @param n Índice de la carta seleccionada
+     * @return La carta extraída
      */
-    public void recibirCarta(Carta carta) {
-        if (carta != null) {
-            mano[numCartas++] = carta;
-        }
+    public Carta jugarCarta(int n) {
+        return mano.extraer(n);
     }
 
     /**
-     * Método para jugar las cartas y disminuir el tamaño
-     * de tu mano
+     * Recibe una carta y la guarda en el contenedor
      * 
-     * @param n numero entero que representa el numero de la carta
-     * @return carta objeto carta que es la carta buscada
+     * @param carta Objeto carta a añadir
      */
-    public Carta jugarCarta(int n) {
-        Carta carta = mano[n];
-        for (int j = n; j < numCartas - 1; j++) {
-            mano[j] = mano[j + 1];
-        }
-        mano[--numCartas] = null;
-        return carta;
+    public void recibirCarta(Carta carta) {
+        // Nota: Con Contenedor (ArrayList) ya no hay límite de 20,
+        // pero mantenemos la estructura por tus apuntes.
+        mano.añadir(carta);
     }
 
     /**
@@ -67,7 +60,7 @@ public class Jugador {
      * @return valor boleano que determina si la mano esta llena o no
      */
     public boolean tieneManoLlena() {
-        if (numCartas >= mano.length) {
+        if (mano.size() >= 21) {
             System.out.println("El jugador tiene la mano llena");
             return true;
         }

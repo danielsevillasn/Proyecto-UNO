@@ -8,7 +8,7 @@ import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
 
 /**
- * Clase que estructurada mediante una serie de métodos para todo el juego
+ * Clase que establece la raiz del juego
  *
  * @author DaniS y Libio
  */
@@ -80,9 +80,9 @@ public class Juego {
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
     public static void ejecutarSistemaCompleto(ModoEjecucion modo) throws InterruptedException, ReiniciarJuego {
-        if (modo == ModoEjecucion.NORMAL){
+        if (modo == ModoEjecucion.NORMAL) {
             Pantallas.PantallaUNO();
-        }else{
+        } else {
             Datos.milisegundos = 0;
         }
         Sistema();

@@ -7,7 +7,8 @@ import MetodosSecundarios.Calculos;
 
 /**
  * Clase Carta con implementación de herencias, enum e interfaz
- * * @author DaniS y Libio
+ * 
+ * @author DaniS y Libio
  */
 public abstract class Carta {
     // Atributos/////////////////////

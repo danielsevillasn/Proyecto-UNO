@@ -6,6 +6,12 @@ import Enumerados.TiposEspeciales;
 import Excepciones.CartaLanzadaNoValida;
 import MetodosSecundarios.Calculos;
 
+/**
+ * Clase CartaEspecial que hereda de carta y se basa en el desarrollo de una
+ * carta especial del UNO con sus respectivos métodos
+ * 
+ * @author DaniS y Libio
+ */
 public class CartaEspecial extends Carta {
     // Atributos/////////////////////
     private TiposEspeciales tiposEspeciales;

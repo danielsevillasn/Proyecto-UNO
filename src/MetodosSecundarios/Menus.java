@@ -20,7 +20,6 @@ public class Menus {
     public static String jugadores = "2";
     public static String nombreJugador = "";
 
-
     /**
      * Muestra al usuario un menú de opciones; pide que teclee una de ellas y
      * devuelve la Opción introducida
@@ -120,7 +119,7 @@ public class Menus {
      * @param 'ninguno'
      * @return valor entero que representa el numero de jugadores
      * @throws InterruptedException para los thread sleep
-     * @throws ReiniciarJuego para reinciar el juego cuando se quiera
+     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
     public static int menuJugadores() throws InterruptedException, ReiniciarJuego {
         int numJugadores;

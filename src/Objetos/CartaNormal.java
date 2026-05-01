@@ -6,8 +6,10 @@ import Excepciones.CartaLanzadaNoValida;
 import MetodosSecundarios.Calculos;
 
 /**
- * Herencia de la clase carta
- * * @author DaniS y Libio
+ * Clase CartaNormal que hereda de carta y se basa en el desarrollo de una
+ * carta normal del UNO con sus respectivos métodos
+ * 
+ * @author DaniS y Libio
  */
 public class CartaNormal extends Carta {
     // Atributos/////////////////////

@@ -2,6 +2,12 @@ package Excepciones;
 
 import java.util.ArrayList;
 
+/**
+ * Excepcion programada que se lanza cuando una de las políticas de seguridad no
+ * se cumplen a la hora de ingresar un nombre de usuario
+ * 
+ * @author DaniS y Libio
+ */
 public class NombreUsuarioNoValido extends Exception {
     // Atributos/////////////////////
     private final String nombreRechazado;

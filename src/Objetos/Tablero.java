@@ -2,29 +2,25 @@ package Objetos;
 
 import Enumerados.Color;
 import Enumerados.TiposEspeciales;
-import MetodosSecundarios.Calculos;
 
 /**
  * Clase tablero que gestiona el mazo de robo (chupona) y la pila de descarte.
- * * @author DaniS y Libio
+ * 
+ * @author DaniS y Libio
  */
 public class Tablero {
 
     // Atributos/////////////////////
 
-    private final Carta[] chupona;
-    private int topeChupona;
-    private final Carta[] descarte;
-    private int topeDescarte;
+    private Contenedor<Carta> chupona;
+    private Contenedor<Carta> descarte;
 
     // Metodos////////////////////////
 
     // Constructor por defecto
     public Tablero() {
-        topeChupona = 0;
-        topeDescarte = 0;
-        chupona = new Carta[108];
-        descarte = new Carta[108];
+        this.chupona = new Contenedor<>();
+        this.descarte = new Contenedor<>();
     }
 
     // Otros metodos
@@ -40,7 +36,7 @@ public class Tablero {
 
         inicializarCartasEspeciales();
 
-        mezclarBaraja();
+        chupona.barajar();
     }
 
     /**
@@ -53,7 +49,7 @@ public class Tablero {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k <= 9; k++) {
                     if (!(k == 0 && i == 1)) {
-                        chupona[topeChupona++] = new CartaNormal(k, Color.values()[j]);
+                        chupona.añadir(new CartaNormal(k, Color.values()[j]));
                     }
                 }
             }
@@ -70,71 +66,53 @@ public class Tablero {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 4; k++) {
-                    chupona[topeChupona++] = new CartaEspecial(TiposEspeciales.values()[j], Color.values()[k]);
+                    chupona.añadir(new CartaEspecial(TiposEspeciales.values()[j], Color.values()[k]));
                 }
             }
         }
 
         // Cambio color y chupate cuatro deben aparecer 4 veces cada una
         for (int i = 0; i < 4; i++) {
-            chupona[topeChupona++] = new CartaEspecial(TiposEspeciales.values()[3], Color.NEGRO);
-            chupona[topeChupona++] = new CartaEspecial(TiposEspeciales.values()[4], Color.NEGRO);
+            chupona.añadir(new CartaEspecial(TiposEspeciales.values()[3], Color.NEGRO));
+            chupona.añadir(new CartaEspecial(TiposEspeciales.values()[4], Color.NEGRO));
         }
     }
 
     /**
-     * Mezcla la baraja empleando numeros aleatorios
-     * 
-     * @param 'nada'
-     */
-    private void mezclarBaraja() {
-        Carta temp;
-        for (int i = 0; i < topeChupona; i++) {
-            // Genera un índice aleatorio entre 0 e i
-            int r = Calculos.aleatorio(0, i);
-            temp = chupona[i];
-            chupona[i] = chupona[r];
-            chupona[r] = temp;
-        }
-    }
-
-    /**
-     * Extrae y devuelve la carta superior de la pila de robo (chupona).
+     *  Saca la última carta del mazo de robo
      * 
      * @return El objeto Carta extraído o null si el mazo está vacío
      * @param 'ninguno'
      */
     public Carta tirarCarta() {
-        if (topeChupona > 0) {
-            return chupona[--topeChupona];
-        } else {
-            return null;
+        if (chupona.size() > 0) {
+            return chupona.extraer(chupona.size() - 1);
         }
+        return null;
     }
 
     /**
-     * Coloca una carta específica sobre el montón de descarte e incrementa el tope.
+     * Coloca una carta en el montón de descarte
      * 
      * @param c Objeto Carta que el jugador lanza a la mesa.
      */
     public void dejar(Carta c) {
-        descarte[topeDescarte++] = c;
+        descarte.añadir(c);
     }
 
     /**
-     * Permite consultar cuál es el objeto carta que está actualmente en la cima del
-     * descarte sin quitarla.
+     * Mira la carta que está arriba en el descarte
      * 
      * @return El objeto Carta que se encuentra visible en la mesa.
      * @param 'ninguno'
      */
     public Carta verCartaEnLaMesa() {
-        return descarte[topeDescarte - 1];
+        return descarte.obtener(descarte.size() - 1);
     }
 
     // ToString
     @Override
     public String toString() {
-        return "Numero de cartas en la baraja chupona = " + topeChupona + " cartas";
+        return "Numero de cartas en la baraja chupona = " + chupona.size() + " cartas";
     }
 }

@@ -15,6 +15,11 @@ import Objetos.Jugador;
 import Objetos.Tablero;
 import Objetos.Turno;
 
+/**
+ * Clase que gestiona el flujo del juego
+ * 
+ * @author DaniS y Libio
+ */
 public class UnoEngine {
 
     private static Tablero tablero;
@@ -147,7 +152,7 @@ public class UnoEngine {
 
         // Mostrar la mano del jugador actual
         for (int i = 0; i < jugador.getNumCartas(); i++) {
-            System.out.print(i + ":" + jugador.mano[i] + " ");
+            System.out.print(i + ":" + jugador.getMano().obtener(i) + " ");
         }
         System.out.println(jugador.getNumCartas() + ":[ROBAR]");
     }
@@ -174,7 +179,7 @@ public class UnoEngine {
     private static boolean cartaSacada() throws CartaLanzadaNoValida {
         Carta cartaSeleccionada;
         Carta cartaEnMesa;
-        cartaSeleccionada = jugador.mano[opcionCarta];
+        cartaSeleccionada = jugador.getMano().obtener(opcionCarta);
         cartaEnMesa = tablero.verCartaEnLaMesa();
         return cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
     }
@@ -395,7 +400,7 @@ public class UnoEngine {
         numJugadores = Menus.menuJugadores();
 
         cantidadActualJugadores = numJugadores;
-        
+
         Juego.nombresCargados.clear();
 
         pedirNombreJugadores();
