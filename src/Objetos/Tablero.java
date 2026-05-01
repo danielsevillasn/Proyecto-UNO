@@ -2,6 +2,7 @@ package Objetos;
 
 import Enumerados.Color;
 import Enumerados.TiposEspeciales;
+import Excepciones.ContenedorVacio;
 
 /**
  * Clase tablero que gestiona el mazo de robo (chupona) y la pila de descarte.
@@ -85,10 +86,13 @@ public class Tablero {
      * @param 'ninguno'
      */
     public Carta tirarCarta() {
-        if (chupona.size() > 0) {
-            return chupona.extraer(chupona.size() - 1);
+        try {
+            Carta carta = chupona.extraer(chupona.size() - 1);
+            return carta;
+        } catch (ContenedorVacio e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-        return null;
     }
 
     /**

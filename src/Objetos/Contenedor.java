@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import Excepciones.ContenedorLleno;
+import Excepciones.ContenedorVacio;
 
 /**
  * Clase genérica que sirve como base para cualquier colección de cartas.
@@ -55,11 +56,14 @@ public class Contenedor<T extends Carta> {
      * @param indice Posición en la lista
      * @return La carta extraída o null si el índice no es válido
      */
-    public T extraer(int indice) {
-        if (indice >= 0 && indice < lista.size()) {
-            return lista.remove(indice);
+    public T extraer(int indice) throws ContenedorVacio {
+        if (lista.isEmpty()) {
+            throw new ContenedorVacio("El contenedor está vacío, no se puede extraer.");
         }
-        throw new IndexOutOfBoundsException("Índice fuera de rango: " + indice);
+        if (indice < 0 || indice >= lista.size()) {
+            throw new ContenedorVacio("Índice fuera de rango: " + indice);
+        }
+        return lista.remove(indice);
     }
 
     /**

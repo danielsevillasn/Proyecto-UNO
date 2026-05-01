@@ -1,6 +1,7 @@
 package Objetos;
 
 import Excepciones.ContenedorLleno;
+import Excepciones.ContenedorVacio;
 
 /**
  * Clase que representa al jugador y su mano de cartas.
@@ -43,7 +44,13 @@ public class Jugador {
      * @return La carta extraída
      */
     public Carta jugarCarta(int n) {
-        return mano.extraer(n);
+        try {
+            Carta carta = mano.extraer(0);
+            return carta;
+        } catch (ContenedorVacio e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -52,9 +59,9 @@ public class Jugador {
      * @param carta Objeto carta a añadir
      */
     public void recibirCarta(Carta carta) {
-        try{
-            mano.añadir(carta,limiteMano);
-        }catch(ContenedorLleno e){
+        try {
+            mano.añadir(carta, limiteMano);
+        } catch (ContenedorLleno e) {
             System.out.println(e.getMessage());
         }
     }
