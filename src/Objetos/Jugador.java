@@ -45,7 +45,7 @@ public class Jugador {
      */
     public Carta jugarCarta(int n) {
         try {
-            Carta carta = mano.extraer(0);
+            Carta carta = mano.extraer(n);
             return carta;
         } catch (ContenedorVacio e) {
             System.out.println(e.getMessage());
