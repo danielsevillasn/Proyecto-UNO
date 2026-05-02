@@ -89,8 +89,10 @@ public abstract class Carta implements Comparable<Carta> {
     @Override
     public int compareTo(Carta c) {
         int compareTipo = tipo.compareTo(c.tipo);
-        if (compareTipo != 0)
-            return compareTipo;
+        if (compareTipo != 0) {
+            return compareTipo; // Si el tipo es distinto, eso define el orden
+        }
+        // Si el tipo es igual, compara por color
         return color.compareTo(c.color);
     }
 

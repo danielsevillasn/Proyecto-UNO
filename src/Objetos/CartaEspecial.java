@@ -119,14 +119,15 @@ public class CartaEspecial extends Carta {
     // Prioridad en el orden basada en 3. TipoEspecial
     @Override
     public int compareTo(Carta c) {
-        int compareCarta = super.compareTo(c);
-        if (compareCarta != 0){
-            return compareCarta;
+        int compareCarta = super.compareTo(c); // Comienza con la comparación definida en la superclase
+        if (compareCarta != 0) {
+            return compareCarta; // Si tipo o color son distintos, decide el orden aquí.
         }
-        if (!(c instanceof CartaEspecial)){
-            return 1;
+        if (!(c instanceof CartaEspecial)) {
+            return 1; // Si el objeto comparado no es una Carta especial, este objeto se pone delante
         }
         CartaEspecial other = (CartaEspecial) c;
-        return tiposEspeciales.compareTo(other.tiposEspeciales);
+        return tiposEspeciales.compareTo(other.tiposEspeciales); // Si todo lo anterior es igual, entonces compara por
+                                                                 // su tipo especial
     }
 }

@@ -100,16 +100,16 @@ public class CartaNormal extends Carta {
     // Prioridad en el orden basada en 3. numero
     @Override
     public int compareTo(Carta c) {
-        int compareCarta = super.compareTo(c);
-        if (compareCarta != 0){
-            return compareCarta;
+        int compareCarta = super.compareTo(c); // Comienza con la comparación definida en la superclase
+        if (compareCarta != 0) {
+            return compareCarta; // Si tipo o color son distintos, decide el orden aquí.
         }
-        if (!(c instanceof CartaNormal)){
-            return 1;
+        if (!(c instanceof CartaNormal)) {
+            return 1; // Si el objeto comparado no es una Carta normal, este objeto se pone delante
         }
         CartaNormal n = (CartaNormal) c;
         Integer n1 = (Integer) numero;
         Integer n2 = (Integer) n.getNumero();
-        return n1.compareTo(n2);
+        return n1.compareTo(n2); // Si todo lo anterior es igual, entonces compara por color
     }
 }
