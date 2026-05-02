@@ -83,4 +83,33 @@ public class CartaNormal extends Carta {
         return super.toString() + numero + "]" + RESETCOLOR;
     }
 
+    // Equals
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        CartaNormal other = (CartaNormal) obj;
+        return numero == other.numero;
+    }
+
+    // Compare to
+    // Prioridad en el orden basada en 3. numero
+    @Override
+    public int compareTo(Carta c) {
+        int compareCarta = super.compareTo(c);
+        if (compareCarta != 0){
+            return compareCarta;
+        }
+        if (!(c instanceof CartaNormal)){
+            return 1;
+        }
+        CartaNormal n = (CartaNormal) c;
+        Integer n1 = (Integer) numero;
+        Integer n2 = (Integer) n.getNumero();
+        return n1.compareTo(n2);
+    }
 }

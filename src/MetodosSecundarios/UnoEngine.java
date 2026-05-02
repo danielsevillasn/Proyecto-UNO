@@ -5,6 +5,7 @@ import Excepciones.NombreUsuarioNoValido;
 import Excepciones.ReiniciarJuego;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import Enumerados.Color;
@@ -84,6 +85,7 @@ public class UnoEngine {
     private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego {
         while (!fin) {
             // Escoge al jugador correspondiente, basado en el turno actual
+            ordenarBarajaJugadores();
             jugador = jugadores.get(controladorTurnos.getActual());
 
             // Imprime el tablero, con el turno, el jugador y las cartas
@@ -105,6 +107,12 @@ public class UnoEngine {
             // Si nadie ha ganado, pasamos al siguiente turno
             if (!fin)
                 controladorTurnos.siguiente(cantidadActualJugadores);
+        }
+    }
+
+    private static void ordenarBarajaJugadores(){
+        for (int i = 0; i < cantidadActualJugadores; i++) {
+            Collections.sort(jugadores.get(i).getMano().getLista());
         }
     }
 

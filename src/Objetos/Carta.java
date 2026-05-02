@@ -10,7 +10,7 @@ import MetodosSecundarios.Calculos;
  * 
  * @author DaniS y Libio
  */
-public abstract class Carta {
+public abstract class Carta implements Comparable<Carta> {
     // Atributos/////////////////////
     protected Color color;
     protected final Tipos tipo;
@@ -65,6 +65,33 @@ public abstract class Carta {
     @Override
     public String toString() {
         return getFormatoColor() + "[" + color + " ";
+    }
+
+    // Equals
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Carta other = (Carta) obj;
+        if (color != other.color)
+            return false;
+        if (tipo != other.tipo)
+            return false;
+        return true;
+    }
+
+    // Compare to
+    // Prioridad en el orden basada en 1. Tipo -> 2. Color
+    @Override
+    public int compareTo(Carta c) {
+        int compareTipo = tipo.compareTo(c.tipo);
+        if (compareTipo != 0)
+            return compareTipo;
+        return color.compareTo(c.color);
     }
 
 }

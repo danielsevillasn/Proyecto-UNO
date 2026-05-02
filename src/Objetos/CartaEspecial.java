@@ -102,4 +102,31 @@ public class CartaEspecial extends Carta {
         return super.toString() + simbolo + "]" + RESETCOLOR;
     }
 
+    // Equals
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        CartaEspecial other = (CartaEspecial) obj;
+        return tiposEspeciales == other.tiposEspeciales;
+    }
+
+    // Compare to
+    // Prioridad en el orden basada en 3. TipoEspecial
+    @Override
+    public int compareTo(Carta c) {
+        int compareCarta = super.compareTo(c);
+        if (compareCarta != 0){
+            return compareCarta;
+        }
+        if (!(c instanceof CartaEspecial)){
+            return 1;
+        }
+        CartaEspecial other = (CartaEspecial) c;
+        return tiposEspeciales.compareTo(other.tiposEspeciales);
+    }
 }

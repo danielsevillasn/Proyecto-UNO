@@ -24,6 +24,11 @@ public class Contenedor<T extends Carta> {
         this.lista = new ArrayList<>();
     }
 
+    // Getter
+    public ArrayList<T> getLista() {
+        return lista;
+    }
+
     // Otros metodos
     /**
      * Añade una carta a la colección
@@ -97,4 +102,5 @@ public class Contenedor<T extends Carta> {
     public int size() {
         return lista.size();
     }
+
 }
