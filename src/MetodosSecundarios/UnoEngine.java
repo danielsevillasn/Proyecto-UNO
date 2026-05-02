@@ -5,6 +5,7 @@ import Excepciones.NombreUsuarioNoValido;
 import Excepciones.ReiniciarJuego;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Enumerados.Color;
 import Enumerados.Tipos;
@@ -24,7 +25,7 @@ public class UnoEngine {
 
     private static Tablero tablero;
     private static Turno controladorTurnos;
-    private static Jugador[] lista;
+    private static HashMap<Integer, Jugador> jugadores;
     private static boolean fin = false;
     private static boolean cartaValida = false;
     private static int opcionCarta = -1;
@@ -48,7 +49,7 @@ public class UnoEngine {
         tablero.inicializarBaraja();
         fin = false;
         cantidadActualJugadores = Juego.cantidadActualJugadores;
-        lista = new Jugador[cantidadActualJugadores];
+        jugadores = new HashMap<>();
 
         repartoInicial(nombresCargados);
 
@@ -66,9 +67,9 @@ public class UnoEngine {
      */
     private static void repartoInicial(ArrayList<String> nombresCargados) {
         for (int i = 0; i < cantidadActualJugadores; i++) {
-            lista[i] = new Jugador(nombresCargados.get(i));
+            jugadores.put(i, new Jugador(nombresCargados.get(i)));
             for (int c = 0; c < 7; c++) {
-                lista[i].recibirCarta(tablero.tirarCarta());
+                jugadores.get(i).recibirCarta(tablero.tirarCarta());
             }
         }
     }
@@ -83,7 +84,7 @@ public class UnoEngine {
     private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego {
         while (!fin) {
             // Escoge al jugador correspondiente, basado en el turno actual
-            jugador = lista[controladorTurnos.getActual()];
+            jugador = jugadores.get(controladorTurnos.getActual());
 
             // Imprime el tablero, con el turno, el jugador y las cartas
             verTablero();
@@ -105,6 +106,23 @@ public class UnoEngine {
             if (!fin)
                 controladorTurnos.siguiente(cantidadActualJugadores);
         }
+    }
+
+    /**
+     * Método que muestra la interfaz gráfica del tablero excepto la de la accion
+     * 
+     * @param 'ninguno'
+     */
+    private static void verTablero() {
+        System.out.println("\n--- TURNO DE: " + jugador.getNombre() + " ---");
+        System.out.println("  - " + controladorTurnos + " -");
+        System.out.println("Mesa: " + tablero.verCartaEnLaMesa());
+
+        // Mostrar la mano del jugador actual
+        for (int i = 0; i < jugador.getNumCartas(); i++) {
+            System.out.print(i + ":" + jugador.getMano().obtener(i) + " ");
+        }
+        System.out.println(jugador.getNumCartas() + ":[ROBAR]");
     }
 
     /**
@@ -138,23 +156,6 @@ public class UnoEngine {
                 }
             }
         }
-    }
-
-    /**
-     * Método que muestra la interfaz gráfica del tablero excepto la de la accion
-     * 
-     * @param 'ninguno'
-     */
-    private static void verTablero() {
-        System.out.println("\n--- TURNO DE: " + jugador.getNombre() + " ---");
-        System.out.println("  - " + controladorTurnos + " -");
-        System.out.println("Mesa: " + tablero.verCartaEnLaMesa());
-
-        // Mostrar la mano del jugador actual
-        for (int i = 0; i < jugador.getNumCartas(); i++) {
-            System.out.print(i + ":" + jugador.getMano().obtener(i) + " ");
-        }
-        System.out.println(jugador.getNumCartas() + ":[ROBAR]");
     }
 
     /**
@@ -266,7 +267,7 @@ public class UnoEngine {
      */
     private static void bloqueo() {
         Jugador jugadorSaltado;
-        jugadorSaltado = lista[hallarIdJugador()]; // Consultamos quién va a ser bloqueado
+        jugadorSaltado = jugadores.get(hallarIdJugador()); // Consultamos quién va a ser bloqueado
         System.out.println("¡" + jugadorSaltado.getNombre() + " ha sido bloqueado y pierde su turno!");
         controladorTurnos.siguiente(cantidadActualJugadores);
     }
@@ -300,7 +301,7 @@ public class UnoEngine {
      */
     private static void chupate(int numeroCartas, Carta cartaTirada) throws InterruptedException, ReiniciarJuego {
         Jugador jugadorChupete;
-        jugadorChupete = lista[hallarIdJugador()];
+        jugadorChupete = jugadores.get(hallarIdJugador());
         if (numeroCartas == 4) {
             cambiarColor(cartaTirada);
         }

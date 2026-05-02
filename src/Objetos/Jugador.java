@@ -11,6 +11,7 @@ import Excepciones.ContenedorVacio;
 public class Jugador {
     // Atributos/////////////////////
     private final String nombre;
+    private static int id;
     private Contenedor<Carta> mano;
     private final int limiteMano;
 
@@ -21,6 +22,7 @@ public class Jugador {
         this.nombre = nombre;
         this.mano = new Contenedor<>();
         limiteMano = 21;
+        id++;
     }
 
     // Getter
@@ -30,6 +32,10 @@ public class Jugador {
 
     public int getNumCartas() {
         return mano.size();
+    }
+
+    public static int getId() {
+        return id;
     }
 
     public Contenedor<Carta> getMano() {
