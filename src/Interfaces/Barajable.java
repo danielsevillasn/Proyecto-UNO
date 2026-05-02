@@ -5,9 +5,9 @@ package Interfaces;
  * 
  * @author DaniS y Libio
  */
-public interface EfectosCarta {
+public interface Barajable {
     /**
-     * Método que sirve para atribuirle un efecto a la carta
+     * Método que sirve para barajar 
      */
-    void efecto();
+    void barajar();
 }
