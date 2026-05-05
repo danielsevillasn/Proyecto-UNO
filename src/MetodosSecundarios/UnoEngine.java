@@ -1,18 +1,13 @@
 package MetodosSecundarios;
 
 import Excepciones.CartaLanzadaNoValida;
-import Excepciones.NombreUsuarioNoValido;
 import Excepciones.ReiniciarJuego;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
-import Enumerados.Color;
 import Enumerados.Tipos;
 import Objetos.Carta;
-import Objetos.CartaEspecial;
-import Objetos.CartaNormal;
 import Objetos.Jugador;
 import Objetos.Tablero;
 import Objetos.Turno;
@@ -49,30 +44,19 @@ public class UnoEngine {
         controladorTurnos = new Turno();
         tablero.inicializarBaraja();
         fin = false;
-        cantidadActualJugadores = Juego.cantidadActualJugadores;
+
+        cantidadActualJugadores = Juego.cantidadActualJugadores;// Recogemos la cantidad de jugadores que esta en
+                                                                // registro
+
         jugadores = new HashMap<>();
 
-        repartoInicial(nombresCargados);
+        Mecanicas.repartoInicial(cantidadActualJugadores, jugadores, tablero, nombresCargados);
 
         tablero.dejar(tablero.tirarCarta());
 
         flujoDeLaPartida();
 
         Pantallas.PantallaFinal();
-    }
-
-    /**
-     * Metodo para repartir las cartas iniciales a todos los jugadores
-     * 
-     * @param nombresCargados nombres de los jugadores (por referencia)
-     */
-    private static void repartoInicial(ArrayList<String> nombresCargados) {
-        for (int i = 0; i < cantidadActualJugadores; i++) {
-            jugadores.put(i, new Jugador(nombresCargados.get(i)));
-            for (int c = 0; c < 7; c++) {
-                jugadores.get(i).recibirCarta(tablero.tirarCarta());
-            }
-        }
     }
 
     /**
@@ -85,7 +69,7 @@ public class UnoEngine {
     private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego {
         while (!fin) {
             // Escoge al jugador correspondiente, basado en el turno actual
-            ordenarBarajaJugadores();
+            Mecanicas.ordenarBarajaJugadores(cantidadActualJugadores, jugadores);
             jugador = jugadores.get(controladorTurnos.getActual());
 
             // Imprime el tablero, con el turno, el jugador y las cartas
@@ -102,17 +86,11 @@ public class UnoEngine {
             Thread.sleep(Datos.milisegundos);
             // Cambio de turno
             Datos.pulsaEnter();
-            Datos.saltoDeLineas();
+            // Datos.saltoDeLineas(); // Descomentar si es necesario
 
             // Si nadie ha ganado, pasamos al siguiente turno
             if (!fin)
                 controladorTurnos.siguiente(cantidadActualJugadores);
-        }
-    }
-
-    private static void ordenarBarajaJugadores(){
-        for (int i = 0; i < cantidadActualJugadores; i++) {
-            Collections.sort(jugadores.get(i).getMano().getLista());
         }
     }
 
@@ -146,12 +124,12 @@ public class UnoEngine {
             opcionCarta = Datos.pedirEntero("Acción: ");
             if (opcionCarta == jugador.getNumCartas()) {
                 // Opción Robar
-                robarCarta();
+                Mecanicas.robarCarta(jugador, tablero);
                 cartaValida = false;
                 salir = true;
             } else {
                 try {
-                    cartaValida = cartaSacada();
+                    cartaValida = Mecanicas.cartaSacada(jugador, tablero, opcionCarta);
                     salir = true;
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("La carta que quieres lanzar no esta dentro del limite de la baraja");
@@ -159,38 +137,12 @@ public class UnoEngine {
                     System.out.println("No existe la carta seleccionada");
                 } catch (CartaLanzadaNoValida e) {
                     System.out.println(e.getMessage());
-                    cartaSacadaNoValida();
+                    Mecanicas.cartaSacadaNoValida(jugador, tablero);
+                    cartaValida = false;
                     salir = true;
                 }
             }
         }
-    }
-
-    /**
-     * Método que roba una carta de la baraja chupona
-     * 
-     * @param 'ninguno'
-     */
-    private static void robarCarta() {
-        Carta cartaRobada;
-        cartaRobada = tablero.tirarCarta();
-        if (!jugador.tieneManoLlena()) {
-            jugador.recibirCarta(cartaRobada);
-            System.out.println("Has recibido un: " + cartaRobada);
-        }
-    }
-
-    /**
-     * Método que mira si la carta que se acaba de tirar es valida o no
-     * 
-     * @param 'ninguno'
-     */
-    private static boolean cartaSacada() throws CartaLanzadaNoValida {
-        Carta cartaSeleccionada;
-        Carta cartaEnMesa;
-        cartaSeleccionada = jugador.getMano().obtener(opcionCarta);
-        cartaEnMesa = tablero.verCartaEnLaMesa();
-        return cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
     }
 
     /**
@@ -206,7 +158,8 @@ public class UnoEngine {
             cartaTirada = jugador.jugarCarta(opcionCarta);
 
             if (cartaTirada.getTipo() == Tipos.ESPECIAL) {
-                efectosCartasEspeciales(cartaTirada);
+                Efectos.efectosCartasEspeciales(cartaTirada, controladorTurnos, jugadores, cantidadActualJugadores,
+                        tablero);
             }
 
             tablero.dejar(cartaTirada);
@@ -217,260 +170,5 @@ public class UnoEngine {
                 Menus.nombreJugador = jugador.getNombre();
             }
         }
-    }
-
-    /**
-     * Método que recoge todos los efectos de las cartas especiales implementadas y
-     * los hace funcionar
-     * 
-     * @param cartaTirada Carta que ha sido tirada por el jugador
-     * @throws InterruptedException para los thread sleep
-     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
-     */
-    private static void efectosCartasEspeciales(Carta cartaTirada) throws InterruptedException, ReiniciarJuego {
-        CartaEspecial c = (CartaEspecial) cartaTirada;
-        switch (c.getTiposEspeciales()) {
-            case REVERSA:
-                reversa();
-                break;
-            case BLOQUEO:
-                bloqueo();
-                break;
-            case CHUPATE2:
-                chupate(2, cartaTirada);
-                break;
-            case CHUPATE4:
-                chupate(4, cartaTirada);
-                break;
-            case CAMBIOCOLOR:
-                cambiarColor(cartaTirada);
-                break;
-        }
-    }
-
-    /**
-     * Método que realiza la accion de la carta 'reversa':
-     * cambia el sentido del juego y si son únicamente dos jugadores salta el turno
-     * del siguiente
-     * 
-     * @param 'ninguno'
-     */
-    private static void reversa() {
-        controladorTurnos.cambiarSentido();
-
-        // Si son solo 2 jugadores entonces saltamos el turno del jugador que le
-        // precedia
-        if (cantidadActualJugadores == 2) {
-            controladorTurnos.siguiente(cantidadActualJugadores);
-        }
-        System.out.println("¡El sentido ha cambiado!");
-    }
-
-    /**
-     * Método que realiza la accion de la carta 'bloqueo':
-     * Recoge en un objeto jugador el jugador saltado para hallar su id para así
-     * mostrar su nombre y previamente saltarle el turno
-     * 
-     * @param 'ninguno'
-     */
-    private static void bloqueo() {
-        Jugador jugadorSaltado;
-        jugadorSaltado = jugadores.get(hallarIdJugador()); // Consultamos quién va a ser bloqueado
-        System.out.println("¡" + jugadorSaltado.getNombre() + " ha sido bloqueado y pierde su turno!");
-        controladorTurnos.siguiente(cantidadActualJugadores);
-    }
-
-    /**
-     * Método que halla el id del jugador seleccionado mediante un sistema parecido
-     * al de los turnos
-     * 
-     * @return entero que representa el id del jugador actual
-     */
-    private static int hallarIdJugador() {
-        // Si el sentido es el normal entonces
-        int actual = controladorTurnos.getActual();
-        int sentido = controladorTurnos.getSentido(); // 1 o -1
-
-        // Sumamos la cantidad de jugadores para evitar números negativos al restar
-        // El operador % (módulo) asegura que el índice siempre esté en el rango
-        // correcto
-        return (actual + sentido + cantidadActualJugadores) % cantidadActualJugadores;
-    }
-
-    /**
-     * Método que realiza la accion de la carta 'chupateDos':
-     * Recoge en un objeto jugador el jugador que va a chupar para hallar su id para
-     * así hacer que chupe las cartas respectivas, luego saltar el turno y si es un
-     * chupate 4 cambiar el color
-     * 
-     * @param cartaTirada carta que se ha tirado en el tablero
-     * @throws InterruptedException para los thread sleep
-     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
-     */
-    private static void chupate(int numeroCartas, Carta cartaTirada) throws InterruptedException, ReiniciarJuego {
-        Jugador jugadorChupete;
-        jugadorChupete = jugadores.get(hallarIdJugador());
-        if (numeroCartas == 4) {
-            cambiarColor(cartaTirada);
-        }
-        System.out.println("¡" + jugadorChupete.getNombre() + " chupa " + numeroCartas + " cartas y pierde su turno!");
-        chuparCartas(numeroCartas, jugadorChupete);
-        controladorTurnos.siguiente(cantidadActualJugadores);
-    }
-
-    /**
-     * Método que sirve para realizar la accion de chupar cartas
-     * 
-     * @param numeroCartas expresa la cantidad de cartas que el jugador ha de chupar
-     * @param j            recoge el jugador que tiene que chupar las cartas
-     * @throws InterruptedException para los thread sleep
-     */
-    private static void chuparCartas(int numeroCartas, Jugador j) throws InterruptedException {
-        Carta cartaRobada = new CartaNormal();
-        for (int i = 0; i < numeroCartas; i++) {
-            if (!j.tieneManoLlena()) {
-                cartaRobada = tablero.tirarCarta();
-                j.recibirCarta(cartaRobada);
-                System.out.println("Recibe un: " + cartaRobada);
-            }
-        }
-        Thread.sleep(Datos.milisegundos);
-    }
-
-    /**
-     * Método que realiza la accion de la carta 'cambio color'
-     * 
-     * @param cartaTirada carta que se ha tirado en el tablero
-     * @throws ReiniciarJuego para reinciar el juego cuando se quiera
-     */
-    private static void cambiarColor(Carta cartaTirada) throws ReiniciarJuego {
-        boolean datoValido = false;
-        do {
-            System.out.println("A que color quieres cambiar?");
-            System.out.println("1- Rojo");
-            System.out.println("2- Amarillo");
-            System.out.println("3- Verde");
-            System.out.println("4- Azul");
-
-            int opcion = Datos.pedirEntero("Elige un color(1-4):");
-            switch (opcion) {
-                case 1:
-                    cartaTirada.setColor(Color.ROJO);
-                    datoValido = true;
-                    break;
-                case 2:
-                    cartaTirada.setColor(Color.AMARILLO);
-                    datoValido = true;
-                    break;
-                case 3:
-                    cartaTirada.setColor(Color.VERDE);
-                    datoValido = true;
-                    break;
-                case 4:
-                    cartaTirada.setColor(Color.AZUL);
-                    datoValido = true;
-                    break;
-                default:
-                    System.out.println("Esa opcion no es válida");
-                    break;
-            }
-        } while (!datoValido);
-    }
-
-    /**
-     * Método que funciona si la carta sacada no es valida y chupa una carta
-     * 
-     * @param 'ninguno'
-     * @throws InterruptedException para los thread sleep
-     */
-    private static void cartaSacadaNoValida() throws InterruptedException {
-        Carta cartaRobada;
-        cartaRobada = tablero.tirarCarta();
-        if (!jugador.tieneManoLlena()) {
-            jugador.recibirCarta(cartaRobada);
-        }
-        System.out.println("!CHUPAS UNA CARTA!\n");
-        Thread.sleep(Datos.milisegundos);
-        System.out.println("Has recibido un: " + cartaRobada);
-        cartaValida = false;
-    }
-
-    /**
-     * Configura el número de jugadores para el juego
-     * 
-     * @param 'ninguno'
-     * @return valor entero que representa la cantidad actual de jugadores
-     * @throws InterruptedException para los thread sleep
-     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
-     */
-    public static int configurarJugadores() throws InterruptedException, ReiniciarJuego {
-        int numJugadores;
-
-        numJugadores = Menus.menuJugadores();
-
-        cantidadActualJugadores = numJugadores;
-
-        Juego.nombresCargados.clear();
-
-        pedirNombreJugadores();
-
-        Menus.jugadores = "" + cantidadActualJugadores;
-        return cantidadActualJugadores;
-    }
-
-    /**
-     * Método que pide el nombre de los jugadores, valida segun las condiciones
-     * impuestas que esta correcto y lo mete en el array de los nombres del juego
-     * 
-     * @throws ReiniciarJuego para reinciar el juego cuando se quiera
-     */
-    private static void pedirNombreJugadores() throws ReiniciarJuego {
-        boolean nombreValido;
-        String nombre;
-        for (int i = 0; i < cantidadActualJugadores; i++) {
-            nombreValido = false;
-            do {
-                try {
-                    nombre = Datos.pedirCadena("Nombre Jugador " + (i + 1) + ": ");
-
-                    validacionNombre(nombre);
-
-                    Juego.nombresCargados.add(nombre);
-                    nombreValido = true;
-                } catch (NombreUsuarioNoValido e) {
-                    System.out.println(e.getMessage());
-                    System.out.println("Para que tu usuario sea válido, debe cumplir:");
-
-                    // Imprime las sugerencias del array list sugerencias
-                    for (String sugerencia : e.getSugerencias()) {
-                        System.out.println("- " + sugerencia);
-                    }
-                }
-            } while (!nombreValido);
-        }
-        Datos.pulsaEnter();
-    }
-
-    /**
-     * Método que valida el nombre de un usuario de tal forma que siga las
-     * condiciones impuestas en la excepcion
-     * 
-     * @param nombreUsuario variable tipo String que representa el nombre del
-     *                      usuario
-     * @throws NombreUsuarioNoValido excepcion que recoge todas las condiciones para
-     *                               luego mostrarlas en caso de que no se cumplan
-     */
-    public static void validacionNombre(String nombreUsuario) throws NombreUsuarioNoValido {
-        // Inicalizamos la excepcion pasando por parametro el nombre
-        NombreUsuarioNoValido nombreUsuarioNoValido = new NombreUsuarioNoValido(nombreUsuario);
-
-        // Si la excepción detecta que se ha cumplido alguna condicion, por lo cual hay
-        // sugerencias, lanzamos una excepcion
-        if (!nombreUsuarioNoValido.getSugerencias().isEmpty()) {
-            throw nombreUsuarioNoValido;
-        }
-
-        // Si la excepcion no ocurre entonces el usuario se registra
-        System.out.println("Usuario " + nombreUsuario + " registrado con éxito.");
     }
 }

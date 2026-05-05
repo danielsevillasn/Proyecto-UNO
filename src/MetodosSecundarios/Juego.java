@@ -139,7 +139,7 @@ public class Juego {
                     Menus.menuModoDeJuego();
                     break;
                 case "2": // Configurar nombres y cantidad de jugadores
-                    cantidadActualJugadores = UnoEngine.configurarJugadores();
+                    cantidadActualJugadores = Registro.configurarJugadores();
                     break;
                 case "3": // Mostrar instrucciones
                     Pantallas.PantallaReglas();
