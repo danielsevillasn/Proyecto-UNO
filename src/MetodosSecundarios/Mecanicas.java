@@ -2,11 +2,10 @@ package MetodosSecundarios;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import Excepciones.CartaLanzadaNoValida;
 import Objetos.Carta;
 import Objetos.Jugador;
-import Objetos.Tablero;
+import Objetos.PartidaContexto;
 
 /**
  * Clase que gestiona las mecánicas internas del flujo de juego
@@ -20,11 +19,11 @@ public class Mecanicas {
      * 
      * @param nombresCargados nombres de los jugadores (por referencia)
      */
-    public static void repartoInicial(int cantidadActualJugadores, HashMap<Integer, Jugador> jugadores, Tablero tablero, ArrayList<String> nombresCargados) {
-        for (int i = 0; i < cantidadActualJugadores; i++) {
-            jugadores.put(i, new Jugador(nombresCargados.get(i)));
+    public static void repartoInicial(PartidaContexto ctx, ArrayList<String> nombresCargados) {
+        for (int i = 0; i < ctx.getCantidadJugadores(); i++) {
+            ctx.getJugadores().put(i, new Jugador(nombresCargados.get(i)));
             for (int c = 0; c < 7; c++) {
-                jugadores.get(i).recibirCarta(tablero.tirarCarta());
+                ctx.getJugadores().get(i).recibirCarta(ctx.getTablero().tirarCarta());
             }
         }
     }
@@ -32,9 +31,9 @@ public class Mecanicas {
     /**
      * Método que sirve para ordenar la baraja de los jugadores
      */
-    public static void ordenarBarajaJugadores(int cantidadActualJugadores, HashMap<Integer, Jugador> jugadores) {
-        for (int i = 0; i < cantidadActualJugadores; i++) {
-            Collections.sort(jugadores.get(i).getMano().getLista());
+    public static void ordenarBarajaJugadores(PartidaContexto ctx) {
+        for (int i = 0; i < ctx.getCantidadJugadores(); i++) {
+            Collections.sort(ctx.getJugadores().get(i).getMano().getLista());
         }
     }
 
@@ -43,9 +42,9 @@ public class Mecanicas {
      * 
      * @param 'ninguno'
      */
-    public static void robarCarta(Jugador jugador, Tablero tablero) {
+    public static void robarCarta(Jugador jugador, PartidaContexto ctx) {
         Carta cartaRobada;
-        cartaRobada = tablero.tirarCarta();
+        cartaRobada = ctx.getTablero().tirarCarta();
         if (!jugador.tieneManoLlena()) {
             jugador.recibirCarta(cartaRobada);
             System.out.println("Has recibido un: " + cartaRobada);
@@ -57,11 +56,11 @@ public class Mecanicas {
      * 
      * @param 'ninguno'
      */
-    public static boolean cartaSacada(Jugador jugador, Tablero tablero, int opcionCarta) throws CartaLanzadaNoValida {
+    public static boolean cartaSacada(Jugador jugador, PartidaContexto ctx, int opcionCarta) throws CartaLanzadaNoValida {
         Carta cartaSeleccionada;
         Carta cartaEnMesa;
         cartaSeleccionada = jugador.getMano().obtener(opcionCarta);
-        cartaEnMesa = tablero.verCartaEnLaMesa();
+        cartaEnMesa = ctx.getTablero().verCartaEnLaMesa();
         return cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
     }
 
@@ -71,9 +70,9 @@ public class Mecanicas {
      * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      */
-    public static void cartaSacadaNoValida(Jugador jugador, Tablero tablero) throws InterruptedException {
+    public static void cartaSacadaNoValida(Jugador jugador, PartidaContexto ctx) throws InterruptedException {
         Carta cartaRobada;
-        cartaRobada = tablero.tirarCarta();
+        cartaRobada = ctx.getTablero().tirarCarta();
         if (!jugador.tieneManoLlena()) {
             jugador.recibirCarta(cartaRobada);
         }

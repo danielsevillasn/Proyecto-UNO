@@ -1,13 +1,11 @@
 package MetodosSecundarios;
 
-import java.util.HashMap;
 import Enumerados.Color;
 import Excepciones.ReiniciarJuego;
 import Objetos.Carta;
 import Objetos.CartaEspecial;
 import Objetos.Jugador;
-import Objetos.Tablero;
-import Objetos.Turno;
+import Objetos.PartidaContexto;
 
 /**
  * Clase que gestiona los efectos de las cartas especiales
@@ -24,21 +22,20 @@ public class Efectos {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    public static void efectosCartasEspeciales(Carta cartaTirada, Turno controladorTurnos, HashMap<Integer, Jugador> jugadores,
-            int cantidadActualJugadores, Tablero tablero) throws InterruptedException, ReiniciarJuego {
+    public static void efectosCartasEspeciales(Carta cartaTirada, PartidaContexto ctx) throws InterruptedException, ReiniciarJuego {
         CartaEspecial c = (CartaEspecial) cartaTirada;
         switch (c.getTiposEspeciales()) {
             case REVERSA:
-                reversa(controladorTurnos, cantidadActualJugadores);
+                reversa(ctx);
                 break;
             case BLOQUEO:
-                bloqueo(controladorTurnos, jugadores, cantidadActualJugadores);
+                bloqueo(ctx);
                 break;
             case CHUPATE2:
-                chupate(2, cartaTirada, controladorTurnos, jugadores, cantidadActualJugadores, tablero);
+                chupate(2, cartaTirada, ctx);
                 break;
             case CHUPATE4:
-                chupate(4, cartaTirada, controladorTurnos, jugadores, cantidadActualJugadores, tablero);
+                chupate(4, cartaTirada, ctx);
                 break;
             case CAMBIOCOLOR:
                 cambiarColor(cartaTirada);
@@ -53,13 +50,13 @@ public class Efectos {
      * 
      * @param 'ninguno'
      */
-    private static void reversa(Turno controladorTurnos, int cantidadActualJugadores) {
-        controladorTurnos.cambiarSentido();
+    private static void reversa(PartidaContexto ctx) {
+        ctx.getControladorTurnos().cambiarSentido();
 
         // Si son solo 2 jugadores entonces saltamos el turno del jugador que le
         // precedia
-        if (cantidadActualJugadores == 2) {
-            controladorTurnos.siguiente(cantidadActualJugadores);
+        if (ctx.getCantidadJugadores() == 2) {
+            ctx.getControladorTurnos().siguiente(ctx.getCantidadJugadores());
         }
         System.out.println("¡El sentido ha cambiado!");
     }
@@ -71,11 +68,11 @@ public class Efectos {
      * 
      * @param 'ninguno'
      */
-    private static void bloqueo(Turno controladorTurnos, HashMap<Integer, Jugador> jugadores, int cantidadActualJugadores) {
+    private static void bloqueo(PartidaContexto ctx) {
         Jugador jugadorSaltado;
-        jugadorSaltado = jugadores.get(hallarIdJugador(controladorTurnos, cantidadActualJugadores)); // Consultamos quién va a ser bloqueado
+        jugadorSaltado = ctx.getJugadores().get(hallarIdJugador(ctx)); // Consultamos quién va a ser bloqueado
         System.out.println("¡" + jugadorSaltado.getNombre() + " ha sido bloqueado y pierde su turno!");
-        controladorTurnos.siguiente(cantidadActualJugadores);
+        ctx.getControladorTurnos().siguiente(ctx.getCantidadJugadores());
     }
 
     /**
@@ -88,17 +85,16 @@ public class Efectos {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    private static void chupate(int numeroCartas, Carta cartaTirada, Turno controladorTurnos,
-            HashMap<Integer, Jugador> jugadores, int cantidadActualJugadores, Tablero tablero)
+    private static void chupate(int numeroCartas, Carta cartaTirada, PartidaContexto ctx)
             throws InterruptedException, ReiniciarJuego {
         Jugador jugadorChupete;
-        jugadorChupete = jugadores.get(hallarIdJugador(controladorTurnos, cantidadActualJugadores));
+        jugadorChupete = ctx.getJugadores().get(hallarIdJugador(ctx));
         if (numeroCartas == 4) {
             cambiarColor(cartaTirada);
         }
         System.out.println("¡" + jugadorChupete.getNombre() + " chupa " + numeroCartas + " cartas y pierde su turno!");
-        chuparCartas(numeroCartas, jugadorChupete, tablero);
-        controladorTurnos.siguiente(cantidadActualJugadores);
+        chuparCartas(numeroCartas, jugadorChupete, ctx);
+        ctx.getControladorTurnos().siguiente(ctx.getCantidadJugadores());
     }
 
     /**
@@ -108,11 +104,11 @@ public class Efectos {
      * @param j            recoge el jugador que tiene que chupar las cartas
      * @throws InterruptedException para los thread sleep
      */
-    private static void chuparCartas(int numeroCartas, Jugador j, Tablero tablero) throws InterruptedException {
+    private static void chuparCartas(int numeroCartas, Jugador j, PartidaContexto ctx) throws InterruptedException {
         Carta cartaRobada;
         for (int i = 0; i < numeroCartas; i++) {
             if (!j.tieneManoLlena()) {
-                cartaRobada = tablero.tirarCarta();
+                cartaRobada = ctx.getTablero().tirarCarta();
                 j.recibirCarta(cartaRobada);
                 System.out.println("Recibe un: " + cartaRobada);
             }
@@ -168,13 +164,13 @@ public class Efectos {
      * 
      * @return entero que representa el id del jugador actual
      */
-    private static int hallarIdJugador(Turno controladorTurnos, int cantidadActualJugadores) {
+    private static int hallarIdJugador(PartidaContexto ctx) {
         // Si el sentido es el normal entonces
-        int actual = controladorTurnos.getActual();
-        int sentido = controladorTurnos.getSentido();// 1 o -1
+        int actual = ctx.getControladorTurnos().getActual();
+        int sentido = ctx.getControladorTurnos().getSentido();// 1 o -1
         // Sumamos la cantidad de jugadores para evitar números negativos al restar
         // El operador % (módulo) asegura que el índice siempre esté en el rango
         // correcto
-        return (actual + sentido + cantidadActualJugadores) % cantidadActualJugadores;
+        return (actual + sentido + ctx.getCantidadJugadores()) % ctx.getCantidadJugadores();
     }
 }

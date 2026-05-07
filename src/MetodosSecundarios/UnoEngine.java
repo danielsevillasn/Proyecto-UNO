@@ -11,6 +11,7 @@ import Objetos.Carta;
 import Objetos.Jugador;
 import Objetos.Tablero;
 import Objetos.Turno;
+import Objetos.PartidaContexto;
 
 /**
  * Clase que gestiona el flujo del juego
@@ -22,6 +23,7 @@ public class UnoEngine {
     private static Tablero tablero;
     private static Turno controladorTurnos;
     private static HashMap<Integer, Jugador> jugadores;
+    private static PartidaContexto ctx;
     private static boolean fin = false;
     private static boolean cartaValida = false;
     private static int opcionCarta = -1;
@@ -45,12 +47,12 @@ public class UnoEngine {
         tablero.inicializarBaraja();
         fin = false;
 
-        cantidadActualJugadores = Juego.cantidadActualJugadores;// Recogemos la cantidad de jugadores que esta en
-                                                                // registro
-
+        cantidadActualJugadores = Juego.cantidadActualJugadores;
         jugadores = new HashMap<>();
 
-        Mecanicas.repartoInicial(cantidadActualJugadores, jugadores, tablero, nombresCargados);
+        ctx = new PartidaContexto(tablero, controladorTurnos, jugadores, cantidadActualJugadores);
+
+        Mecanicas.repartoInicial(ctx, nombresCargados);
 
         tablero.dejar(tablero.tirarCarta());
 
@@ -69,7 +71,7 @@ public class UnoEngine {
     private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego {
         while (!fin) {
             // Escoge al jugador correspondiente, basado en el turno actual
-            Mecanicas.ordenarBarajaJugadores(cantidadActualJugadores, jugadores);
+            Mecanicas.ordenarBarajaJugadores(ctx);
             jugador = jugadores.get(controladorTurnos.getActual());
 
             // Imprime el tablero, con el turno, el jugador y las cartas
@@ -84,9 +86,9 @@ public class UnoEngine {
             Thread.sleep(Datos.milisegundos);
             System.out.println("\n  * " + tablero + " *");
             Thread.sleep(Datos.milisegundos);
+            
             // Cambio de turno
             Datos.pulsaEnter();
-            // Datos.saltoDeLineas(); // Descomentar si es necesario
 
             // Si nadie ha ganado, pasamos al siguiente turno
             if (!fin)
@@ -124,12 +126,12 @@ public class UnoEngine {
             opcionCarta = Datos.pedirEntero("Acción: ");
             if (opcionCarta == jugador.getNumCartas()) {
                 // Opción Robar
-                Mecanicas.robarCarta(jugador, tablero);
+                Mecanicas.robarCarta(jugador, ctx);
                 cartaValida = false;
                 salir = true;
             } else {
                 try {
-                    cartaValida = Mecanicas.cartaSacada(jugador, tablero, opcionCarta);
+                    cartaValida = Mecanicas.cartaSacada(jugador, ctx, opcionCarta);
                     salir = true;
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("La carta que quieres lanzar no esta dentro del limite de la baraja");
@@ -137,7 +139,7 @@ public class UnoEngine {
                     System.out.println("No existe la carta seleccionada");
                 } catch (CartaLanzadaNoValida e) {
                     System.out.println(e.getMessage());
-                    Mecanicas.cartaSacadaNoValida(jugador, tablero);
+                    Mecanicas.cartaSacadaNoValida(jugador, ctx);
                     cartaValida = false;
                     salir = true;
                 }
@@ -158,8 +160,7 @@ public class UnoEngine {
             cartaTirada = jugador.jugarCarta(opcionCarta);
 
             if (cartaTirada.getTipo() == Tipos.ESPECIAL) {
-                Efectos.efectosCartasEspeciales(cartaTirada, controladorTurnos, jugadores, cantidadActualJugadores,
-                        tablero);
+                Efectos.efectosCartasEspeciales(cartaTirada, ctx);
             }
 
             tablero.dejar(cartaTirada);
