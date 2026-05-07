@@ -86,7 +86,7 @@ public class UnoEngine {
             Thread.sleep(Datos.milisegundos);
             System.out.println("\n  * " + tablero + " *");
             Thread.sleep(Datos.milisegundos);
-            
+
             // Cambio de turno
             Datos.pulsaEnter();
 
@@ -100,8 +100,10 @@ public class UnoEngine {
      * Método que muestra la interfaz gráfica del tablero excepto la de la accion
      * 
      * @param 'ninguno'
+     * @throws InterruptedException Para los saltos de lineas
      */
-    private static void verTablero() {
+    private static void verTablero() throws InterruptedException {
+        Datos.saltoDeLineas();
         System.out.println("\n--- TURNO DE: " + jugador.getNombre() + " ---");
         System.out.println("  - " + controladorTurnos + " -");
         System.out.println("Mesa: " + tablero.verCartaEnLaMesa());

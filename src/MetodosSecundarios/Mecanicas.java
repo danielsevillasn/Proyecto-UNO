@@ -22,7 +22,8 @@ public class Mecanicas {
         for (int i = 0; i < UnoEngine.contextoPartida.getCantidadJugadores(); i++) {
             UnoEngine.contextoPartida.getJugadores().put(i, new Jugador(nombresCargados.get(i)));
             for (int c = 0; c < 7; c++) {
-                UnoEngine.contextoPartida.getJugadores().get(i).recibirCarta(UnoEngine.contextoPartida.getTablero().tirarCarta());
+                UnoEngine.contextoPartida.getJugadores().get(i)
+                        .recibirCarta(UnoEngine.contextoPartida.getTablero().tirarCarta());
             }
         }
     }

@@ -57,7 +57,7 @@ public class Menus {
         System.out.println("\t4- Iniciar juego");
         System.out.println("\t5- Atrás <--");
         System.out.println("==========================");
-        System.out.println("Modo de juego: " + modoDeJuego + "\tjugadores: " + jugadores);
+        System.out.println("Modo de juego: " + modoDeJuego + "\tJugadores: " + jugadores);
 
         return (Datos.pedirCadena("\tElija opción (1-5): "));
     }
@@ -94,7 +94,7 @@ public class Menus {
     public static void modoDeJuegoSeleccionado() throws ReiniciarJuego {
         boolean salir = false;
         while (!salir) {
-            int opcion = Datos.pedirEntero("\tElija opción (1-3): ");
+            int opcion = Datos.pedirEntero("\tElija opción (1-2): ");
             switch (opcion) {
                 case 1:
                     modoDeJuego = "Clásico";
@@ -189,5 +189,21 @@ public class Menus {
                     break;
             }
         }
+    }
+
+    /**
+     * Menu que muestra los diferentes colores a los que puedes cambiar
+     * 
+     * @return numero entero que devuelve la opcion escogida
+     * @throws ReiniciarJuego
+     */
+    public static int menuCambioColor() throws ReiniciarJuego {
+        System.out.println("A que color quieres cambiar?");
+        System.out.println("1- Rojo");
+        System.out.println("2- Amarillo");
+        System.out.println("3- Verde");
+        System.out.println("4- Azul");
+
+        return Datos.pedirEntero("Elige un color(1-4):");
     }
 }

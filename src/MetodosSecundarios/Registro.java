@@ -1,4 +1,5 @@
 package MetodosSecundarios;
+
 import Excepciones.NombreUsuarioNoValido;
 import Excepciones.ReiniciarJuego;
 

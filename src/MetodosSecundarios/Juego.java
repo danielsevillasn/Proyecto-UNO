@@ -114,6 +114,7 @@ public class Juego {
         } catch (ReiniciarJuego e) {
             reinicio();
             System.out.println("\n" + e.getMessage());
+            Thread.sleep(Datos.milisegundos);
             Datos.pulsaEnter();
             Juego.iniciarJuego();
         } catch (SalirDelJuego e) {

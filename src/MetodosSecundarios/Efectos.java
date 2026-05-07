@@ -55,7 +55,8 @@ public class Efectos {
         // Si son solo 2 jugadores entonces saltamos el turno del jugador que le
         // precedia
         if (UnoEngine.contextoPartida.getCantidadJugadores() == 2) {
-            UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
+            UnoEngine.contextoPartida.getControladorTurnos()
+                    .siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
         }
         System.out.println("¡El sentido ha cambiado!");
     }
@@ -69,7 +70,8 @@ public class Efectos {
      */
     private static void bloqueo() {
         Jugador jugadorSaltado;
-        jugadorSaltado = UnoEngine.contextoPartida.getJugadores().get(hallarIdJugador()); // Consultamos quién va a ser bloqueado
+        jugadorSaltado = UnoEngine.contextoPartida.getJugadores().get(hallarIdJugador()); // Consultamos quién va a ser
+                                                                                          // bloqueado
         System.out.println("¡" + jugadorSaltado.getNombre() + " ha sido bloqueado y pierde su turno!");
         UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
     }
@@ -115,7 +117,6 @@ public class Efectos {
         Thread.sleep(Datos.milisegundos);
     }
 
-
     /**
      * Método que realiza la accion de la carta 'cambio color'
      * 
@@ -125,13 +126,7 @@ public class Efectos {
     private static void cambiarColor(Carta cartaTirada) throws ReiniciarJuego {
         boolean datoValido = false;
         do {
-            System.out.println("A que color quieres cambiar?");
-            System.out.println("1- Rojo");
-            System.out.println("2- Amarillo");
-            System.out.println("3- Verde");
-            System.out.println("4- Azul");
-
-            int opcion = Datos.pedirEntero("Elige un color(1-4):");
+            int opcion = Menus.menuCambioColor();
             switch (opcion) {
                 case 1:
                     cartaTirada.setColor(Color.ROJO);
@@ -156,7 +151,6 @@ public class Efectos {
         } while (!datoValido);
     }
 
-
     /**
      * Método que halla el id del jugador seleccionado mediante un sistema parecido
      * al de los turnos
@@ -170,6 +164,7 @@ public class Efectos {
         // Sumamos la cantidad de jugadores para evitar números negativos al restar
         // El operador % (módulo) asegura que el índice siempre esté en el rango
         // correcto
-        return (actual + sentido + UnoEngine.contextoPartida.getCantidadJugadores()) % UnoEngine.contextoPartida.getCantidadJugadores();
+        return (actual + sentido + UnoEngine.contextoPartida.getCantidadJugadores())
+                % UnoEngine.contextoPartida.getCantidadJugadores();
     }
 }
