@@ -5,7 +5,6 @@ import Excepciones.ReiniciarJuego;
 import Objetos.Carta;
 import Objetos.CartaEspecial;
 import Objetos.Jugador;
-import Objetos.PartidaContexto;
 
 /**
  * Clase que gestiona los efectos de las cartas especiales
@@ -22,20 +21,20 @@ public class Efectos {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    public static void efectosCartasEspeciales(Carta cartaTirada, PartidaContexto ctx) throws InterruptedException, ReiniciarJuego {
+    public static void efectosCartasEspeciales(Carta cartaTirada) throws InterruptedException, ReiniciarJuego {
         CartaEspecial c = (CartaEspecial) cartaTirada;
         switch (c.getTiposEspeciales()) {
             case REVERSA:
-                reversa(ctx);
+                reversa();
                 break;
             case BLOQUEO:
-                bloqueo(ctx);
+                bloqueo();
                 break;
             case CHUPATE2:
-                chupate(2, cartaTirada, ctx);
+                chupate(2, cartaTirada);
                 break;
             case CHUPATE4:
-                chupate(4, cartaTirada, ctx);
+                chupate(4, cartaTirada);
                 break;
             case CAMBIOCOLOR:
                 cambiarColor(cartaTirada);
@@ -50,13 +49,13 @@ public class Efectos {
      * 
      * @param 'ninguno'
      */
-    private static void reversa(PartidaContexto ctx) {
-        ctx.getControladorTurnos().cambiarSentido();
+    private static void reversa() {
+        UnoEngine.contextoPartida.getControladorTurnos().cambiarSentido();
 
         // Si son solo 2 jugadores entonces saltamos el turno del jugador que le
         // precedia
-        if (ctx.getCantidadJugadores() == 2) {
-            ctx.getControladorTurnos().siguiente(ctx.getCantidadJugadores());
+        if (UnoEngine.contextoPartida.getCantidadJugadores() == 2) {
+            UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
         }
         System.out.println("¡El sentido ha cambiado!");
     }
@@ -68,11 +67,11 @@ public class Efectos {
      * 
      * @param 'ninguno'
      */
-    private static void bloqueo(PartidaContexto ctx) {
+    private static void bloqueo() {
         Jugador jugadorSaltado;
-        jugadorSaltado = ctx.getJugadores().get(hallarIdJugador(ctx)); // Consultamos quién va a ser bloqueado
+        jugadorSaltado = UnoEngine.contextoPartida.getJugadores().get(hallarIdJugador()); // Consultamos quién va a ser bloqueado
         System.out.println("¡" + jugadorSaltado.getNombre() + " ha sido bloqueado y pierde su turno!");
-        ctx.getControladorTurnos().siguiente(ctx.getCantidadJugadores());
+        UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
     }
 
     /**
@@ -85,16 +84,16 @@ public class Efectos {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    private static void chupate(int numeroCartas, Carta cartaTirada, PartidaContexto ctx)
+    private static void chupate(int numeroCartas, Carta cartaTirada)
             throws InterruptedException, ReiniciarJuego {
         Jugador jugadorChupete;
-        jugadorChupete = ctx.getJugadores().get(hallarIdJugador(ctx));
+        jugadorChupete = UnoEngine.contextoPartida.getJugadores().get(hallarIdJugador());
         if (numeroCartas == 4) {
             cambiarColor(cartaTirada);
         }
         System.out.println("¡" + jugadorChupete.getNombre() + " chupa " + numeroCartas + " cartas y pierde su turno!");
-        chuparCartas(numeroCartas, jugadorChupete, ctx);
-        ctx.getControladorTurnos().siguiente(ctx.getCantidadJugadores());
+        chuparCartas(numeroCartas, jugadorChupete);
+        UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
     }
 
     /**
@@ -104,11 +103,11 @@ public class Efectos {
      * @param j            recoge el jugador que tiene que chupar las cartas
      * @throws InterruptedException para los thread sleep
      */
-    private static void chuparCartas(int numeroCartas, Jugador j, PartidaContexto ctx) throws InterruptedException {
+    private static void chuparCartas(int numeroCartas, Jugador j) throws InterruptedException {
         Carta cartaRobada;
         for (int i = 0; i < numeroCartas; i++) {
             if (!j.tieneManoLlena()) {
-                cartaRobada = ctx.getTablero().tirarCarta();
+                cartaRobada = UnoEngine.contextoPartida.getTablero().tirarCarta();
                 j.recibirCarta(cartaRobada);
                 System.out.println("Recibe un: " + cartaRobada);
             }
@@ -164,13 +163,13 @@ public class Efectos {
      * 
      * @return entero que representa el id del jugador actual
      */
-    private static int hallarIdJugador(PartidaContexto ctx) {
+    private static int hallarIdJugador() {
         // Si el sentido es el normal entonces
-        int actual = ctx.getControladorTurnos().getActual();
-        int sentido = ctx.getControladorTurnos().getSentido();// 1 o -1
+        int actual = UnoEngine.contextoPartida.getControladorTurnos().getActual();
+        int sentido = UnoEngine.contextoPartida.getControladorTurnos().getSentido();// 1 o -1
         // Sumamos la cantidad de jugadores para evitar números negativos al restar
         // El operador % (módulo) asegura que el índice siempre esté en el rango
         // correcto
-        return (actual + sentido + ctx.getCantidadJugadores()) % ctx.getCantidadJugadores();
+        return (actual + sentido + UnoEngine.contextoPartida.getCantidadJugadores()) % UnoEngine.contextoPartida.getCantidadJugadores();
     }
 }

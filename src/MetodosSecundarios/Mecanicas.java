@@ -5,7 +5,6 @@ import java.util.Collections;
 import Excepciones.CartaLanzadaNoValida;
 import Objetos.Carta;
 import Objetos.Jugador;
-import Objetos.PartidaContexto;
 
 /**
  * Clase que gestiona las mecánicas internas del flujo de juego
@@ -19,11 +18,11 @@ public class Mecanicas {
      * 
      * @param nombresCargados nombres de los jugadores (por referencia)
      */
-    public static void repartoInicial(PartidaContexto ctx, ArrayList<String> nombresCargados) {
-        for (int i = 0; i < ctx.getCantidadJugadores(); i++) {
-            ctx.getJugadores().put(i, new Jugador(nombresCargados.get(i)));
+    public static void repartoInicial(ArrayList<String> nombresCargados) {
+        for (int i = 0; i < UnoEngine.contextoPartida.getCantidadJugadores(); i++) {
+            UnoEngine.contextoPartida.getJugadores().put(i, new Jugador(nombresCargados.get(i)));
             for (int c = 0; c < 7; c++) {
-                ctx.getJugadores().get(i).recibirCarta(ctx.getTablero().tirarCarta());
+                UnoEngine.contextoPartida.getJugadores().get(i).recibirCarta(UnoEngine.contextoPartida.getTablero().tirarCarta());
             }
         }
     }
@@ -31,9 +30,9 @@ public class Mecanicas {
     /**
      * Método que sirve para ordenar la baraja de los jugadores
      */
-    public static void ordenarBarajaJugadores(PartidaContexto ctx) {
-        for (int i = 0; i < ctx.getCantidadJugadores(); i++) {
-            Collections.sort(ctx.getJugadores().get(i).getMano().getLista());
+    public static void ordenarBarajaJugadores() {
+        for (int i = 0; i < UnoEngine.contextoPartida.getCantidadJugadores(); i++) {
+            Collections.sort(UnoEngine.contextoPartida.getJugadores().get(i).getMano().getLista());
         }
     }
 
@@ -42,11 +41,11 @@ public class Mecanicas {
      * 
      * @param 'ninguno'
      */
-    public static void robarCarta(Jugador jugador, PartidaContexto ctx) {
+    public static void robarCarta() {
         Carta cartaRobada;
-        cartaRobada = ctx.getTablero().tirarCarta();
-        if (!jugador.tieneManoLlena()) {
-            jugador.recibirCarta(cartaRobada);
+        cartaRobada = UnoEngine.contextoPartida.getTablero().tirarCarta();
+        if (!UnoEngine.jugador.tieneManoLlena()) {
+            UnoEngine.jugador.recibirCarta(cartaRobada);
             System.out.println("Has recibido un: " + cartaRobada);
         }
     }
@@ -56,11 +55,11 @@ public class Mecanicas {
      * 
      * @param 'ninguno'
      */
-    public static boolean cartaSacada(Jugador jugador, PartidaContexto ctx, int opcionCarta) throws CartaLanzadaNoValida {
+    public static boolean cartaSacada(int opcionCarta) throws CartaLanzadaNoValida {
         Carta cartaSeleccionada;
         Carta cartaEnMesa;
-        cartaSeleccionada = jugador.getMano().obtener(opcionCarta);
-        cartaEnMesa = ctx.getTablero().verCartaEnLaMesa();
+        cartaSeleccionada = UnoEngine.jugador.getMano().obtener(opcionCarta);
+        cartaEnMesa = UnoEngine.contextoPartida.getTablero().verCartaEnLaMesa();
         return cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
     }
 
@@ -70,11 +69,11 @@ public class Mecanicas {
      * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      */
-    public static void cartaSacadaNoValida(Jugador jugador, PartidaContexto ctx) throws InterruptedException {
+    public static void cartaSacadaNoValida() throws InterruptedException {
         Carta cartaRobada;
-        cartaRobada = ctx.getTablero().tirarCarta();
-        if (!jugador.tieneManoLlena()) {
-            jugador.recibirCarta(cartaRobada);
+        cartaRobada = UnoEngine.contextoPartida.getTablero().tirarCarta();
+        if (!UnoEngine.jugador.tieneManoLlena()) {
+            UnoEngine.jugador.recibirCarta(cartaRobada);
         }
         System.out.println("!CHUPAS UNA CARTA!\n");
         Thread.sleep(Datos.milisegundos);

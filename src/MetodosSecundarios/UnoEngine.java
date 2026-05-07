@@ -23,12 +23,12 @@ public class UnoEngine {
     private static Tablero tablero;
     private static Turno controladorTurnos;
     private static HashMap<Integer, Jugador> jugadores;
-    private static PartidaContexto ctx;
+    protected static PartidaContexto contextoPartida;
     private static boolean fin = false;
     private static boolean cartaValida = false;
     private static int opcionCarta = -1;
     private static int cantidadActualJugadores;
-    private static Jugador jugador;
+    protected static Jugador jugador;
 
     /**
      * Lógica principal de la partida
@@ -50,9 +50,9 @@ public class UnoEngine {
         cantidadActualJugadores = Juego.cantidadActualJugadores;
         jugadores = new HashMap<>();
 
-        ctx = new PartidaContexto(tablero, controladorTurnos, jugadores, cantidadActualJugadores);
+        contextoPartida = new PartidaContexto(tablero, controladorTurnos, jugadores, cantidadActualJugadores);
 
-        Mecanicas.repartoInicial(ctx, nombresCargados);
+        Mecanicas.repartoInicial(nombresCargados);
 
         tablero.dejar(tablero.tirarCarta());
 
@@ -71,7 +71,7 @@ public class UnoEngine {
     private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego {
         while (!fin) {
             // Escoge al jugador correspondiente, basado en el turno actual
-            Mecanicas.ordenarBarajaJugadores(ctx);
+            Mecanicas.ordenarBarajaJugadores();
             jugador = jugadores.get(controladorTurnos.getActual());
 
             // Imprime el tablero, con el turno, el jugador y las cartas
@@ -126,12 +126,12 @@ public class UnoEngine {
             opcionCarta = Datos.pedirEntero("Acción: ");
             if (opcionCarta == jugador.getNumCartas()) {
                 // Opción Robar
-                Mecanicas.robarCarta(jugador, ctx);
+                Mecanicas.robarCarta();
                 cartaValida = false;
                 salir = true;
             } else {
                 try {
-                    cartaValida = Mecanicas.cartaSacada(jugador, ctx, opcionCarta);
+                    cartaValida = Mecanicas.cartaSacada(opcionCarta);
                     salir = true;
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("La carta que quieres lanzar no esta dentro del limite de la baraja");
@@ -139,7 +139,7 @@ public class UnoEngine {
                     System.out.println("No existe la carta seleccionada");
                 } catch (CartaLanzadaNoValida e) {
                     System.out.println(e.getMessage());
-                    Mecanicas.cartaSacadaNoValida(jugador, ctx);
+                    Mecanicas.cartaSacadaNoValida();
                     cartaValida = false;
                     salir = true;
                 }
@@ -160,7 +160,7 @@ public class UnoEngine {
             cartaTirada = jugador.jugarCarta(opcionCarta);
 
             if (cartaTirada.getTipo() == Tipos.ESPECIAL) {
-                Efectos.efectosCartasEspeciales(cartaTirada, ctx);
+                Efectos.efectosCartasEspeciales(cartaTirada);
             }
 
             tablero.dejar(cartaTirada);
