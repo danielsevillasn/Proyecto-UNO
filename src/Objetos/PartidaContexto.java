@@ -59,6 +59,22 @@ public class PartidaContexto {
         this.cantidadJugadores = cantidadJugadores;
     }
 
+    // Otros metodos
+    /**
+     * * Atajo para avanzar el turno sin escribir toda la lógica de cantidad de
+     * jugadores
+     */
+    public void pasarSiguiente() {
+        this.controladorTurnos.siguiente(this.cantidadJugadores);
+    }
+
+    /**
+     * Atajo para obtener directamente al jugador que tiene el turno
+     */
+    public Jugador jugadorActual() {
+        return this.jugadores.get(this.controladorTurnos.getActual());
+    }
+
     // To String
     @Override
     public String toString() {

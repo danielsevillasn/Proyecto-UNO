@@ -50,13 +50,12 @@ public class Efectos {
      * @param 'ninguno'
      */
     private static void reversa() {
-        UnoEngine.contextoPartida.getControladorTurnos().cambiarSentido();
+        UnoEngine.turnos().cambiarSentido();
 
         // Si son solo 2 jugadores entonces saltamos el turno del jugador que le
         // precedia
-        if (UnoEngine.contextoPartida.getCantidadJugadores() == 2) {
-            UnoEngine.contextoPartida.getControladorTurnos()
-                    .siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
+        if (UnoEngine.nJugadores() == 2) {
+            UnoEngine.siguiente();
         }
         System.out.println("¡El sentido ha cambiado!");
     }
@@ -73,7 +72,7 @@ public class Efectos {
         jugadorSaltado = UnoEngine.contextoPartida.getJugadores().get(hallarIdJugador()); // Consultamos quién va a ser
                                                                                           // bloqueado
         System.out.println("¡" + jugadorSaltado.getNombre() + " ha sido bloqueado y pierde su turno!");
-        UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
+        UnoEngine.siguiente();
     }
 
     /**
@@ -95,7 +94,7 @@ public class Efectos {
         }
         System.out.println("¡" + jugadorChupete.getNombre() + " chupa " + numeroCartas + " cartas y pierde su turno!");
         chuparCartas(numeroCartas, jugadorChupete);
-        UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
+        UnoEngine.siguiente();
     }
 
     /**
@@ -109,7 +108,7 @@ public class Efectos {
         Carta cartaRobada;
         for (int i = 0; i < numeroCartas; i++) {
             if (!j.tieneManoLlena()) {
-                cartaRobada = UnoEngine.contextoPartida.getTablero().tirarCarta();
+                cartaRobada = UnoEngine.tablero().tirarCarta();
                 j.recibirCarta(cartaRobada);
                 System.out.println("Recibe un: " + cartaRobada);
             }
@@ -159,12 +158,12 @@ public class Efectos {
      */
     private static int hallarIdJugador() {
         // Si el sentido es el normal entonces
-        int actual = UnoEngine.contextoPartida.getControladorTurnos().getActual();
-        int sentido = UnoEngine.contextoPartida.getControladorTurnos().getSentido();// 1 o -1
+        int actual = UnoEngine.turnos().getActual();
+        int sentido = UnoEngine.turnos().getSentido();// 1 o -1
         // Sumamos la cantidad de jugadores para evitar números negativos al restar
         // El operador % (módulo) asegura que el índice siempre esté en el rango
         // correcto
-        return (actual + sentido + UnoEngine.contextoPartida.getCantidadJugadores())
-                % UnoEngine.contextoPartida.getCantidadJugadores();
+        return (actual + sentido + UnoEngine.nJugadores())
+                % UnoEngine.nJugadores();
     }
 }

@@ -57,7 +57,7 @@ public class UnoEngine {
         tablero.dejar(tablero.tirarCarta());
 
         Mecanicas.aplicarEfectoPrimeraCarta();
-        
+
         flujoDeLaPartida();
 
         Pantallas.PantallaFinal();
@@ -74,7 +74,7 @@ public class UnoEngine {
         while (!fin) {
             // Escoge al jugador correspondiente, basado en el turno actual
             Mecanicas.ordenarBarajaJugadores();
-            jugador = jugadores.get(controladorTurnos.getActual());
+            jugador = actual();
 
             // Imprime el tablero, con el turno, el jugador y las cartas
             verTablero();
@@ -175,5 +175,27 @@ public class UnoEngine {
                 Menus.nombreJugador = jugador.getNombre();
             }
         }
+    }
+
+    //Metodos atajo
+    //Sirven para reducir codigo en efectos y en mecanicas
+    public static Jugador actual() {
+        return contextoPartida.jugadorActual();
+    }
+
+    public static Tablero tablero() {
+        return contextoPartida.getTablero();
+    }
+
+    public static Turno turnos() {
+        return contextoPartida.getControladorTurnos();
+    }
+
+    public static int nJugadores() {
+        return contextoPartida.getCantidadJugadores();
+    }
+
+    public static void siguiente() {
+        contextoPartida.pasarSiguiente();
     }
 }

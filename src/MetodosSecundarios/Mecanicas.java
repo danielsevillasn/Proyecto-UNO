@@ -21,11 +21,11 @@ public class Mecanicas {
      * @param nombresCargados nombres de los jugadores (por referencia)
      */
     public static void repartoInicial(ArrayList<String> nombresCargados) {
-        for (int i = 0; i < UnoEngine.contextoPartida.getCantidadJugadores(); i++) {
+        for (int i = 0; i < UnoEngine.nJugadores(); i++) {
             UnoEngine.contextoPartida.getJugadores().put(i, new Jugador(nombresCargados.get(i)));
             for (int c = 0; c < 7; c++) {
                 UnoEngine.contextoPartida.getJugadores().get(i)
-                        .recibirCarta(UnoEngine.contextoPartida.getTablero().tirarCarta());
+                        .recibirCarta(UnoEngine.tablero().tirarCarta());
             }
         }
     }
@@ -34,7 +34,7 @@ public class Mecanicas {
      * Método que sirve para ordenar la baraja de los jugadores
      */
     public static void ordenarBarajaJugadores() {
-        for (int i = 0; i < UnoEngine.contextoPartida.getCantidadJugadores(); i++) {
+        for (int i = 0; i < UnoEngine.nJugadores(); i++) {
             Collections.sort(UnoEngine.contextoPartida.getJugadores().get(i).getMano().getLista());
         }
     }
@@ -46,7 +46,7 @@ public class Mecanicas {
      */
     public static void robarCarta() {
         Carta cartaRobada;
-        cartaRobada = UnoEngine.contextoPartida.getTablero().tirarCarta();
+        cartaRobada = UnoEngine.tablero().tirarCarta();
         if (!UnoEngine.jugador.tieneManoLlena()) {
             UnoEngine.jugador.recibirCarta(cartaRobada);
             System.out.println("Has recibido un: " + cartaRobada);
@@ -62,7 +62,7 @@ public class Mecanicas {
         Carta cartaSeleccionada;
         Carta cartaEnMesa;
         cartaSeleccionada = UnoEngine.jugador.getMano().obtener(opcionCarta);
-        cartaEnMesa = UnoEngine.contextoPartida.getTablero().verCartaEnLaMesa();
+        cartaEnMesa = UnoEngine.tablero().verCartaEnLaMesa();
         return cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
     }
 
@@ -74,7 +74,7 @@ public class Mecanicas {
      */
     public static void cartaSacadaNoValida() throws InterruptedException {
         Carta cartaRobada;
-        cartaRobada = UnoEngine.contextoPartida.getTablero().tirarCarta();
+        cartaRobada = UnoEngine.tablero().tirarCarta();
         if (!UnoEngine.jugador.tieneManoLlena()) {
             UnoEngine.jugador.recibirCarta(cartaRobada);
         }
@@ -87,26 +87,26 @@ public class Mecanicas {
      * Aplica el efecto especial de la primera carta, según las reglas de UNO.
      */
     public static void aplicarEfectoPrimeraCarta() throws InterruptedException, ReiniciarJuego {
-        Carta carta = UnoEngine.contextoPartida.getTablero().verCartaEnLaMesa();
+        Carta carta = UnoEngine.tablero().verCartaEnLaMesa();
         System.out.println("Primera carta en la mesa: " + carta);
 
         if (carta instanceof CartaEspecial especial) {
             switch (especial.getTiposEspeciales()) {
                 case CHUPATE2:
-                    Jugador primerJugador = UnoEngine.contextoPartida.getJugadores().get(UnoEngine.contextoPartida.getControladorTurnos().getActual());
+                    Jugador primerJugador = UnoEngine.actual();
                     for (int i = 0; i < 2; i++) {
                         if (!primerJugador.tieneManoLlena())
-                            primerJugador.recibirCarta(UnoEngine.contextoPartida.getTablero().tirarCarta());
+                            primerJugador.recibirCarta(UnoEngine.tablero().tirarCarta());
                     }
                     System.out.println(primerJugador.getNombre() + " roba 2 cartas y pierde turno (efecto +2 inicial)");
-                    UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
+                    UnoEngine.siguiente();
                     break;
                 case CHUPATE4:
                     System.out.println("¡El +4 no puede ser carta inicial! Se devuelve y se roba otra.");
-                    UnoEngine.contextoPartida.getTablero().meter(carta);
-                    UnoEngine.contextoPartida.getTablero().getChupona().barajar();
-                    UnoEngine.contextoPartida.getTablero().dejar(
-                            UnoEngine.contextoPartida.getTablero().tirarCarta());
+                    UnoEngine.tablero().meter(carta);
+                    UnoEngine.tablero().getChupona().barajar();
+                    UnoEngine.tablero().dejar(
+                            UnoEngine.tablero().tirarCarta());
                     aplicarEfectoPrimeraCarta();
                     break;
                 case CAMBIOCOLOR:
@@ -129,15 +129,15 @@ public class Mecanicas {
                     break;
                 case BLOQUEO:
                     System.out.println("Ha salido un 'Bloqueo': el primer jugador pierde el turno.");
-                    UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
+                    UnoEngine.siguiente();
                     Thread.sleep(Datos.milisegundos);
                     break;
                 case REVERSA:
                     System.out.println(
                             "Ha salido un 'Reversa': se invierte el sentido y el primer jugador pierde el turno.");
-                    UnoEngine.contextoPartida.getControladorTurnos().cambiarSentido();
-                    if (UnoEngine.contextoPartida.getCantidadJugadores() > 2) {
-                        UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
+                    UnoEngine.turnos().cambiarSentido();
+                    if (UnoEngine.nJugadores() > 2) {
+                        UnoEngine.siguiente();
                     }
                     Thread.sleep(Datos.milisegundos);
                     break;
