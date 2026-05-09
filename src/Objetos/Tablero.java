@@ -24,6 +24,15 @@ public class Tablero {
         this.descarte = new Contenedor<>();
     }
 
+    // Getter
+    public Contenedor<Carta> getChupona() {
+        return chupona;
+    }
+
+    public Contenedor<Carta> getDescarte() {
+        return descarte;
+    }
+
     // Otros metodos
     /**
      * Inicializa el juego creando las cartas por color y número (duplicando
@@ -105,6 +114,15 @@ public class Tablero {
     }
 
     /**
+     * Añade una carta en especifico a la baraja
+     * 
+     * @param carta
+     */
+    public void meter(Carta carta) {
+        chupona.añadir(carta);
+    }
+
+    /**
      * Mira la carta que está arriba en el descarte
      * 
      * @return El objeto Carta que se encuentra visible en la mesa.
@@ -119,4 +137,5 @@ public class Tablero {
     public String toString() {
         return "Numero de cartas en la baraja chupona = " + chupona.size() + " cartas";
     }
+
 }

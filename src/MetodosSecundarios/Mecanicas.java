@@ -3,7 +3,9 @@ package MetodosSecundarios;
 import java.util.ArrayList;
 import java.util.Collections;
 import Excepciones.CartaLanzadaNoValida;
+import Excepciones.ReiniciarJuego;
 import Objetos.Carta;
+import Objetos.CartaEspecial;
 import Objetos.Jugador;
 
 /**
@@ -79,5 +81,69 @@ public class Mecanicas {
         System.out.println("!CHUPAS UNA CARTA!\n");
         Thread.sleep(Datos.milisegundos);
         System.out.println("Has recibido un: " + cartaRobada);
+    }
+
+    /**
+     * Aplica el efecto especial de la primera carta, según las reglas de UNO.
+     */
+    public static void aplicarEfectoPrimeraCarta() throws InterruptedException, ReiniciarJuego {
+        Carta carta = UnoEngine.contextoPartida.getTablero().verCartaEnLaMesa();
+        System.out.println("Primera carta en la mesa: " + carta);
+
+        if (carta instanceof CartaEspecial especial) {
+            switch (especial.getTiposEspeciales()) {
+                case CHUPATE2:
+                    Jugador primerJugador = UnoEngine.contextoPartida.getJugadores().get(UnoEngine.contextoPartida.getControladorTurnos().getActual());
+                    for (int i = 0; i < 2; i++) {
+                        if (!primerJugador.tieneManoLlena())
+                            primerJugador.recibirCarta(UnoEngine.contextoPartida.getTablero().tirarCarta());
+                    }
+                    System.out.println(primerJugador.getNombre() + " roba 2 cartas y pierde turno (efecto +2 inicial)");
+                    UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
+                    break;
+                case CHUPATE4:
+                    System.out.println("¡El +4 no puede ser carta inicial! Se devuelve y se roba otra.");
+                    UnoEngine.contextoPartida.getTablero().meter(carta);
+                    UnoEngine.contextoPartida.getTablero().getChupona().barajar();
+                    UnoEngine.contextoPartida.getTablero().dejar(
+                            UnoEngine.contextoPartida.getTablero().tirarCarta());
+                    aplicarEfectoPrimeraCarta();
+                    break;
+                case CAMBIOCOLOR:
+                    System.out.println("Ha salido un cambio de color. El primer jugador elige color.");
+                    int color = Menus.menuCambioColor();
+                    switch (color) {
+                        case 1:
+                            carta.setColor(Enumerados.Color.ROJO);
+                            break;
+                        case 2:
+                            carta.setColor(Enumerados.Color.AMARILLO);
+                            break;
+                        case 3:
+                            carta.setColor(Enumerados.Color.VERDE);
+                            break;
+                        case 4:
+                            carta.setColor(Enumerados.Color.AZUL);
+                            break;
+                    }
+                    break;
+                case BLOQUEO:
+                    System.out.println("Ha salido un 'Bloqueo': el primer jugador pierde el turno.");
+                    UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
+                    Thread.sleep(Datos.milisegundos);
+                    break;
+                case REVERSA:
+                    System.out.println(
+                            "Ha salido un 'Reversa': se invierte el sentido y el primer jugador pierde el turno.");
+                    UnoEngine.contextoPartida.getControladorTurnos().cambiarSentido();
+                    if (UnoEngine.contextoPartida.getCantidadJugadores() > 2) {
+                        UnoEngine.contextoPartida.getControladorTurnos().siguiente(UnoEngine.contextoPartida.getCantidadJugadores());
+                    }
+                    Thread.sleep(Datos.milisegundos);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

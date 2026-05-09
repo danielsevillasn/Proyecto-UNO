@@ -56,6 +56,8 @@ public class UnoEngine {
 
         tablero.dejar(tablero.tirarCarta());
 
+        Mecanicas.aplicarEfectoPrimeraCarta();
+        
         flujoDeLaPartida();
 
         Pantallas.PantallaFinal();
