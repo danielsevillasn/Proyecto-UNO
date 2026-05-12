@@ -3,8 +3,8 @@ package MetodosSecundarios;
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import Enumerados.Tipos;
 import Objetos.Carta;
@@ -22,7 +22,6 @@ public class UnoEngine {
 
     private static Tablero tablero;
     private static Turno controladorTurnos;
-    private static HashMap<Integer, Jugador> jugadores;
     protected static PartidaContexto contextoPartida;
     private static boolean fin = false;
     private static boolean cartaValida = false;
@@ -40,8 +39,10 @@ public class UnoEngine {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    public static void partida(ArrayList<String> nombresCargados) throws InterruptedException, ReiniciarJuego {
+    public static void partida(List<String> nombresCargados) throws InterruptedException, ReiniciarJuego {
         // Inicialización de componentes de juego
+        HashMap<Integer, Jugador> jugadores;
+
         tablero = new Tablero();
         controladorTurnos = new Turno();
         tablero.inicializarBaraja();
@@ -60,7 +61,7 @@ public class UnoEngine {
 
         flujoDeLaPartida();
 
-        Pantallas.PantallaFinal();
+        Pantallas.pantallaFinal();
     }
 
     /**

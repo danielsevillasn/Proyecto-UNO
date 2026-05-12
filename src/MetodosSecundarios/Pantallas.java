@@ -20,7 +20,7 @@ public class Pantallas {
      * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      */
-    public static void PantallaReglas() throws InterruptedException {
+    public static void pantallaReglas() throws InterruptedException {
         Datos.saltoDeLineas();
 
         System.out.println("========== REGLAS DEL JUEGO UNO ==========");
@@ -72,7 +72,7 @@ public class Pantallas {
      * @param 'nada'
      * @throws InterruptedException para los thread sleep
      */
-    public static void PantallaFinal() throws InterruptedException {
+    public static void pantallaFinal() throws InterruptedException {
         Datos.saltoDeLineas();
 
         String mensajeJugador = "Jugador: " + Menus.nombreJugador + "!";
@@ -100,7 +100,7 @@ public class Pantallas {
      * @param 'nada'
      * @throws InterruptedException para los thread sleep
      */
-    public static void PantallaUNO() throws InterruptedException {
+    public static void pantallaUNO() throws InterruptedException {
         Datos.saltoDeLineas();
 
         System.out.println(AMARILLO);

@@ -16,7 +16,7 @@ public class Juego {
 
     static Scanner s = new Scanner(System.in);
     // Configuración inicial por defecto
-    protected static ArrayList<String> nombresCargados = new ArrayList<String>();
+    protected static ArrayList<String> nombresCargados = new ArrayList<>();
     public static int cantidadActualJugadores;
     private static boolean salir;
 
@@ -81,11 +81,11 @@ public class Juego {
      */
     public static void ejecutarSistemaCompleto(ModoEjecucion modo) throws InterruptedException, ReiniciarJuego {
         if (modo == ModoEjecucion.NORMAL) {
-            Pantallas.PantallaUNO();
+            Pantallas.pantallaUNO();
         } else {
             Datos.milisegundos = 0;
         }
-        Sistema();
+        sistema();
     }
 
     /**
@@ -95,7 +95,7 @@ public class Juego {
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      * @param 'ninguno'
      */
-    public static void Sistema() throws InterruptedException, ReiniciarJuego {
+    public static void sistema() throws InterruptedException, ReiniciarJuego {
         String opcion1 = "";
         try {
             while (true) {
@@ -143,7 +143,7 @@ public class Juego {
                     cantidadActualJugadores = Registro.configurarJugadores();
                     break;
                 case "3": // Mostrar instrucciones
-                    Pantallas.PantallaReglas();
+                    Pantallas.pantallaReglas();
                     break;
                 case "4": // Iniciar una partida
                     Datos.saltoDeLineas();

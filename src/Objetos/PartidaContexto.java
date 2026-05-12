@@ -1,6 +1,7 @@
 package Objetos;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Clase que agrupa los elementos principales de la partida para simplificar el
@@ -18,11 +19,11 @@ public class PartidaContexto {
     // Metodos////////////////////////
 
     // Constructor para instanciar objeto con parámetros
-    public PartidaContexto(Tablero tablero, Turno controladorTurnos, HashMap<Integer, Jugador> jugadores,
+    public PartidaContexto(Tablero tablero, Turno controladorTurnos, Map<Integer, Jugador> jugadores,
             int cantidadJugadores) {
         this.tablero = tablero;
         this.controladorTurnos = controladorTurnos;
-        this.jugadores = jugadores;
+        this.jugadores = (HashMap<Integer, Jugador>) jugadores;
         this.cantidadJugadores = cantidadJugadores;
     }
 
@@ -35,7 +36,7 @@ public class PartidaContexto {
         return controladorTurnos;
     }
 
-    public HashMap<Integer, Jugador> getJugadores() {
+    public Map<Integer, Jugador> getJugadores() {
         return jugadores;
     }
 
@@ -51,8 +52,8 @@ public class PartidaContexto {
         this.controladorTurnos = controladorTurnos;
     }
 
-    public void setJugadores(HashMap<Integer, Jugador> jugadores) {
-        this.jugadores = jugadores;
+    public void setJugadores(Map<Integer, Jugador> jugadores) {
+        this.jugadores = (HashMap<Integer, Jugador>) jugadores;
     }
 
     public void setCantidadJugadores(int cantidadJugadores) {

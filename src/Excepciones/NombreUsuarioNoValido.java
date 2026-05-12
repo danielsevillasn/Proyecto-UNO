@@ -1,6 +1,7 @@
 package Excepciones;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Excepcion programada que se lanza cuando una de las políticas de seguridad no
@@ -19,13 +20,13 @@ public class NombreUsuarioNoValido extends Exception {
     public NombreUsuarioNoValido(String nombre) {
         super("El nombre de usuario '" + nombre + "' no cumple con las políticas de seguridad.");
         this.nombreRechazado = nombre;
-        this.sugerencias = new ArrayList<String>();
+        this.sugerencias = new ArrayList<>();
 
         configurarSugerencias();
     }
 
     // Getter
-    public ArrayList<String> getSugerencias() {
+    public List<String> getSugerencias() {
         return sugerencias;
     }
 

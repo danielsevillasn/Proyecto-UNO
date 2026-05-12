@@ -110,6 +110,6 @@ public class CartaNormal extends Carta {
         CartaNormal n = (CartaNormal) c;
         Integer n1 = (Integer) numero;
         Integer n2 = (Integer) n.getNumero();
-        return n1.compareTo(n2); // Si todo lo anterior es igual, entonces compara por color
+        return n1.compareTo(n2); // Si lo anterior es igual, entonces compara por color
     }
 }

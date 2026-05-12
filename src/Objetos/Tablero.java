@@ -96,8 +96,7 @@ public class Tablero {
      */
     public Carta tirarCarta() {
         try {
-            Carta carta = chupona.extraer(chupona.size() - 1);
-            return carta;
+            return chupona.extraer(chupona.size() - 1);
         } catch (ContenedorVacio e) {
             System.out.println(e.getMessage());
             return null;

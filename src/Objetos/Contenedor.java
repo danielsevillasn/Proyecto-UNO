@@ -2,6 +2,7 @@ package Objetos;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import Excepciones.ContenedorLleno;
 import Excepciones.ContenedorVacio;
@@ -26,7 +27,7 @@ public class Contenedor<T extends Carta> implements Barajable {
     }
 
     // Getter
-    public ArrayList<T> getLista() {
+    public List<T> getLista() {
         return lista;
     }
 

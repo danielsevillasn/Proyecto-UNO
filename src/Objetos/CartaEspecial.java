@@ -127,7 +127,7 @@ public class CartaEspecial extends Carta {
             return 1; // Si el objeto comparado no es una Carta especial, este objeto se pone delante
         }
         CartaEspecial other = (CartaEspecial) c;
-        return tiposEspeciales.compareTo(other.tiposEspeciales); // Si todo lo anterior es igual, entonces compara por
+        return tiposEspeciales.compareTo(other.tiposEspeciales); // Si lo anterior es igual, entonces compara por
                                                                  // su tipo especial
     }
 }

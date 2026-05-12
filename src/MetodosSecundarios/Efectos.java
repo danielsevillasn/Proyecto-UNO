@@ -6,6 +6,8 @@ import Objetos.Carta;
 import Objetos.CartaEspecial;
 import Objetos.Jugador;
 
+import static MetodosSecundarios.UnoEngine.*;
+
 /**
  * Clase que gestiona los efectos de las cartas especiales
  * 
@@ -50,12 +52,12 @@ public class Efectos {
      * @param 'ninguno'
      */
     private static void reversa() {
-        UnoEngine.turnos().cambiarSentido();
+        turnos().cambiarSentido();
 
         // Si son solo 2 jugadores entonces saltamos el turno del jugador que le
         // precedia
-        if (UnoEngine.nJugadores() == 2) {
-            UnoEngine.siguiente();
+        if (nJugadores() == 2) {
+            siguiente();
         }
         System.out.println("¡El sentido ha cambiado!");
     }
@@ -69,10 +71,10 @@ public class Efectos {
      */
     private static void bloqueo() {
         Jugador jugadorSaltado;
-        jugadorSaltado = UnoEngine.contextoPartida.getJugadores().get(hallarIdJugador()); // Consultamos quién va a ser
+        jugadorSaltado = contextoPartida.getJugadores().get(hallarIdJugador()); // Consultamos quién va a ser
                                                                                           // bloqueado
         System.out.println("¡" + jugadorSaltado.getNombre() + " ha sido bloqueado y pierde su turno!");
-        UnoEngine.siguiente();
+        siguiente();
     }
 
     /**
@@ -88,13 +90,13 @@ public class Efectos {
     private static void chupate(int numeroCartas, Carta cartaTirada)
             throws InterruptedException, ReiniciarJuego {
         Jugador jugadorChupete;
-        jugadorChupete = UnoEngine.contextoPartida.getJugadores().get(hallarIdJugador());
+        jugadorChupete = contextoPartida.getJugadores().get(hallarIdJugador());
         if (numeroCartas == 4) {
             cambiarColor(cartaTirada);
         }
         System.out.println("¡" + jugadorChupete.getNombre() + " chupa " + numeroCartas + " cartas y pierde su turno!");
         chuparCartas(numeroCartas, jugadorChupete);
-        UnoEngine.siguiente();
+        siguiente();
     }
 
     /**
@@ -108,7 +110,7 @@ public class Efectos {
         Carta cartaRobada;
         for (int i = 0; i < numeroCartas; i++) {
             if (!j.tieneManoLlena()) {
-                cartaRobada = UnoEngine.tablero().tirarCarta();
+                cartaRobada = tablero().tirarCarta();
                 j.recibirCarta(cartaRobada);
                 System.out.println("Recibe un: " + cartaRobada);
             }
@@ -158,12 +160,12 @@ public class Efectos {
      */
     private static int hallarIdJugador() {
         // Si el sentido es el normal entonces
-        int actual = UnoEngine.turnos().getActual();
-        int sentido = UnoEngine.turnos().getSentido();// 1 o -1
+        int actual = turnos().getActual();
+        int sentido = turnos().getSentido();// 1 o -1
         // Sumamos la cantidad de jugadores para evitar números negativos al restar
         // El operador % (módulo) asegura que el índice siempre esté en el rango
         // correcto
-        return (actual + sentido + UnoEngine.nJugadores())
-                % UnoEngine.nJugadores();
+        return (actual + sentido + nJugadores())
+                % nJugadores();
     }
 }
