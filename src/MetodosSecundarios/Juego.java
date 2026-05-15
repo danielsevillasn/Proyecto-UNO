@@ -143,7 +143,8 @@ public class Juego {
                     cantidadActualJugadores = Registro.configurarJugadores();
                     break;
                 case "3": // Mostrar instrucciones
-                    Pantallas.pantallaReglas();
+                    Reglas.guardarReglas(); //Crea el archivo de reglas.txt cada vez que estas se muestrasn
+                    Reglas.mostrarReglas();
                     break;
                 case "4": // Iniciar una partida
                     Datos.saltoDeLineas();

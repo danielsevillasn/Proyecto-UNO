@@ -95,7 +95,7 @@ public class UnoEngine {
 
             // Si nadie ha ganado, pasamos al siguiente turno
             if (!fin)
-                controladorTurnos.siguiente(cantidadActualJugadores);
+                siguiente();
         }
     }
 
