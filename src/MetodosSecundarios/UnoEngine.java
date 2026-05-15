@@ -3,6 +3,7 @@ package MetodosSecundarios;
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,6 +61,8 @@ public class UnoEngine {
         Mecanicas.aplicarEfectoPrimeraCarta();
 
         flujoDeLaPartida();
+        
+        Juego.guardarEstadisticas(jugador, jugadores.values());
 
         Pantallas.pantallaFinal();
     }
@@ -178,8 +181,12 @@ public class UnoEngine {
         }
     }
 
-    //Metodos atajo
-    //Sirven para reducir codigo en efectos y en mecanicas
+    public static void guardarEstadisticas(Jugador ganador, Collection<Jugador> participantes) {
+        // Lógica para abrir el fichero y escribir los resultados
+    }
+
+    // Metodos atajo
+    // Sirven para reducir codigo en efectos y en mecanicas
     public static Jugador actual() {
         return contextoPartida.jugadorActual();
     }

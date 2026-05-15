@@ -15,6 +15,7 @@ public class Jugador {
     private final int id;
     private Contenedor<Carta> mano;
     private final int limiteMano;
+    private int cartasRobadasTotales;
 
     // Metodos////////////////////////
 
@@ -43,6 +44,10 @@ public class Jugador {
         return mano;
     }
 
+    public int getCartasRobadasTotales() {
+    return cartasRobadasTotales;
+    }
+
     // Otros metodos
     /**
      * Juega una carta de la mano
@@ -67,6 +72,7 @@ public class Jugador {
     public void recibirCarta(Carta carta) {
         try {
             mano.añadir(carta, limiteMano);
+            cartasRobadasTotales++; // Registra cada carta que entra a la mano
         } catch (ContenedorLleno e) {
             System.out.println(e.getMessage());
         }

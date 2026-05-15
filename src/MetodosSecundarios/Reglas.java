@@ -9,7 +9,7 @@ public class Reglas {
     private static final String ARCHIVO_REGLAS = "reglas.txt";
 
     /**
-     * Guarda una copia estática de las reglas en el archivo de texto.
+     * Guarda una copia de las reglas
      */
     public static void guardarReglas() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_REGLAS))) {

@@ -1,11 +1,19 @@
 package MetodosSecundarios;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import Enumerados.ModoEjecucion;
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
+import Objetos.Jugador;
 
 /**
  * Clase que establece la raiz del juego
@@ -143,7 +151,7 @@ public class Juego {
                     cantidadActualJugadores = Registro.configurarJugadores();
                     break;
                 case "3": // Mostrar instrucciones
-                    Reglas.guardarReglas(); //Crea el archivo de reglas.txt cada vez que estas se muestrasn
+                    Reglas.guardarReglas(); // Crea el archivo de reglas.txt cada vez que estas se muestrasn
                     Reglas.mostrarReglas();
                     break;
                 case "4": // Iniciar una partida
@@ -193,5 +201,26 @@ public class Juego {
         Datos.milisegundos = 1000;
 
         System.out.println("\nEstado del juego restablecido correctamente.");
+    }
+
+    public static void guardarEstadisticas(Jugador ganador, java.util.Collection<Jugador> jugadores) {
+        String rutaArchivo = "estadisticas.txt";
+        String fecha = DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mm:ss a").format(LocalDateTime.now());
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
+            bw.write("=========================================\n");
+            bw.write("Fecha y Hora: " + fecha + "\n");
+            bw.write("Ganador: " + ganador.getNombre() + "\n");
+            bw.write("Jugadores de la partida:\n");
+
+            for (Jugador j : jugadores) {
+                bw.write("  - " + j.getNombre() + " (Cartas robadas en total: " + j.getCartasRobadasTotales() + ")\n");
+            }
+
+            bw.write("=========================================\n\n");
+
+        } catch (IOException e) {
+            System.out.println("Error al registrar las estadísticas: " + e.getMessage());
+        }
     }
 }
