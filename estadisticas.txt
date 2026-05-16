@@ -1,0 +1,16 @@
+=========================================
+Fecha y Hora: 16-05-2026, 09:05:44 p. m.
+Ganador: Jugador2
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 13)
+  - Jugador2 (Cartas robadas en total: 10)
+=========================================
+
+=========================================
+Fecha y Hora: 16-05-2026, 09:19:33 p. m.
+Ganador: Jugador1
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 17)
+  - Jugador2 (Cartas robadas en total: 22)
+=========================================
+

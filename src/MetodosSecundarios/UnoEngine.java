@@ -65,6 +65,8 @@ public class UnoEngine {
         Juego.guardarEstadisticas(jugador, jugadores.values());
 
         Pantallas.pantallaFinal();
+
+        Pantallas.mostrarEstadisticas(jugador, jugadores.values());
     }
 
     /**
