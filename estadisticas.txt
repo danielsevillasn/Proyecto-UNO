@@ -14,3 +14,27 @@ Jugadores de la partida:
   - Jugador2 (Cartas robadas en total: 22)
 =========================================
 
+=========================================
+Fecha y Hora: 16-05-2026, 11:15:37 p. m.
+Ganador: Jugador1
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 21)
+  - Jugador2 (Cartas robadas en total: 21)
+=========================================
+
+=========================================
+Fecha y Hora: 16-05-2026, 11:22:15 p. m.
+Ganador: Libio
+Jugadores de la partida:
+  - Dani (Cartas robadas en total: 19)
+  - Libio (Cartas robadas en total: 16)
+=========================================
+
+========================================================================
+Fecha y Hora: 16-05-2026, 11:51:05 p. m.
+Ganador: Jugador2
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 26 | Cartas jugadas en total: 22)
+  - Jugador2 (Cartas robadas en total: 22 | Cartas jugadas en total: 22)
+========================================================================
+

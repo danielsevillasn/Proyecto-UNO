@@ -120,6 +120,7 @@ public class Mecanicas {
                     break;
             }
         }
+        Datos.pulsaEnter();
     }
 
     /**
@@ -155,7 +156,8 @@ public class Mecanicas {
     }
 
     /**
-     * Método que desarrolla el efecto del cambio de color cuando sale de primera carta
+     * Método que desarrolla el efecto del cambio de color cuando sale de primera
+     * carta
      * 
      * @param carta el cambio de color que será actualizado
      * @throws ReiniciarJuego para reinciar el juego cuando se quiera
@@ -191,7 +193,6 @@ public class Mecanicas {
     public static void efectoBloqueo() throws InterruptedException {
         System.out.println("Ha salido un 'Bloqueo': el primer jugador pierde el turno.");
         siguiente();
-        Thread.sleep(Datos.milisegundos);
     }
 
     /**
@@ -207,6 +208,5 @@ public class Mecanicas {
         if (nJugadores() > 2) {
             siguiente();
         }
-        Thread.sleep(Datos.milisegundos);
     }
 }

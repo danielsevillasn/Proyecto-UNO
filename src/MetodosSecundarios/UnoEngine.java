@@ -61,12 +61,12 @@ public class UnoEngine {
         Mecanicas.aplicarEfectoPrimeraCarta();
 
         flujoDeLaPartida();
-        
-        Juego.guardarEstadisticas(jugador, jugadores.values());
+
+        AlmacenamientoDatos.guardarEstadisticas(jugador, jugadores);
 
         Pantallas.pantallaFinal();
 
-        Pantallas.mostrarEstadisticas(jugador, jugadores.values());
+        AlmacenamientoDatos.mostrarEstadisticas(jugador, jugadores);
     }
 
     /**

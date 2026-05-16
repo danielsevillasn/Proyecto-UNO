@@ -16,6 +16,7 @@ public class Jugador {
     private Contenedor<Carta> mano;
     private final int limiteMano;
     private int cartasRobadasTotales;
+    private int cartasJugadasTotales;
 
     // Metodos////////////////////////
 
@@ -32,6 +33,10 @@ public class Jugador {
         return nombre;
     }
 
+    public int getCartasJugadasTotales() {
+        return cartasJugadasTotales;
+    }
+
     public int getNumCartas() {
         return mano.size();
     }
@@ -45,7 +50,7 @@ public class Jugador {
     }
 
     public int getCartasRobadasTotales() {
-    return cartasRobadasTotales;
+        return cartasRobadasTotales;
     }
 
     // Otros metodos
@@ -57,7 +62,9 @@ public class Jugador {
      */
     public Carta jugarCarta(int n) {
         try {
-            return mano.extraer(n);
+            Carta cartaExtraida = mano.extraer(n);
+            cartasJugadasTotales++;
+            return cartaExtraida;
         } catch (ContenedorVacio e) {
             System.out.println(e.getMessage());
             return null;

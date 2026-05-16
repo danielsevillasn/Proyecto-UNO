@@ -3,9 +3,19 @@ package MetodosSecundarios;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Reglas {
+import Objetos.Jugador;
 
+/**
+ * Clase que contiene metodos relacionados con el almacenamiento de los datos
+ * 
+ * @author Dani S y Libio
+ */
+public class AlmacenamientoDatos {
     private static final String ARCHIVO_REGLAS = "reglas.txt";
 
     /**
@@ -25,7 +35,7 @@ public class Reglas {
             bw.newLine();
             bw.write("5. El primer jugador en quedarse sin cartas gana la partida.");
             bw.newLine();
-            
+
             System.out.println("Reglas guardadas correctamente en " + ARCHIVO_REGLAS);
         } catch (IOException e) {
             System.out.println("Error al escribir el archivo de reglas: " + e.getMessage());
@@ -88,7 +98,7 @@ public class Reglas {
     /**
      * Método que muestra las reglas
      */
-    public static void mostrarReglas() throws InterruptedException{
+    public static void mostrarReglas() throws InterruptedException {
         try {
             System.out.println("archivo de reglas creado correctamente");
             Thread.sleep(Datos.milisegundos);
@@ -97,5 +107,59 @@ public class Reglas {
         } catch (InterruptedException e) {
             System.out.println("Error en las pausas de la pantalla de reglas: " + e.getMessage());
         }
+    }
+
+    /**
+     * Método para guardar las estadísticas de los jugadores de la partida actual
+     * 
+     * @param ganador   el jugador que ha ganado
+     * @param jugadores mapa de los jugadores de la partida
+     */
+    public static void guardarEstadisticas(Jugador ganador, HashMap<Integer, Jugador> jugadores) {
+        String rutaArchivo = "estadisticas.txt";
+        String fecha = DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mm:ss a").format(LocalDateTime.now());
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
+            bw.write("========================================================================\n");
+            bw.write("Fecha y Hora: " + fecha + "\n");
+            bw.write("Ganador: " + ganador.getNombre() + "\n");
+            bw.write("Jugadores de la partida:\n");
+
+            for (Map.Entry<Integer, Jugador> j : jugadores.entrySet()) {
+                bw.write("  - " + j.getValue().getNombre() + " (Cartas robadas en total: "
+                        + j.getValue().getCartasRobadasTotales() + " | Cartas jugadas en total: "
+                        + j.getValue().getCartasJugadasTotales() + ")\n");
+            }
+
+            bw.write("========================================================================\n\n");
+
+        } catch (IOException e) {
+            System.out.println("Error al registrar las estadísticas: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Método para mostar las estadístcas de los jugadores al terminar la partida
+     * 
+     * @param ganador   el jugador que ha ganado
+     * @param jugadores mapa de los jugadores de la partida
+     */
+    public static void mostrarEstadisticas(Jugador ganador, HashMap<Integer, Jugador> jugadores)
+            throws InterruptedException {
+        Datos.saltoDeLineas();
+
+        System.out.println("=========================================\n");
+        String fecha = DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mm:ss a").format(LocalDateTime.now());
+        System.out.println("Fecha y Hora: " + fecha + "\n");
+        System.out.println("Ganador: " + ganador.getNombre() + "\n");
+        System.out.println("Jugadores de la partida:\n");
+        for (Map.Entry<Integer, Jugador> j : jugadores.entrySet()) {
+            System.out.println("  - " + j.getValue().getNombre() + " (Cartas robadas en total: "
+                    + j.getValue().getCartasRobadasTotales() + " | Cartas jugadas en total: "
+                    + j.getValue().getCartasJugadasTotales() + ")\n");
+        }
+        System.out.println("=========================================\n\n");
+
+        Datos.pulsaEnter();
     }
 }
