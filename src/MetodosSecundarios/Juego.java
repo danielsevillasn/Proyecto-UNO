@@ -29,6 +29,22 @@ public class Juego {
      */
     public static void iniciarJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
+
+        // Comprobación de partida guardada existente
+        if (AlmacenamientoDatos.existePartidaGuardada()) {
+            System.out.println("Se ha detectado una partida interrumpida.");
+            String respuesta = Datos.pedirCadena("¿Deseas reanudar la partida anterior? (S/N): ");
+
+            if (respuesta.equalsIgnoreCase("S")) {
+                UnoEngine.contextoPartida = (Objetos.PartidaContexto) AlmacenamientoDatos.cargarPartida();
+                UnoEngine.reanudarPartida(); 
+                return;
+            } else {
+                AlmacenamientoDatos.borrarPartidaGuardada();
+            }
+        }
+
+        // Configuración inicial por defecto si no se reanuda
         cantidadActualJugadores = 2;
         nombresCargados.clear();
         nombresCargados.add("Jugador1");
@@ -112,6 +128,10 @@ public class Juego {
                 }
             }
         } catch (ReiniciarJuego e) {
+            // Guardar el contexto actual si contiene datos de partida activos
+            if (UnoEngine.contextoPartida != null && UnoEngine.contextoPartida.getTablero() != null) {
+                AlmacenamientoDatos.guardarPartida(UnoEngine.contextoPartida);
+            }
             reinicio();
             System.out.println("\n" + e.getMessage());
             Thread.sleep(Datos.milisegundos);

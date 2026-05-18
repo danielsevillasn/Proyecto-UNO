@@ -23,7 +23,7 @@ public class UnoEngine {
 
     private static Tablero tablero;
     private static Turno controladorTurnos;
-    protected static PartidaContexto contextoPartida;
+    protected static PartidaContexto contextoPartida = null;
     private static boolean fin = false;
     private static boolean cartaValida = false;
     private static int opcionCarta = -1;
@@ -179,6 +179,35 @@ public class UnoEngine {
                 Menus.nombreJugador = jugador.getNombre();
             }
         }
+    }
+
+    /**
+     * Reanuda una partida previamente guardada restaurando el estado
+     * desde el objeto contenedor contextoPartida
+     * 
+     * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reiniciar el juego cuando quiera
+     */
+    public static void reanudarPartida() throws InterruptedException, ReiniciarJuego {
+        if (contextoPartida == null || contextoPartida.getTablero() == null) {
+            System.out.println("Error: No se encontró información válida para reanudar la partida :(");
+            Juego.iniciarJuego();
+            return;
+        }
+
+        System.out.println("Restaurando parámetros de juego...");
+
+        tablero = contextoPartida.getTablero();
+        controladorTurnos = contextoPartida.getControladorTurnos();
+        cantidadActualJugadores = contextoPartida.getCantidadJugadores();
+        fin = false;
+
+        System.out.println("Partida restaurada :)\n");
+
+        // Borramos el archivo físico para evitar cargas infinitas o duplicadas
+        AlmacenamientoDatos.borrarPartidaGuardada();
+
+        flujoDeLaPartida();
     }
 
     public static void guardarEstadisticas(Jugador ganador, Collection<Jugador> participantes) {
