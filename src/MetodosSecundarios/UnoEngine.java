@@ -66,7 +66,7 @@ public class UnoEngine {
 
         Pantallas.pantallaFinal();
 
-        AlmacenamientoDatos.mostrarEstadisticas(jugador, jugadores);
+        Menus.preguntarMostrarEstadisticas(jugador, jugadores);
     }
 
     /**
