@@ -26,6 +26,8 @@ public class Jugador {
         this.mano = new Contenedor<>();
         limiteMano = 21;
         id = idIncrementado++;
+        cartasRobadasTotales = 0;
+        cartasJugadasTotales = 0;
     }
 
     // Getter
