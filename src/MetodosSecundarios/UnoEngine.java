@@ -62,8 +62,6 @@ public class UnoEngine {
 
         flujoDeLaPartida();
 
-        AlmacenamientoDatos.guardarEstadisticas(jugador, jugadores);
-
         Pantallas.pantallaFinal();
 
         Menus.preguntarMostrarEstadisticas(jugador, jugadores);

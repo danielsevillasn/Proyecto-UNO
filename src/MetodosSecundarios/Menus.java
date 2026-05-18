@@ -212,19 +212,21 @@ public class Menus {
     /**
      * Pregunta al usuario si desea visualizar las estadísticas de la partida
      * 
-     * @param jugador Jugador actual o ganador
+     * @param jugador   Jugador actual o ganador
      * @param jugadores Mapa con todos los participantes
-     * @throws ReiniciarJuego Si se solicita el reinicio del juego
-    * @throws InterruptedException Si la entrada del usuario es interrumpida
+     * @throws ReiniciarJuego       Si se solicita el reinicio del juego
+     * @throws InterruptedException Si la entrada del usuario es interrumpida
      */
-    public static void preguntarMostrarEstadisticas(Jugador jugador, HashMap<Integer, Jugador> jugadores) throws ReiniciarJuego, InterruptedException {
+    public static void preguntarMostrarEstadisticas(Jugador jugador, HashMap<Integer, Jugador> jugadores)
+            throws ReiniciarJuego, InterruptedException {
         while (true) {
             String respuesta = Datos.pedirCadena("Quieres ver las estadísticas? (si / no): ");
-            
+
             if (respuesta.equalsIgnoreCase("si")) {
-                AlmacenamientoDatos.mostrarEstadisticas(jugador, jugadores);
+                AlmacenamientoDatos.finalizarYGuardarEstadísticas(jugador, jugadores, true);
                 break;
             } else if (respuesta.equalsIgnoreCase("no")) {
+                AlmacenamientoDatos.finalizarYGuardarEstadísticas(jugador, jugadores, false);
                 System.out.println("Volviendo al menú principal...");
                 Thread.sleep(Datos.milisegundos + 500);
                 break;

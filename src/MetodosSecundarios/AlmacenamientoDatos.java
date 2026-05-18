@@ -1,12 +1,14 @@
 package MetodosSecundarios;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.Map;
 
 import Objetos.Jugador;
 
@@ -16,31 +18,8 @@ import Objetos.Jugador;
  * @author Dani S y Libio
  */
 public class AlmacenamientoDatos {
-    private static final String ARCHIVO_REGLAS = "reglas.txt";
-
-    /**
-     * Guarda una copia de las reglas
-     */
-    public static void guardarReglas() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_REGLAS))) {
-            bw.write("=== REGLAS DEL JUEGO UNO ===");
-            bw.newLine();
-            bw.write("1. Cada jugador recibe 7 cartas al comenzar.");
-            bw.newLine();
-            bw.write("2. Se debe jugar una carta que coincida en color, numero o simbolo con la del centro.");
-            bw.newLine();
-            bw.write("3. Si no tienes carta para jugar, debes robar una del mazo.");
-            bw.newLine();
-            bw.write("4. Cuando te quede una sola carta, debes avisar diciendo UNO.");
-            bw.newLine();
-            bw.write("5. El primer jugador en quedarse sin cartas gana la partida.");
-            bw.newLine();
-
-            System.out.println("Reglas guardadas correctamente en " + ARCHIVO_REGLAS);
-        } catch (IOException e) {
-            System.out.println("Error al escribir el archivo de reglas: " + e.getMessage());
-        }
-    }
+    private static final String ARCHIVO_REGLAS = "src\\Archivos\\reglas.txt";
+    private static final String ARCHIVO_ESTADISTICAS = "src\\Archivos\\estadisticas.txt";
 
     /**
      * Pantalla en la que sale todas las reglas del juego y del modo de juego
@@ -50,115 +29,71 @@ public class AlmacenamientoDatos {
      * @throws InterruptedException para los thread sleep
      */
     public static void pantallaReglas() throws InterruptedException {
-        Datos.saltoDeLineas();
-
-        System.out.println("========== REGLAS DEL JUEGO UNO ==========");
-        Thread.sleep(Datos.milisegundos + 1000);
-        System.out.println();
-        System.out.println("OBJETIVO DEL JUEGO:");
-        System.out.println("- Ser el primero en quedarse sin cartas en la mano");
-        Thread.sleep(Datos.milisegundos + 1000);
-        System.out.println();
-        System.out.println("PREPARACIÓN:");
-        System.out.println("- Se reparten 7 cartas a cada jugador.");
-        System.out.println("- Se deja el mazo boca abajo en el centro (mazo de robo)");
-        System.out.println("- Se da la vuelta a la primera carta del mazo para iniciar");
-        System.out.println("  la pila de descarte.");
-        Thread.sleep(Datos.milisegundos + 1000);
-        System.out.println();
-        System.out.println("TURNO DE JUEGO:");
-        System.out.println("- En tu turno debes jugar UNA carta que COINCIDA en color,");
-        System.out.println("  número o símbolo con la carta superior de la pila de descarte");
-        System.out.println("- Si no puedes o no quieres jugar, robas UNA carta del mazo");
-        System.out.println("- Si la carta robada se puede jugar, puedes decidir jugarla");
-        System.out.println("  inmediatamente o quedártela en la mano.");
-        Thread.sleep(Datos.milisegundos + 1000);
-        System.out.println();
-        System.out.println("CARTAS NUMÉRICAS (0-9):");
-        System.out.println("- Solo sirven para coincidir por número o color, no tienen");
-        System.out.println("  efectos especiales");
-        Thread.sleep(Datos.milisegundos + 1000);
-        System.out.println("\nCARTAS ESPECIALES: ");
-        System.out.println("- Son cartas que tienen habilidades especiales en el flujo de la partida");
-        System.out.println("\n- REVERSA: Sirve para cambiar el sentido de los turnos. Esta carta tiene colores");
-        System.out.println("\n- BLOQUEO: Sirve para bloquear el siguiente turno, es decir, impedir ");
-        System.out.println("  que el próximo jugador juegue su turno. Esta carta tiene colores");
-        System.out.println("\n- CHUPA 2: Carta especial que sirve para obligar al siguiente jugador ");
-        System.out.println("  coger dos cartas de la chupona. Esta carta tiene colores");
-        System.out.println("\n- CHUPA 4: Carta especial que hace que el próximo jugador tenga que ");
-        System.out.println("  coger 4 cartas de la baraja de chupona. Además esta carta no tiene color ");
-        System.out.println("  lo que significa que se puede lanzar cuando quieras. También al ");
-        System.out.println("  lanzar esta carta puedes cambiar el color al que tú quieras.");
-        System.out.println("\n- CAMBIO DE COLOR: Carta especial que no tiene color, lo que significa");
-        System.out.println("  ");
-        System.out.println();
-        Datos.pulsaEnter();
-    }
-
-    /**
-     * Método que muestra las reglas
-     */
-    public static void mostrarReglas() throws InterruptedException {
         try {
-            System.out.println("archivo de reglas creado correctamente");
-            Thread.sleep(Datos.milisegundos);
+            BufferedReader br = new BufferedReader(new FileReader(ARCHIVO_REGLAS));
+            String linea = "";
 
-            pantallaReglas();
-        } catch (InterruptedException e) {
-            System.out.println("Error en las pausas de la pantalla de reglas: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Método para guardar las estadísticas de los jugadores de la partida actual
-     * 
-     * @param ganador   el jugador que ha ganado
-     * @param jugadores mapa de los jugadores de la partida
-     */
-    public static void guardarEstadisticas(Jugador ganador, HashMap<Integer, Jugador> jugadores) {
-        String rutaArchivo = "estadisticas.txt";
-        String fecha = DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mm:ss a").format(LocalDateTime.now());
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
-            bw.write("========================================================================\n");
-            bw.write("Fecha y Hora: " + fecha + "\n");
-            bw.write("Ganador: " + ganador.getNombre() + "\n");
-            bw.write("Jugadores de la partida:\n");
-
-            for (Map.Entry<Integer, Jugador> j : jugadores.entrySet()) {
-                bw.write("  - " + j.getValue().getNombre() + " (Cartas robadas en total: "
-                        + j.getValue().getCartasRobadasTotales() + " | Cartas jugadas en total: "
-                        + j.getValue().getCartasJugadasTotales() + ")\n");
+            while (linea != null) {
+                System.out.println(linea);
+                linea = br.readLine();
+                Thread.sleep(750);
             }
-
-            bw.write("========================================================================\n\n");
-
+            br.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("No se ha encontrado el archivo");
         } catch (IOException e) {
-            System.out.println("Error al registrar las estadísticas: " + e.getMessage());
+            System.out.println("No se puede leer el archivo");
         }
-    }
-
-    /**
-     * Método para mostar las estadístcas de los jugadores al terminar la partida
-     * 
-     * @param ganador   el jugador que ha ganado
-     * @param jugadores mapa de los jugadores de la partida
-     */
-    public static void mostrarEstadisticas(Jugador ganador, HashMap<Integer, Jugador> jugadores)
-            throws InterruptedException {
+        Datos.pulsaEnter();
         Datos.saltoDeLineas();
 
-        System.out.println("=========================================\n");
+    }
+
+    /**
+     * Método para guardar las estadisticas de la partida y para que poder mostrar
+     * las estadisticas en caso de querer
+     * 
+     * @param ganador   el jugador que ha ganado
+     * @param jugadores mapa de los jugadores de la partida
+     * @param mostrar   variable booleana que determina si se muestran las
+     *                  estadísticas o no
+     * @throws InterruptedException para los thread sleep
+     */
+    public static void finalizarYGuardarEstadísticas(Jugador ganador, HashMap<Integer, Jugador> jugadores,
+            boolean mostrar)
+            throws InterruptedException {
+
+        Datos.saltoDeLineas();
+
+        // Formateo de fecha y diseño
         String fecha = DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mm:ss a").format(LocalDateTime.now());
-        System.out.println("Fecha y Hora: " + fecha + "\n");
-        System.out.println("Ganador: " + ganador.getNombre() + "\n");
-        System.out.println("Jugadores de la partida:\n");
-        for (Map.Entry<Integer, Jugador> j : jugadores.entrySet()) {
-            System.out.println("  - " + j.getValue().getNombre() + " (Cartas robadas en total: "
-                    + j.getValue().getCartasRobadasTotales() + " | Cartas jugadas en total: "
-                    + j.getValue().getCartasJugadasTotales() + ")\n");
+        String separador = "========================================================================\n";
+
+        // 1. Creamos y acumulamos todo el texto en una variable String
+        String reporteFinal = separador;
+        reporteFinal += "Fecha y Hora: " + fecha + "\n";
+        reporteFinal += "Ganador: " + ganador.getNombre() + "\n";
+        reporteFinal += "Jugadores de la partida:\n";
+
+        // Recorremos directamente los valores del HashMap
+        for (Jugador j : jugadores.values()) {
+            reporteFinal += "  - " + j.getNombre()
+                    + " (Cartas robadas en total: " + j.getCartasRobadasTotales()
+                    + " | Cartas jugadas en total: " + j.getCartasJugadasTotales() + ")\n";
         }
-        System.out.println("=========================================\n\n");
+        reporteFinal += separador + "\n";
+
+        // 2. Lo mostramos por pantalla
+        if (mostrar) {
+            System.out.print(reporteFinal);
+        }
+
+        // 3. Lo guardamos en el archivo
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_ESTADISTICAS, true))) {
+            bw.write(reporteFinal);
+        } catch (IOException e) {
+            System.out.println("Error al registrar las estadísticas en el archivo: " + e.getMessage());
+        }
 
         Datos.pulsaEnter();
     }
