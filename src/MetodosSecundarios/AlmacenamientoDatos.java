@@ -17,8 +17,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+import Excepciones.ReiniciarJuego;
+import Excepciones.SalirDelJuego;
 import Objetos.Jugador;
 import Objetos.PartidaContexto;
+import Objetos.Turno;
 
 /**
  * Clase que contiene metodos relacionados con el almacenamiento de los datos
@@ -41,25 +44,64 @@ public class AlmacenamientoDatos {
     private final static String ARCHIVO_PARTIDA = rutaPartida.toString();
 
     /**
+     * Método que comprueba que el archivo partida sea un archivo y que exista
      * 
-     * 
-     * @return
+     * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
+     * @throws SalirDelJuego        para salir del juego cuando quieras
      */
-    public static boolean existePartidaGuardada() {
-        File archivo = new File(ARCHIVO_PARTIDA);
-        return archivo.exists() && archivo.isFile();
-    }
+    public static void partidaGuardada() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
+        File archivoPartida = new File(ARCHIVO_PARTIDA);
+        boolean salir = false;
+        if (archivoPartida.exists() && archivoPartida.isFile()) {
+            Datos.saltoDeLineas();
+            System.out.println("Se ha detectado una partida interrumpida.");
+            while (!salir) {
+                String respuesta = Datos.pedirCadena("¿Deseas reanudar la partida anterior? (S/N): ");
 
-    public static void guardarPartida(PartidaContexto contexto) {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO_PARTIDA))) {
-            out.writeObject(contexto);
-            System.out.println("Partida guardada correctamente en binario.");
-        } catch (IOException e) {
-            System.out.println("Error al guardar la partida en binario: " + e.getMessage());
+                switch (respuesta) {
+                    case "S":
+                        UnoEngine.contextoPartida = (Objetos.PartidaContexto) AlmacenamientoDatos.cargarPartida();
+                        UnoEngine.reanudarPartida();
+                        Juego.iniciarJuego();
+                    case "N":
+                        archivoPartida.delete();
+                        salir = true;
+                        break;
+
+                    default:
+                        System.out.println("Tienes que poner \"S\" o \"N\", intentalo de nuevo");
+                        break;
+                }
+            }
+        } else if (!archivoPartida.exists()) {
+            System.out.println("El archivo no existe");
+        } else {
+            System.out.println("No es un archivo lo que se indica en la ruta");
         }
     }
 
-    // Cargar partida desde binario
+    /**
+     * Método que permite guardar la partida actual en un archivo en binario con el
+     * respectivo contexto de la partida actual
+     * 
+     * @param contexto de la partida actual
+     */
+    public static void guardarPartida(PartidaContexto contexto) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO_PARTIDA))) {
+            out.writeObject(contexto);
+            System.out.println("Partida guardada correctamente");
+        } catch (IOException e) {
+            System.out.println("Error al guardar la partida: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Método que carga la partida guardada leyendo el archivo binario y pasandolo a
+     * objeto
+     * 
+     * @return devuelve el contexto de la partida guardada
+     */
     public static PartidaContexto cargarPartida() {
         File archivo = new File(ARCHIVO_PARTIDA);
         if (!archivo.exists()) {
@@ -69,14 +111,14 @@ public class AlmacenamientoDatos {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(ARCHIVO_PARTIDA))) {
             Object obj = in.readObject();
             if (obj instanceof PartidaContexto contexto) {
-                System.out.println("Partida cargada correctamente desde binario.");
+                System.out.println("\nPartida cargada correctamente");
                 return contexto;
             } else {
                 System.out.println("El archivo de guardado no contiene una partida válida.");
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error al cargar la partida en binario: " + e.getMessage());
+            System.out.println("Error al cargar la partida: " + e.getMessage());
             return null;
         }
     }
@@ -118,7 +160,7 @@ public class AlmacenamientoDatos {
      *                  estadísticas o no
      * @throws InterruptedException para los thread sleep
      */
-    public static void finalizarYGuardarEstadísticas(Jugador ganador, Map<Integer, Jugador> jugadores,
+    public static void finalizarYGuardarEstadísticas(Jugador ganador, Map<Integer, Jugador> jugadores, Turno turno,
             boolean mostrar) throws InterruptedException {
         Datos.saltoDeLineas();
 
@@ -127,6 +169,7 @@ public class AlmacenamientoDatos {
 
         String reporteFinal = separador;
         reporteFinal += "Fecha y Hora: " + fecha + "\n";
+        reporteFinal += "Turnos jugados: "+turno.getContadorTurno()+"\n";
         reporteFinal += "Ganador: " + ganador.getNombre() + "\n";
         reporteFinal += "Jugadores de la partida:\n";
 

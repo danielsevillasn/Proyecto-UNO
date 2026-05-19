@@ -6,6 +6,7 @@ import java.util.Scanner;
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
 import Objetos.Jugador;
+import Objetos.Turno;
 
 /**
  * Clase para imprimir todos los menus del juego
@@ -217,16 +218,16 @@ public class Menus {
      * @throws ReiniciarJuego       Si se solicita el reinicio del juego
      * @throws InterruptedException Si la entrada del usuario es interrumpida
      */
-    public static void preguntarMostrarEstadisticas(Jugador jugador, Map<Integer, Jugador> jugadores)
+    public static void preguntarMostrarEstadisticas(Jugador jugador, Map<Integer, Jugador> jugadores, Turno turno)
             throws ReiniciarJuego, InterruptedException {
         while (true) {
             String respuesta = Datos.pedirCadena("Quieres ver las estadísticas? (si / no): ");
 
             if (respuesta.equalsIgnoreCase("si")) {
-                AlmacenamientoDatos.finalizarYGuardarEstadísticas(jugador, jugadores, true);
+                AlmacenamientoDatos.finalizarYGuardarEstadísticas(jugador, jugadores,turno, true);
                 break;
             } else if (respuesta.equalsIgnoreCase("no")) {
-                AlmacenamientoDatos.finalizarYGuardarEstadísticas(jugador, jugadores, false);
+                AlmacenamientoDatos.finalizarYGuardarEstadísticas(jugador, jugadores,turno, false);
                 System.out.println("Volviendo al menú principal...");
                 Thread.sleep(Datos.milisegundos + 500);
                 break;

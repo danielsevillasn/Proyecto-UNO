@@ -120,7 +120,6 @@ public class Mecanicas {
                     break;
             }
         }
-        Datos.pulsaEnter();
     }
 
     /**
@@ -150,8 +149,7 @@ public class Mecanicas {
         System.out.println("¡El +4 no puede ser carta inicial! Se devuelve y se roba otra.");
         tablero().meter(carta);
         tablero().getChupona().barajar();
-        tablero().dejar(
-                tablero().tirarCarta());
+        tablero().dejar(tablero().tirarCarta());
         aplicarEfectoPrimeraCarta();
     }
 
@@ -204,7 +202,7 @@ public class Mecanicas {
     public static void efectoReversa() throws InterruptedException {
         System.out.println(
                 "Ha salido un 'Reversa': se invierte el sentido y el primer jugador pierde el turno.");
-        turnos().cambiarSentido();
         siguiente();
+        turnos().cambiarSentido();
     }
 }

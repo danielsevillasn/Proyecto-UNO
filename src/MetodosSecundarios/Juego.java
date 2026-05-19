@@ -114,10 +114,6 @@ public class Juego {
                 }
             }
         } catch (ReiniciarJuego e) {
-            // Guardar el contexto actual si contiene datos de partida activos
-            if (UnoEngine.contextoPartida != null && UnoEngine.contextoPartida.getTablero() != null) {
-                AlmacenamientoDatos.guardarPartida(UnoEngine.contextoPartida);
-            }
             reinicio();
             System.out.println("\n" + e.getMessage());
             Thread.sleep(Datos.milisegundos);
@@ -134,21 +130,13 @@ public class Juego {
      * @param salir valor booleano que expresa cuando sale del flujo
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
+     * @throws SalirDelJuego        para salir del juego cuando quieras
      */
-    public static void flujoDelSistema() throws InterruptedException, ReiniciarJuego {
+    public static void flujoDelSistema() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         String opcion2 = "";
-        salir = false;
         // Comprobación de partida guardada existente
-        if (AlmacenamientoDatos.existePartidaGuardada()) {
-            System.out.println("Se ha detectado una partida interrumpida.");
-            String respuesta = Datos.pedirCadena("¿Deseas reanudar la partida anterior? (S/N): ");
-
-            if (respuesta.equalsIgnoreCase("S")) {
-                UnoEngine.contextoPartida = (Objetos.PartidaContexto) AlmacenamientoDatos.cargarPartida();
-                UnoEngine.reanudarPartida();
-                opcion2 = "5";
-            }
-        }
+        AlmacenamientoDatos.partidaGuardada();
+        salir = false;
         while (!salir) {
             opcion2 = Menus.menuInicio();
 

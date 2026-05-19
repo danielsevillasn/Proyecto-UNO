@@ -74,6 +74,20 @@ public class Datos {
         s.nextLine();
     }
 
+    public static boolean salirDelJuego() throws ReiniciarJuego{
+        String entrada;
+        System.out.println("Pulse enter para continuar, si quieres salir, escribe \"salir\": ");
+        entrada = s.nextLine().trim();
+
+        // Para que el usuario vuelva a iniciar el juego cuando quiera
+        solicitarReinicio(entrada);
+
+        if(entrada.equalsIgnoreCase("salir")){
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Solamente es un mensaje para entradas incorrectas
      * 

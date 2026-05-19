@@ -2,6 +2,7 @@ package MetodosSecundarios;
 
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
+import Excepciones.SalirDelJuego;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,8 +38,9 @@ public class UnoEngine {
      * @param nombresCargados array con todos los nombres (por referencia)
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
+     * @throws SalirDelJuego        para salir del juego cuando quieras
      */
-    public static void partida(List<String> nombresCargados) throws InterruptedException, ReiniciarJuego {
+    public static void partida(List<String> nombresCargados) throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         // Inicialización de componentes de juego
         HashMap<Integer, Jugador> jugadores;
 
@@ -56,12 +58,14 @@ public class UnoEngine {
         tablero.dejar(tablero.tirarCarta());
 
         Mecanicas.aplicarEfectoPrimeraCarta();
+        Datos.pulsaEnter();
+
 
         flujoDeLaPartida();
 
         Pantallas.pantallaFinal();
 
-        Menus.preguntarMostrarEstadisticas(jugador, jugadores);
+        Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores(), contextoPartida.getControladorTurnos());
     }
 
     /**
@@ -70,8 +74,9 @@ public class UnoEngine {
      * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
+     * @throws SalirDelJuego        para salir del juego cuando quieras
      */
-    private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego {
+    private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         while (!fin) {
             // Escoge al jugador correspondiente, basado en el turno actual
             Mecanicas.ordenarBarajaJugadores();
@@ -90,8 +95,10 @@ public class UnoEngine {
             System.out.println("\n  * " + tablero + " *");
             Thread.sleep(Datos.milisegundos);
 
-            // Cambio de turno
-            Datos.pulsaEnter();
+            if (Datos.salirDelJuego()) {
+                AlmacenamientoDatos.guardarPartida(UnoEngine.contextoPartida);
+                throw new SalirDelJuego();
+            }
 
             // Si nadie ha ganado, pasamos al siguiente turno
             if (!fin)
@@ -184,8 +191,9 @@ public class UnoEngine {
      * 
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando quiera
+     * @throws @throws SalirDelJuego        para salir del juego cuando quieras
      */
-    public static void reanudarPartida() throws InterruptedException, ReiniciarJuego {
+    public static void reanudarPartida() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         if (contextoPartida == null || contextoPartida.getTablero() == null) {
             System.out.println("Error: No se encontró información válida para reanudar la partida :(");
             Juego.iniciarJuego();
@@ -197,12 +205,13 @@ public class UnoEngine {
             controladorTurnos = contextoPartida.getControladorTurnos();
             fin = false;
 
-            System.out.println("Partida restaurada :)\n");
+            System.out.println("Partida restaurada :)");
+            Datos.pulsaEnter();
 
             flujoDeLaPartida();
             Pantallas.pantallaFinal();
 
-            Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores());
+            Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores(), contextoPartida.getControladorTurnos());
         }
     }
 
