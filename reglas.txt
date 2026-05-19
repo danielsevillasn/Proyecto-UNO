@@ -1,6 +1,0 @@
-=== REGLAS DEL JUEGO UNO ===
-1. Cada jugador recibe 7 cartas al comenzar.
-2. Se debe jugar una carta que coincida en color, numero o simbolo con la del centro.
-3. Si no tienes carta para jugar, debes robar una del mazo.
-4. Cuando te quede una sola carta, debes avisar diciendo UNO.
-5. El primer jugador en quedarse sin cartas gana la partida.

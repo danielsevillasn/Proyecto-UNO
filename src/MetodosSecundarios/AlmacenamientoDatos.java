@@ -3,25 +3,22 @@ package MetodosSecundarios;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.util.Map;
 
-import Enumerados.Color;
-import Enumerados.TiposEspeciales;
-import Objetos.Carta;
-import Objetos.CartaEspecial;
-import Objetos.CartaNormal;
-import Objetos.Contenedor;
 import Objetos.Jugador;
 import Objetos.PartidaContexto;
-import Objetos.Tablero;
-import Objetos.Turno;
 
 /**
  * Clase que contiene metodos relacionados con el almacenamiento de los datos
@@ -32,130 +29,55 @@ public class AlmacenamientoDatos {
     /**
      * Rutas de los archivos guardados en el proyecto
      */
-    private static final String RUTA_ARCHIVO = "src\\Archivos\\partida_guardada.dat";
-    private static final String ARCHIVO_REGLAS = "src\\Archivos\\reglas.txt";
-    private static final String ARCHIVO_ESTADISTICAS = "src\\Archivos\\estadisticas.txt";
+    private static final Path CARPETA_ARCHIVOS = Paths.get("src", "Archivos");
 
+    // 2. Resolvemos las rutas de forma segura para cualquier SO
+    private static Path rutaReglas = CARPETA_ARCHIVOS.resolve("reglas.txt");
+    private static Path rutaEstadísticas = CARPETA_ARCHIVOS.resolve("estadisticas.txt");
+    private static Path rutaPartida = CARPETA_ARCHIVOS.resolve("partida_guardada.dat");
+
+    private final static String ARCHIVO_REGLAS = rutaReglas.toString();
+    private final static String ARCHIVO_ESTADISTICAS = rutaEstadísticas.toString();
+    private final static String ARCHIVO_PARTIDA = rutaPartida.toString();
+
+    /**
+     * 
+     * 
+     * @return
+     */
     public static boolean existePartidaGuardada() {
-        File archivo = new File(RUTA_ARCHIVO);
+        File archivo = new File(ARCHIVO_PARTIDA);
         return archivo.exists() && archivo.isFile();
     }
 
     public static void guardarPartida(PartidaContexto contexto) {
-        try (PrintWriter escritor = new PrintWriter(new FileWriter(RUTA_ARCHIVO))) {
-            // 1. Datos del controlador de turnos
-            Turno t = contexto.getControladorTurnos();
-            escritor.println(t.getActual());
-            escritor.println(t.getContadorTurno());
-            escritor.println(t.getSentido());
-
-            // 2. Cantidad de jugadores
-            int cantidadJugadores = contexto.getCantidadJugadores();
-            escritor.println(cantidadJugadores);
-
-            // 3. Guardar el mapa de jugadores y sus cartas en mano
-            for (int i = 0; i < cantidadJugadores; i++) {
-                Jugador j = contexto.getJugadores().get(i);
-                if (j != null) {
-                    escritor.println(j.getNombre());
-
-                    Contenedor<Carta> mano = j.getMano();
-                    escritor.println(mano.size());
-
-                    // Se usa el método obtener(index) propio de Contenedor
-                    for (int k = 0; k < mano.size(); k++) {
-                        Carta c = mano.obtener(k);
-                        escribirCarta(escritor, c);
-                    }
-                }
-            }
-
-            // 4. Guardar datos del Tablero (Mesa y Baraja Chupona)
-            Tablero tablero = contexto.getTablero();
-
-            // Carta en la mesa (Última del contenedor descarte)
-            Carta mesa = tablero.verCartaEnLaMesa();
-            if (mesa != null) {
-                escribirCarta(escritor, mesa);
-            } else {
-                escritor.println("null");
-            }
-
-            // Cartas restantes en la baraja chupona
-            Contenedor<Carta> chupona = tablero.getChupona();
-            escritor.println(chupona.size());
-            for (int i = 0; i < chupona.size(); i++) {
-                Carta c = chupona.obtener(i);
-                escribirCarta(escritor, c);
-            }
-
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO_PARTIDA))) {
+            out.writeObject(contexto);
+            System.out.println("Partida guardada correctamente en binario.");
         } catch (IOException e) {
-            System.out.println("Error al guardar el archivo: " + e.getMessage());
+            System.out.println("Error al guardar la partida en binario: " + e.getMessage());
         }
     }
 
-    public static Object cargarPartida() {
-        File archivo = new File(RUTA_ARCHIVO);
+    // Cargar partida desde binario
+    public static PartidaContexto cargarPartida() {
+        File archivo = new File(ARCHIVO_PARTIDA);
         if (!archivo.exists()) {
+            System.out.println("No existe una partida guardada en binario.");
             return null;
         }
-
-        try (BufferedReader lector = new BufferedReader(new FileReader(archivo))) {
-            // 1. Reconstruir Turno
-            Turno turnoAux = new Turno();
-            turnoAux.setActual(Integer.parseInt(lector.readLine()));
-            turnoAux.setContadorTurno(Integer.parseInt(lector.readLine()));
-            turnoAux.setSentido(Integer.parseInt(lector.readLine()));
-
-            // 2. Cantidad de jugadores
-            int cantidadJugadores = Integer.parseInt(lector.readLine());
-
-            // 3. Reconstruir mapa de jugadores con sus manos
-            HashMap<Integer, Jugador> jugadoresAux = new HashMap<>();
-            for (int i = 0; i < cantidadJugadores; i++) {
-                String nombre = lector.readLine();
-                Jugador jugador = new Jugador(nombre);
-
-                int cartasEnMano = Integer.parseInt(lector.readLine());
-                for (int k = 0; k < cartasEnMano; k++) {
-                    Carta c = leerCarta(lector);
-                    if (c != null) {
-                        jugador.getMano().añadir(c);
-                    }
-                }
-                jugadoresAux.put(i, jugador);
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(ARCHIVO_PARTIDA))) {
+            Object obj = in.readObject();
+            if (obj instanceof PartidaContexto contexto) {
+                System.out.println("Partida cargada correctamente desde binario.");
+                return contexto;
+            } else {
+                System.out.println("El archivo de guardado no contiene una partida válida.");
+                return null;
             }
-
-            // 4. Reconstruir Tablero
-            Tablero tableroAux = new Tablero();
-
-            // Leer carta de la mesa y colocarla en el descarte
-            Carta mesaAux = leerCarta(lector);
-            if (mesaAux != null) {
-                tableroAux.dejar(mesaAux);
-            }
-
-            // Leer baraja chupona
-            int cartasChupona = Integer.parseInt(lector.readLine());
-            for (int i = 0; i < cartasChupona; i++) {
-                Carta c = leerCarta(lector);
-                if (c != null) {
-                    tableroAux.meter(c);
-                }
-            }
-
-            return new PartidaContexto(tableroAux, turnoAux, jugadoresAux, cantidadJugadores);
-
         } catch (Exception e) {
-            System.out.println("Error al recuperar la partida guardada: " + e.getMessage());
+            System.out.println("Error al cargar la partida en binario: " + e.getMessage());
             return null;
-        }
-    }
-
-    public static void borrarPartidaGuardada() {
-        File archivo = new File(RUTA_ARCHIVO);
-        if (archivo.exists()) {
-            archivo.delete();
         }
     }
 
@@ -196,7 +118,7 @@ public class AlmacenamientoDatos {
      *                  estadísticas o no
      * @throws InterruptedException para los thread sleep
      */
-    public static void finalizarYGuardarEstadísticas(Jugador ganador, HashMap<Integer, Jugador> jugadores,
+    public static void finalizarYGuardarEstadísticas(Jugador ganador, Map<Integer, Jugador> jugadores,
             boolean mostrar) throws InterruptedException {
         Datos.saltoDeLineas();
 
@@ -226,35 +148,5 @@ public class AlmacenamientoDatos {
         }
 
         Datos.pulsaEnter();
-    }
-
-    // Métodos de serialización de texto basados en la herencia de objetos reales
-    private static void escribirCarta(PrintWriter escritor, Carta c) {
-        if (c instanceof CartaNormal) {
-            CartaNormal cn = (CartaNormal) c;
-            escritor.println("NORMAL;" + cn.getColor() + ";" + cn.getNumero());
-        } else if (c instanceof CartaEspecial) {
-            CartaEspecial ce = (CartaEspecial) c;
-            escritor.println("ESPECIAL;" + ce.getColor() + ";" + ce.getTiposEspeciales());
-        }
-    }
-
-    private static Carta leerCarta(BufferedReader lector) throws IOException {
-        String linea = lector.readLine();
-        if (linea == null || linea.equals("null")) {
-            return null;
-        }
-
-        String[] partes = linea.split(";");
-        String stringTipo = partes[0];
-        Color color = Color.valueOf(partes[1]);
-
-        if (stringTipo.equals("NORMAL")) {
-            int numero = Integer.parseInt(partes[2]);
-            return new CartaNormal(numero, color);
-        } else {
-            TiposEspeciales especial = TiposEspeciales.valueOf(partes[2]);
-            return new CartaEspecial(especial, color);
-        }
     }
 }

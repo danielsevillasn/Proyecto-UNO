@@ -1,6 +1,6 @@
 package MetodosSecundarios;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import Excepciones.ReiniciarJuego;
@@ -217,7 +217,7 @@ public class Menus {
      * @throws ReiniciarJuego       Si se solicita el reinicio del juego
      * @throws InterruptedException Si la entrada del usuario es interrumpida
      */
-    public static void preguntarMostrarEstadisticas(Jugador jugador, HashMap<Integer, Jugador> jugadores)
+    public static void preguntarMostrarEstadisticas(Jugador jugador, Map<Integer, Jugador> jugadores)
             throws ReiniciarJuego, InterruptedException {
         while (true) {
             String respuesta = Datos.pedirCadena("Quieres ver las estadísticas? (si / no): ");

@@ -1,5 +1,7 @@
 package Objetos;
 
+import java.io.Serializable;
+
 import Excepciones.ContenedorLleno;
 import Excepciones.ContenedorVacio;
 
@@ -8,7 +10,7 @@ import Excepciones.ContenedorVacio;
  * 
  * @author DaniS y Libio
  */
-public class Jugador {
+public class Jugador implements Serializable{
     // Atributos/////////////////////
     private final String nombre;
     private static int idIncrementado;

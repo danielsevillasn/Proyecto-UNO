@@ -30,20 +30,6 @@ public class Juego {
     public static void iniciarJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
 
-        // Comprobación de partida guardada existente
-        if (AlmacenamientoDatos.existePartidaGuardada()) {
-            System.out.println("Se ha detectado una partida interrumpida.");
-            String respuesta = Datos.pedirCadena("¿Deseas reanudar la partida anterior? (S/N): ");
-
-            if (respuesta.equalsIgnoreCase("S")) {
-                UnoEngine.contextoPartida = (Objetos.PartidaContexto) AlmacenamientoDatos.cargarPartida();
-                UnoEngine.reanudarPartida(); 
-                return;
-            } else {
-                AlmacenamientoDatos.borrarPartidaGuardada();
-            }
-        }
-
         // Configuración inicial por defecto si no se reanuda
         cantidadActualJugadores = 2;
         nombresCargados.clear();
@@ -150,8 +136,19 @@ public class Juego {
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
     public static void flujoDelSistema() throws InterruptedException, ReiniciarJuego {
-        String opcion2;
+        String opcion2 = "";
         salir = false;
+        // Comprobación de partida guardada existente
+        if (AlmacenamientoDatos.existePartidaGuardada()) {
+            System.out.println("Se ha detectado una partida interrumpida.");
+            String respuesta = Datos.pedirCadena("¿Deseas reanudar la partida anterior? (S/N): ");
+
+            if (respuesta.equalsIgnoreCase("S")) {
+                UnoEngine.contextoPartida = (Objetos.PartidaContexto) AlmacenamientoDatos.cargarPartida();
+                UnoEngine.reanudarPartida();
+                opcion2 = "5";
+            }
+        }
         while (!salir) {
             opcion2 = Menus.menuInicio();
 

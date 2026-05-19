@@ -205,8 +205,6 @@ public class Mecanicas {
         System.out.println(
                 "Ha salido un 'Reversa': se invierte el sentido y el primer jugador pierde el turno.");
         turnos().cambiarSentido();
-        if (nJugadores() > 2) {
-            siguiente();
-        }
+        siguiente();
     }
 }

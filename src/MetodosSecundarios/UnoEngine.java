@@ -27,7 +27,6 @@ public class UnoEngine {
     private static boolean fin = false;
     private static boolean cartaValida = false;
     private static int opcionCarta = -1;
-    private static int cantidadActualJugadores;
     protected static Jugador jugador;
 
     /**
@@ -49,10 +48,9 @@ public class UnoEngine {
         tablero.inicializarBaraja();
         fin = false;
 
-        cantidadActualJugadores = Juego.cantidadActualJugadores;
         jugadores = new HashMap<>();
 
-        contextoPartida = new PartidaContexto(tablero, controladorTurnos, jugadores, cantidadActualJugadores);
+        contextoPartida = new PartidaContexto(tablero, controladorTurnos, jugadores, Juego.cantidadActualJugadores);
 
         Mecanicas.repartoInicial(nombresCargados);
 
@@ -192,22 +190,21 @@ public class UnoEngine {
         if (contextoPartida == null || contextoPartida.getTablero() == null) {
             System.out.println("Error: No se encontró información válida para reanudar la partida :(");
             Juego.iniciarJuego();
-            return;
+        } else {
+            System.out.println("Restaurando parámetros de juego...");
+            Thread.sleep(Datos.milisegundos);
+
+            tablero = contextoPartida.getTablero();
+            controladorTurnos = contextoPartida.getControladorTurnos();
+            fin = false;
+
+            System.out.println("Partida restaurada :)\n");
+
+            flujoDeLaPartida();
+            Pantallas.pantallaFinal();
+
+            Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores());
         }
-
-        System.out.println("Restaurando parámetros de juego...");
-
-        tablero = contextoPartida.getTablero();
-        controladorTurnos = contextoPartida.getControladorTurnos();
-        cantidadActualJugadores = contextoPartida.getCantidadJugadores();
-        fin = false;
-
-        System.out.println("Partida restaurada :)\n");
-
-        // Borramos el archivo físico para evitar cargas infinitas o duplicadas
-        AlmacenamientoDatos.borrarPartidaGuardada();
-
-        flujoDeLaPartida();
     }
 
     public static void guardarEstadisticas(Jugador ganador, Collection<Jugador> participantes) {
