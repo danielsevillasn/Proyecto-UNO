@@ -3,7 +3,6 @@ package MetodosSecundarios;
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -205,10 +204,6 @@ public class UnoEngine {
 
             Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores());
         }
-    }
-
-    public static void guardarEstadisticas(Jugador ganador, Collection<Jugador> participantes) {
-        // Lógica para abrir el fichero y escribir los resultados
     }
 
     // Metodos atajo
