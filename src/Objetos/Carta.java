@@ -1,5 +1,7 @@
 package Objetos;
 
+import java.io.Serializable;
+
 import Enumerados.Color;
 import Enumerados.Tipos;
 import Excepciones.CartaLanzadaNoValida;
@@ -10,7 +12,7 @@ import MetodosSecundarios.Calculos;
  * 
  * @author DaniS y Libio
  */
-public abstract class Carta implements Comparable<Carta> {
+public abstract class Carta implements Comparable<Carta>, Serializable {
     // Atributos/////////////////////
     protected Color color;
     protected final Tipos tipo;

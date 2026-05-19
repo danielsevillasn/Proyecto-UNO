@@ -3,7 +3,6 @@ package MetodosSecundarios;
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,11 +22,10 @@ public class UnoEngine {
 
     private static Tablero tablero;
     private static Turno controladorTurnos;
-    protected static PartidaContexto contextoPartida;
+    protected static PartidaContexto contextoPartida = null;
     private static boolean fin = false;
     private static boolean cartaValida = false;
     private static int opcionCarta = -1;
-    private static int cantidadActualJugadores;
     protected static Jugador jugador;
 
     /**
@@ -49,10 +47,9 @@ public class UnoEngine {
         tablero.inicializarBaraja();
         fin = false;
 
-        cantidadActualJugadores = Juego.cantidadActualJugadores;
         jugadores = new HashMap<>();
 
-        contextoPartida = new PartidaContexto(tablero, controladorTurnos, jugadores, cantidadActualJugadores);
+        contextoPartida = new PartidaContexto(tablero, controladorTurnos, jugadores, Juego.cantidadActualJugadores);
 
         Mecanicas.repartoInicial(nombresCargados);
 
@@ -181,8 +178,32 @@ public class UnoEngine {
         }
     }
 
-    public static void guardarEstadisticas(Jugador ganador, Collection<Jugador> participantes) {
-        // Lógica para abrir el fichero y escribir los resultados
+    /**
+     * Reanuda una partida previamente guardada restaurando el estado
+     * desde el objeto contenedor contextoPartida
+     * 
+     * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reiniciar el juego cuando quiera
+     */
+    public static void reanudarPartida() throws InterruptedException, ReiniciarJuego {
+        if (contextoPartida == null || contextoPartida.getTablero() == null) {
+            System.out.println("Error: No se encontró información válida para reanudar la partida :(");
+            Juego.iniciarJuego();
+        } else {
+            System.out.println("Restaurando parámetros de juego...");
+            Thread.sleep(Datos.milisegundos);
+
+            tablero = contextoPartida.getTablero();
+            controladorTurnos = contextoPartida.getControladorTurnos();
+            fin = false;
+
+            System.out.println("Partida restaurada :)\n");
+
+            flujoDeLaPartida();
+            Pantallas.pantallaFinal();
+
+            Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores());
+        }
     }
 
     // Metodos atajo

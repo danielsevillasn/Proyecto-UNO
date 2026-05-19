@@ -1,5 +1,6 @@
 package Objetos;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import java.util.Map;
  * 
  * @author DaniS y Libio
  */
-public class PartidaContexto {
+public class PartidaContexto implements Serializable{
     // Atributos/////////////////////
     private Tablero tablero;
     private Turno controladorTurnos;
