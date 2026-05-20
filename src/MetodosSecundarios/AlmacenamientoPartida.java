@@ -38,16 +38,31 @@ public class AlmacenamientoPartida {
     public static int partidaGuardada() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         if (ARCHIVO_PARTIDA.exists() && ARCHIVO_PARTIDA.isFile()) {
             pedirReanudarPartida();
-            //Para terminar la partida
+            // Para terminar la partida
             return 5;
         } else if (!ARCHIVO_PARTIDA.exists()) {
             System.out.println("No hay partida guardada");
-            //Para seguir con la partida
+            // Para seguir con la partida
             return 0;
         } else {
             System.out.println("No es un archivo lo que se indica en la ruta");
-            //Para seguir con la partida
+            // Para seguir con la partida
             return 0;
+        }
+    }
+
+    /**
+     * Método que permite guardar la partida actual en un archivo en binario con el
+     * respectivo contexto de la partida actual
+     * 
+     * @param contexto de la partida actual
+     */
+    public static void guardarPartida(PartidaContexto contexto) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(NOMBRE_ARCHIVO_PARTIDA))) {
+            out.writeObject(contexto);
+            System.out.println("Partida guardada correctamente");
+        } catch (IOException e) {
+            System.out.println("Error al guardar la partida: " + e.getMessage());
         }
     }
 
@@ -71,7 +86,6 @@ public class AlmacenamientoPartida {
                 case "S":
                     UnoEngine.contextoPartida = cargarPartida();
                     UnoEngine.reanudarPartida();
-                    Juego.iniciarJuego();
                     salir = true;
                     break;
                 case "N":
@@ -83,39 +97,6 @@ public class AlmacenamientoPartida {
                     System.out.println("Tienes que poner \"S\" o \"N\", intentalo de nuevo");
                     break;
             }
-        }
-    }
-
-    /**
-     * Método que permite guardar la partida actual en un archivo en binario con el
-     * respectivo contexto de la partida actual
-     * 
-     * @param contexto de la partida actual
-     */
-    public static void guardarPartida(PartidaContexto contexto) {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(NOMBRE_ARCHIVO_PARTIDA))) {
-            out.writeObject(contexto);
-            System.out.println("Partida guardada correctamente");
-        } catch (IOException e) {
-            System.out.println("Error al guardar la partida: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Método que elimina el archivo de la partida
-     * 
-     * @param 'ninguno'
-     */
-    public static void eliminarPartida() {
-        if (ARCHIVO_PARTIDA.exists()) {
-            try {
-                Files.delete(RUTA_PARTIDA);
-            } catch (IOException e) {
-                System.out.println("No se encuentra el archivo de la partida");
-                System.out.println(e.getLocalizedMessage());
-            }
-        } else {
-            System.out.println("El archivo no existe");
         }
     }
 
@@ -145,4 +126,23 @@ public class AlmacenamientoPartida {
             return null;
         }
     }
+
+    /**
+     * Método que elimina el archivo de la partida
+     * 
+     * @param 'ninguno'
+     */
+    public static void eliminarPartida() {
+        if (ARCHIVO_PARTIDA.exists()) {
+            try {
+                Files.delete(RUTA_PARTIDA);
+            } catch (IOException e) {
+                System.out.println("No se encuentra el archivo de la partida");
+                System.out.println(e.getLocalizedMessage());
+            }
+        } else {
+            System.out.println("El archivo no existe");
+        }
+    }
+
 }

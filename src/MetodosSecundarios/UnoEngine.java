@@ -206,20 +206,32 @@ public class UnoEngine {
      *                              quieras
      */
     public static void reanudarPartida() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
-        if (contextoPartida == null || contextoPartida.getTablero() == null) {
-            System.out.println("Error: No se encontró información válida para reanudar la partida :(");
-            Datos.pulsaEnter();
-            Juego.iniciarJuego();
-        } else {
-            System.out.println("Restaurando parámetros de juego...");
-            Thread.sleep(Datos.milisegundos);
-
-            fin = false;
-
-            System.out.println("Partida restaurada :)");
-            Datos.pulsaEnter();
-
+        jugador = actual();
+        int numeroCartasJugadorActual = jugador.getNumCartas();
+        
+        boolean jugadorSinCartas = false;
+        if (numeroCartasJugadorActual == 0) {
+            jugadorSinCartas = true;
+            fin = true;
+            Menus.nombreJugador = jugador.getNombre();
             partida();
+        }
+        if (!jugadorSinCartas) {
+            if (contextoPartida.getJugadores() == null || contextoPartida.getTablero() == null) {
+                System.out.println("Error: No se encontró información válida para reanudar la partida :(");
+                Datos.pulsaEnter();
+                Juego.iniciarJuego();
+            } else {
+                System.out.println("Restaurando parámetros de juego...");
+                Thread.sleep(Datos.milisegundos);
+
+                fin = false;
+
+                System.out.println("Partida restaurada :)");
+                Datos.pulsaEnter();
+
+                partida();
+            }
         }
     }
 
