@@ -46,8 +46,8 @@ public class CartaEspecial extends Carta {
      * Lanza la excepcion de CartaLanzadaNoValida en caso de que la carta que se
      * quiera lanzar no se peda
      * 
-     * @param 'ninguno'
-     * @throws CartaLanzadaNoValida
+     * @param mesa carta que esta en la mesa
+     * @throws CartaLanzadaNoValida excepcion que salta cuando no es valida
      */
     @Override
     public boolean puedePonerseSobre(Carta mesa) throws CartaLanzadaNoValida {

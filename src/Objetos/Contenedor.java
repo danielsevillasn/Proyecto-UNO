@@ -11,10 +11,11 @@ import Interfaces.Barajable;
 
 /**
  * Clase genérica que sirve como base para cualquier colección de cartas.
- * Implementa la lógica de almacenamiento dinámico y barajado.
- * * @author Proyecto UNO
+ * Implementa la lógica de almacenamiento dinámico, barajado y la posibilidad de
+ * serializada.
  * 
  * @param <T> El tipo de carta que almacenará (debe extender de Carta)
+ * @author DaniS y Libio
  */
 public class Contenedor<T extends Carta> implements Barajable, Serializable {
     // Atributos/////////////////////
@@ -48,6 +49,7 @@ public class Contenedor<T extends Carta> implements Barajable, Serializable {
      * Añade una carta a la colección dependiendo de un limite
      * 
      * @param carta Objeto de tipo T a añadir
+     * @param limite para establecer un limite de adición
      * @throws ContenedorLleno Excepcion que salta cuando el contedor esta lleno
      */
     public void añadir(T carta, int limite) throws ContenedorLleno {

@@ -46,8 +46,8 @@ public class CartaNormal extends Carta {
      * Lanza la excepcion de CartaLanzadaNoValida en caso de que la carta que se
      * quiera lanzar no se peda
      * 
-     * @param 'ninguno'
-     * @throws CartaLanzadaNoValida
+     * @param mesa carta que esta en la mesa
+     * @throws CartaLanzadaNoValida excepcion que salta cuando no es valida
      */
     @Override
     public boolean puedePonerseSobre(Carta mesa) throws CartaLanzadaNoValida {
@@ -117,8 +117,6 @@ public class CartaNormal extends Carta {
             return 1; // Si el objeto comparado no es una Carta normal, este objeto se pone delante
         }
         CartaNormal n = (CartaNormal) c;
-        Integer n1 = (Integer) numero;
-        Integer n2 = (Integer) n.getNumero();
-        return n1.compareTo(n2); // Si lo anterior es igual, entonces compara por color
+        return Integer.compare(numero, n.getNumero());
     }
 }

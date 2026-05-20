@@ -8,10 +8,12 @@ import Excepciones.ContenedorVacio;
 
 /**
  * Clase tablero que gestiona el mazo de robo (chupona) y la pila de descarte.
+ * e implementa la interfaz serializable para permitirnos serializar instancias
+ * de este objeto.
  * 
  * @author DaniS y Libio
  */
-public class Tablero implements Serializable{
+public class Tablero implements Serializable {
 
     // Atributos/////////////////////
 
@@ -118,7 +120,7 @@ public class Tablero implements Serializable{
     /**
      * Añade una carta en especifico a la baraja
      * 
-     * @param carta
+     * @param carta carta que se quiere meter en la baraja chupona
      */
     public void meter(Carta carta) {
         chupona.añadir(carta);
@@ -127,8 +129,8 @@ public class Tablero implements Serializable{
     /**
      * Mira la carta que está arriba en el descarte
      * 
-     * @return El objeto Carta que se encuentra visible en la mesa.
      * @param 'ninguno'
+     * @return El objeto Carta que se encuentra visible en la mesa.
      */
     public Carta verCartaEnLaMesa() {
         return descarte.obtener(descarte.size() - 1);

@@ -20,7 +20,7 @@ public class Mecanicas {
     /**
      * Metodo para repartir las cartas iniciales a todos los jugadores
      * 
-     * @param nombresCargados nombres de los jugadores (por referencia)
+     * @param 'ninguno'
      */
     public static void repartoInicial() {
         for (int i = 0; i < nJugadores(); i++) {

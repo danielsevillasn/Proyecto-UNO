@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+import Excepciones.ReiniciarJuego;
 import Objetos.Jugador;
 import Objetos.Turno;
 
@@ -100,5 +101,33 @@ public class AlmacenamientoDatos {
         }
 
         Datos.pulsaEnter();
+    }
+
+    /**
+     * Pregunta al usuario si desea visualizar las estadísticas de la partida
+     * 
+     * @param jugador   Jugador actual o ganador
+     * @param jugadores Mapa con todos los participantes
+     * @throws ReiniciarJuego       Si se solicita el reinicio del juego
+     * @throws InterruptedException Si la entrada del usuario es interrumpida
+     */
+    public static void preguntarMostrarEstadisticas(Jugador jugador, Map<Integer, Jugador> jugadores, Turno turno)
+            throws ReiniciarJuego, InterruptedException {
+        boolean salir = false;
+        while (!salir) {
+            String respuesta = Datos.pedirCadena("Quieres ver las estadísticas? (si / no): ");
+
+            if (respuesta.equalsIgnoreCase("si")) {
+                finalizarYGuardarEstadisticas(jugador, jugadores,turno, true);
+                salir = true;
+            } else if (respuesta.equalsIgnoreCase("no")) {
+                finalizarYGuardarEstadisticas(jugador, jugadores,turno, false);
+                System.out.println("Volviendo al menú principal...");
+                Thread.sleep(Datos.milisegundos);
+                salir = true;
+            } else {
+                Datos.entradaIncorrecta();
+            }
+        }
     }
 }

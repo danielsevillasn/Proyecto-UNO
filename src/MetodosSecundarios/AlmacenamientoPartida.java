@@ -48,7 +48,7 @@ public class AlmacenamientoPartida {
     /**
      * Método que pide si quieres reanudar la partida anterior o no
      * 
-     * @param ARCHIVO_PARTIDA archivo en el que se guarda la partida
+     * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      * @throws SalirDelJuego        para salir del juego cuando quieras

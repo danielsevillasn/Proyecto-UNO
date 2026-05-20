@@ -3,11 +3,12 @@ package Objetos;
 import java.io.Serializable;
 
 /**
- * Clase que establece el turno del juego
+ * Clase que establece el turno del juego e implementa la interfaz
+ * serializable para permitirnos serializar instancias de este objeto.
  * 
  * @author DaniS y Libio
  */
-public class Turno implements Serializable{
+public class Turno implements Serializable {
     // Atributos/////////////////////
     private int actual;
     private int contadorTurno;

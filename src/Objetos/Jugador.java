@@ -6,11 +6,12 @@ import Excepciones.ContenedorLleno;
 import Excepciones.ContenedorVacio;
 
 /**
- * Clase que representa al jugador y su mano de cartas.
+ * Clase que representa al jugador y su mano de cartas e implementa la interfaz
+ * serializable para permitirnos serializar instancias de este objeto.
  * 
  * @author DaniS y Libio
  */
-public class Jugador implements Serializable{
+public class Jugador implements Serializable {
     // Atributos/////////////////////
     private final String nombre;
     private static int idIncrementado;
@@ -93,6 +94,7 @@ public class Jugador implements Serializable{
      * Método que devuelve un booleano dependiendo de si el jugador tiene la baraja
      * llena o no
      * 
+     * @param 'ninguno'
      * @return valor boleano que determina si la mano esta llena o no
      */
     public boolean tieneManoLlena() {

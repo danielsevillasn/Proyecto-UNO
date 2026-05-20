@@ -1,12 +1,9 @@
 package MetodosSecundarios;
 
-import java.util.Map;
 import java.util.Scanner;
 
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
-import Objetos.Jugador;
-import Objetos.Turno;
 
 /**
  * Clase para imprimir todos los menus del juego
@@ -32,13 +29,13 @@ public class Menus {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    public static String menuBienvenida() throws InterruptedException, ReiniciarJuego {
+    public static int menuBienvenida() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
 
         System.out.println("==========Bienvenido/a a UNO=========");
         System.out.println("\t1- Jugar");
         System.out.println("\t2- Salir");
-        return Datos.pedirCadena("\tElija opción (1-2): ");
+        return Datos.pedirEntero("\tElija opción (1-2): ");
     }
 
     /**
@@ -50,7 +47,7 @@ public class Menus {
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
-    public static String menuInicio() throws InterruptedException, ReiniciarJuego {
+    public static int menuInicio() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
 
         System.out.println("==========Inicio=========");
@@ -62,7 +59,7 @@ public class Menus {
         System.out.println("==========================");
         System.out.println("Modo de juego: " + modoDeJuego + "\tJugadores: " + jugadores);
 
-        return (Datos.pedirCadena("\tElija opción (1-5): "));
+        return (Datos.pedirEntero("\tElija opción (1-5): "));
     }
 
     /**
@@ -208,33 +205,5 @@ public class Menus {
         System.out.println("4- Azul");
 
         return Datos.pedirEntero("Elige un color(1-4):");
-    }
-
-    /**
-     * Pregunta al usuario si desea visualizar las estadísticas de la partida
-     * 
-     * @param jugador   Jugador actual o ganador
-     * @param jugadores Mapa con todos los participantes
-     * @throws ReiniciarJuego       Si se solicita el reinicio del juego
-     * @throws InterruptedException Si la entrada del usuario es interrumpida
-     */
-    public static void preguntarMostrarEstadisticas(Jugador jugador, Map<Integer, Jugador> jugadores, Turno turno)
-            throws ReiniciarJuego, InterruptedException {
-        boolean salir = false;
-        while (!salir) {
-            String respuesta = Datos.pedirCadena("Quieres ver las estadísticas? (si / no): ");
-
-            if (respuesta.equalsIgnoreCase("si")) {
-                AlmacenamientoDatos.finalizarYGuardarEstadisticas(jugador, jugadores,turno, true);
-                salir = true;
-            } else if (respuesta.equalsIgnoreCase("no")) {
-                AlmacenamientoDatos.finalizarYGuardarEstadisticas(jugador, jugadores,turno, false);
-                System.out.println("Volviendo al menú principal...");
-                Thread.sleep(Datos.milisegundos);
-                salir = true;
-            } else {
-                Datos.entradaIncorrecta();
-            }
-        }
     }
 }

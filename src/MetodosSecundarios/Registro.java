@@ -11,8 +11,9 @@ import Excepciones.ReiniciarJuego;
 public class Registro {
 
     /**
-     * Configura el número de jugadores para el juego
+     * Configura el número y los nombres de los jugadores
      * 
+     * @param 'ninguno'
      * @return valor entero que representa la cantidad actual de jugadores
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera

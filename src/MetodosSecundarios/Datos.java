@@ -78,7 +78,6 @@ public class Datos {
      * 
      * @param 'ninguno'
      * @return valor booleano que indica si quiere salir o no del juego
-     * @throws ReiniciarJuego
      * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
      */
     public static boolean salirDelJuego() throws ReiniciarJuego {

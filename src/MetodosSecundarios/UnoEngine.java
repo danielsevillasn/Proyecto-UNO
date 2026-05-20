@@ -21,18 +21,29 @@ import Objetos.PartidaContexto;
  */
 public class UnoEngine {
 
-    protected static PartidaContexto contextoPartida = null;
-    private static boolean fin = false;
-    private static boolean cartaValida = false;
-    private static int opcionCarta = -1;
+    protected static PartidaContexto contextoPartida;
+    private static boolean fin;
+    private static boolean cartaValida;
+    private static int opcionCarta;
     protected static Jugador jugador;
 
-    public static void inicioPartida(List<String> nombresCargados, int cantidadActualJugadores) throws InterruptedException, ReiniciarJuego, SalirDelJuego {
-        // Inicialización de componentes de juego
+    /**
+     * Da inicio a la partida del uno inicializando el contexto de esta y sacando y
+     * validando la primera carta
+     * 
+     * @param nombresCargados         nombres de los jugadores
+     * @param cantidadActualJugadores cantidad de jugadores
+     * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
+     * @throws SalirDelJuego        para salir del juego cuando quieras
+     */
+    public static void inicioPartida(List<String> nombresCargados, int cantidadActualJugadores)
+            throws InterruptedException, ReiniciarJuego, SalirDelJuego {
 
         fin = false;
 
-        contextoPartida = new PartidaContexto(new Tablero(), new Turno(), new HashMap<>(), cantidadActualJugadores, nombresCargados);
+        contextoPartida = new PartidaContexto(new Tablero(), new Turno(), new HashMap<>(), cantidadActualJugadores,
+                nombresCargados);
 
         Mecanicas.repartoInicial();
 
@@ -45,10 +56,10 @@ public class UnoEngine {
     }
 
     /**
-     * Lógica principal de la partida
-     * Controla el flujo de turnos,
-     * validación de jugadas y condiciones de victoria
-     * Se inicia el tablero con todos sus componentes
+     * Lógica principal de la partida en la que se discurre el fluje y una vez
+     * termina imprime la pantalla final precedida de sus respectivas estadísticas y
+     * la eliminación de la partida guardada
+     * 
      * 
      * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
@@ -60,11 +71,11 @@ public class UnoEngine {
 
         Pantallas.pantallaFinal();
 
-        Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores(), contextoPartida.getControladorTurnos());
+        AlmacenamientoDatos.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores(),
+                contextoPartida.getControladorTurnos());
 
         AlmacenamientoPartida.eliminarPartida();
     }
-
 
     /**
      * Metodo que reproduce el flujo de la partida
@@ -132,12 +143,13 @@ public class UnoEngine {
      */
     private static void accionSacarCarta() throws ReiniciarJuego, InterruptedException {
         boolean salir = false;
+        opcionCarta = -1;
+        cartaValida = false;
         while (!salir) {
             opcionCarta = Datos.pedirEntero("Acción: ");
             if (opcionCarta == jugador.getNumCartas()) {
                 // Opción Robar
                 Mecanicas.robarCarta();
-                cartaValida = false;
                 salir = true;
             } else {
                 try {
@@ -151,7 +163,6 @@ public class UnoEngine {
                 } catch (CartaLanzadaNoValida e) {
                     System.out.println(e.getMessage());
                     Mecanicas.cartaSacadaNoValida();
-                    cartaValida = false;
                     salir = true;
                 }
             }
@@ -159,7 +170,8 @@ public class UnoEngine {
     }
 
     /**
-     * Método que funciona si la carta sacada es valida y la tira
+     * Método que funciona si la carta sacada es valida para realizar la accion de
+     * sacarla
      * 
      * @param 'ninguno'
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
@@ -190,11 +202,13 @@ public class UnoEngine {
      * 
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando quiera
-     * @throws @throws SalirDelJuego        para salir del juego cuando quieras
+     * @throws @throws              SalirDelJuego para salir del juego cuando
+     *                              quieras
      */
     public static void reanudarPartida() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         if (contextoPartida == null || contextoPartida.getTablero() == null) {
             System.out.println("Error: No se encontró información válida para reanudar la partida :(");
+            Datos.pulsaEnter();
             Juego.iniciarJuego();
         } else {
             System.out.println("Restaurando parámetros de juego...");

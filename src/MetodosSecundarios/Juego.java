@@ -1,7 +1,6 @@
 package MetodosSecundarios;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import Enumerados.ModoEjecucion;
 import Excepciones.ReiniciarJuego;
@@ -14,14 +13,14 @@ import Excepciones.SalirDelJuego;
  */
 public class Juego {
 
-    static Scanner s = new Scanner(System.in);
-    // Configuración inicial por defecto
     protected static ArrayList<String> nombresCargados = new ArrayList<>();
     private static int cantidadActualJugadores;
     private static boolean salir;
+    private static int opcion;
 
     /**
-     * Menú principal del sistema, que ejecuta el sistema completo
+     * Inicio del juego donde se inicializan variables como los nombres, el modo y
+     * la cantida de jugadores
      * 
      * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
@@ -48,12 +47,12 @@ public class Juego {
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
     public static void menuInicio() throws InterruptedException, ReiniciarJuego {
-        int modoEjecucion;
+        opcion = 0;
         salir = false;
         while (!salir) {
             try {
-                modoEjecucion = Menus.menuEjecucion();
-                switch (modoEjecucion) {
+                opcion = Menus.menuEjecucion();
+                switch (opcion) {
                     case 1:
                         ejecutarSistemaCompleto(ModoEjecucion.NORMAL);
                         salir = true;
@@ -75,7 +74,8 @@ public class Juego {
     }
 
     /**
-     * Menú principal del sistema, que ejecuta el sistema completo
+     * A partir del modo seleccionado especifica las funcionalidades del modo de
+     * ejecucion seleccionado
      * 
      * @param modo el modo de ejecución (NORMAL o DEVELOPER)
      * @throws InterruptedException para los thread sleep
@@ -98,15 +98,15 @@ public class Juego {
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
     public static void sistema() throws InterruptedException, ReiniciarJuego {
-        String opcion1 = "";
+        opcion = 0;
         try {
             while (true) {
-                opcion1 = Menus.menuBienvenida();
-                switch (opcion1) {
-                    case "1":
+                opcion = Menus.menuBienvenida();
+                switch (opcion) {
+                    case 1:
                         flujoDelSistema();
                         break;
-                    case "2":
+                    case 2:
                         throw new SalirDelJuego();
                     default:
                         Datos.entradaIncorrecta();
@@ -133,28 +133,28 @@ public class Juego {
      * @throws SalirDelJuego        para salir del juego cuando quieras
      */
     public static void flujoDelSistema() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
-        String opcion2 = "";
+        opcion = 0;
         // Comprobación de partida guardada existente
         AlmacenamientoPartida.partidaGuardada();
         salir = false;
         while (!salir) {
-            opcion2 = Menus.menuInicio();
+            opcion = Menus.menuInicio();
 
-            switch (opcion2) {
-                case "1": // Configurar modo de juego
+            switch (opcion) {
+                case 1: // Configurar modo de juego
                     Menus.menuModoDeJuego();
                     break;
-                case "2": // Configurar nombres y cantidad de jugadores
+                case 2: // Configurar nombres y cantidad de jugadores
                     cantidadActualJugadores = Registro.configurarJugadores();
                     break;
-                case "3": // Mostrar instrucciones
+                case 3: // Mostrar instrucciones
                     AlmacenamientoDatos.pantallaReglas();
                     break;
-                case "4": // Iniciar una partida
+                case 4: // Iniciar una partida
                     Datos.saltoDeLineas();
                     UnoEngine.inicioPartida(nombresCargados, cantidadActualJugadores);
                     break;
-                case "5": // Salir del programa
+                case 5: // Salir del programa
                     salir = true;
                     break;
                 default:

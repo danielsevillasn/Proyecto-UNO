@@ -8,7 +8,8 @@ import Excepciones.CartaLanzadaNoValida;
 import MetodosSecundarios.Calculos;
 
 /**
- * Clase Carta con implementación de herencias, enum e interfaz
+ * Clase Carta con implementación de herencias, enum e interfaces necesarias
+ * para ordenarlas y serializarlas
  * 
  * @author DaniS y Libio
  */
@@ -57,6 +58,7 @@ public abstract class Carta implements Comparable<Carta>, Serializable {
      * Sirve para extraer el codigo Ansi del enumerado color de tal forma que cambia
      * de color lo imprimido
      * 
+     * @param 'ninguno'
      * @return devuelve el String del codigo Ansi
      */
     public String getFormatoColor() {
@@ -79,7 +81,7 @@ public abstract class Carta implements Comparable<Carta>, Serializable {
         return result;
     }
 
-    // Equañs
+    // Equals
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

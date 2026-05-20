@@ -8,7 +8,8 @@ import java.util.Map;
 
 /**
  * Clase que agrupa los elementos principales de la partida para simplificar el
- * paso de parámetros
+ * paso de parámetros e implementa la interfaz
+ * serializable para permitirnos serializar instancias de este objeto.
  * 
  * @author DaniS y Libio
  */
@@ -45,7 +46,7 @@ public class PartidaContexto implements Serializable {
         return jugadores;
     }
 
-    public ArrayList<String> getNombresJugadores() {
+    public List<String> getNombresJugadores() {
         return nombresJugadores;
     }
 
@@ -70,18 +71,16 @@ public class PartidaContexto implements Serializable {
         this.cantidadJugadores = cantidadJugadores;
     }
 
-    public void setJugadores(HashMap<Integer, Jugador> jugadores) {
-        this.jugadores = jugadores;
-    }
-
-    public void setNombresJugadores(ArrayList<String> nombresJugadores) {
-        this.nombresJugadores = nombresJugadores;
+    public void setNombresJugadores(List<String> nombresJugadores) {
+        this.nombresJugadores = (ArrayList<String>) nombresJugadores;
     }
 
     // Otros metodos
     /**
      * * Atajo para avanzar el turno sin escribir toda la lógica de cantidad de
      * jugadores
+     * 
+     * @param 'ninguno'
      */
     public void pasarSiguiente() {
         this.controladorTurnos.siguiente(this.cantidadJugadores);
@@ -89,6 +88,8 @@ public class PartidaContexto implements Serializable {
 
     /**
      * Atajo para obtener directamente al jugador que tiene el turno
+     * 
+     * @param 'ninguno'
      */
     public Jugador jugadorActual() {
         return this.jugadores.get(this.controladorTurnos.getActual());
