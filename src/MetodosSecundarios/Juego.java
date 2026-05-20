@@ -17,7 +17,7 @@ public class Juego {
     static Scanner s = new Scanner(System.in);
     // Configuración inicial por defecto
     protected static ArrayList<String> nombresCargados = new ArrayList<>();
-    public static int cantidadActualJugadores;
+    private static int cantidadActualJugadores;
     private static boolean salir;
 
     /**
@@ -135,7 +135,7 @@ public class Juego {
     public static void flujoDelSistema() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         String opcion2 = "";
         // Comprobación de partida guardada existente
-        AlmacenamientoDatos.partidaGuardada();
+        AlmacenamientoPartida.partidaGuardada();
         salir = false;
         while (!salir) {
             opcion2 = Menus.menuInicio();
@@ -152,7 +152,7 @@ public class Juego {
                     break;
                 case "4": // Iniciar una partida
                     Datos.saltoDeLineas();
-                    UnoEngine.partida(nombresCargados);
+                    UnoEngine.inicioPartida(nombresCargados, cantidadActualJugadores);
                     break;
                 case "5": // Salir del programa
                     salir = true;

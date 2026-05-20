@@ -24,6 +24,7 @@ public class Tablero implements Serializable{
     public Tablero() {
         this.chupona = new Contenedor<>();
         this.descarte = new Contenedor<>();
+        inicializarBaraja();
     }
 
     // Getter

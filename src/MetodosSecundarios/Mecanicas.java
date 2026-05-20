@@ -1,7 +1,6 @@
 package MetodosSecundarios;
 
 import java.util.Collections;
-import java.util.List;
 
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
@@ -23,9 +22,9 @@ public class Mecanicas {
      * 
      * @param nombresCargados nombres de los jugadores (por referencia)
      */
-    public static void repartoInicial(List<String> nombresCargados) {
+    public static void repartoInicial() {
         for (int i = 0; i < nJugadores(); i++) {
-            contextoPartida.getJugadores().put(i, new Jugador(nombresCargados.get(i)));
+            contextoPartida.getJugadores().put(i, new Jugador(contextoPartida.getNombresJugadores().get(i)));
             for (int c = 0; c < 7; c++) {
                 contextoPartida.getJugadores().get(i)
                         .recibirCarta(tablero().tirarCarta());

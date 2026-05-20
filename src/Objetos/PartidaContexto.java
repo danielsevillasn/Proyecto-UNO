@@ -1,7 +1,9 @@
 package Objetos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,22 +12,24 @@ import java.util.Map;
  * 
  * @author DaniS y Libio
  */
-public class PartidaContexto implements Serializable{
+public class PartidaContexto implements Serializable {
     // Atributos/////////////////////
     private Tablero tablero;
     private Turno controladorTurnos;
     private HashMap<Integer, Jugador> jugadores;
     private int cantidadJugadores;
+    private ArrayList<String> nombresJugadores;
 
     // Metodos////////////////////////
 
     // Constructor para instanciar objeto con parámetros
     public PartidaContexto(Tablero tablero, Turno controladorTurnos, Map<Integer, Jugador> jugadores,
-            int cantidadJugadores) {
+            int cantidadJugadores, List<String> nombresJugadores) {
         this.tablero = tablero;
         this.controladorTurnos = controladorTurnos;
         this.jugadores = (HashMap<Integer, Jugador>) jugadores;
         this.cantidadJugadores = cantidadJugadores;
+        this.nombresJugadores = (ArrayList<String>) nombresJugadores;
     }
 
     // Getter
@@ -41,10 +45,15 @@ public class PartidaContexto implements Serializable{
         return jugadores;
     }
 
+    public ArrayList<String> getNombresJugadores() {
+        return nombresJugadores;
+    }
+
     public int getCantidadJugadores() {
         return cantidadJugadores;
     }
 
+    // Setter
     public void setTablero(Tablero tablero) {
         this.tablero = tablero;
     }
@@ -59,6 +68,14 @@ public class PartidaContexto implements Serializable{
 
     public void setCantidadJugadores(int cantidadJugadores) {
         this.cantidadJugadores = cantidadJugadores;
+    }
+
+    public void setJugadores(HashMap<Integer, Jugador> jugadores) {
+        this.jugadores = jugadores;
+    }
+
+    public void setNombresJugadores(ArrayList<String> nombresJugadores) {
+        this.nombresJugadores = nombresJugadores;
     }
 
     // Otros metodos
@@ -85,4 +102,5 @@ public class PartidaContexto implements Serializable{
                 ", turnoActual=" + controladorTurnos.getActual() +
                 '}';
     }
+
 }

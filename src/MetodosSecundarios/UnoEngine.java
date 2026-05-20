@@ -21,13 +21,28 @@ import Objetos.PartidaContexto;
  */
 public class UnoEngine {
 
-    private static Tablero tablero;
-    private static Turno controladorTurnos;
     protected static PartidaContexto contextoPartida = null;
     private static boolean fin = false;
     private static boolean cartaValida = false;
     private static int opcionCarta = -1;
     protected static Jugador jugador;
+
+    public static void inicioPartida(List<String> nombresCargados, int cantidadActualJugadores) throws InterruptedException, ReiniciarJuego, SalirDelJuego {
+        // Inicialización de componentes de juego
+
+        fin = false;
+
+        contextoPartida = new PartidaContexto(new Tablero(), new Turno(), new HashMap<>(), cantidadActualJugadores, nombresCargados);
+
+        Mecanicas.repartoInicial();
+
+        contextoPartida.getTablero().dejar(contextoPartida.getTablero().tirarCarta());
+
+        Mecanicas.aplicarEfectoPrimeraCarta();
+        Datos.pulsaEnter();
+
+        partida();
+    }
 
     /**
      * Lógica principal de la partida
@@ -35,38 +50,21 @@ public class UnoEngine {
      * validación de jugadas y condiciones de victoria
      * Se inicia el tablero con todos sus componentes
      * 
-     * @param nombresCargados array con todos los nombres (por referencia)
+     * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      * @throws SalirDelJuego        para salir del juego cuando quieras
      */
-    public static void partida(List<String> nombresCargados) throws InterruptedException, ReiniciarJuego, SalirDelJuego {
-        // Inicialización de componentes de juego
-        HashMap<Integer, Jugador> jugadores;
-
-        tablero = new Tablero();
-        controladorTurnos = new Turno();
-        tablero.inicializarBaraja();
-        fin = false;
-
-        jugadores = new HashMap<>();
-
-        contextoPartida = new PartidaContexto(tablero, controladorTurnos, jugadores, Juego.cantidadActualJugadores);
-
-        Mecanicas.repartoInicial(nombresCargados);
-
-        tablero.dejar(tablero.tirarCarta());
-
-        Mecanicas.aplicarEfectoPrimeraCarta();
-        Datos.pulsaEnter();
-
-
+    public static void partida() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         flujoDeLaPartida();
 
         Pantallas.pantallaFinal();
 
         Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores(), contextoPartida.getControladorTurnos());
+
+        AlmacenamientoPartida.eliminarPartida();
     }
+
 
     /**
      * Metodo que reproduce el flujo de la partida
@@ -92,11 +90,11 @@ public class UnoEngine {
             cartaSacadaValida();
 
             Thread.sleep(Datos.milisegundos);
-            System.out.println("\n  * " + tablero + " *");
+            System.out.println("\n  * " + contextoPartida.getTablero() + " *");
             Thread.sleep(Datos.milisegundos);
 
             if (Datos.salirDelJuego()) {
-                AlmacenamientoDatos.guardarPartida(UnoEngine.contextoPartida);
+                AlmacenamientoPartida.guardarPartida(UnoEngine.contextoPartida);
                 throw new SalirDelJuego();
             }
 
@@ -115,8 +113,8 @@ public class UnoEngine {
     private static void verTablero() throws InterruptedException {
         Datos.saltoDeLineas();
         System.out.println("\n--- TURNO DE: " + jugador.getNombre() + " ---");
-        System.out.println("  - " + controladorTurnos + " -");
-        System.out.println("Mesa: " + tablero.verCartaEnLaMesa());
+        System.out.println("  - " + contextoPartida.getControladorTurnos() + " -");
+        System.out.println("Mesa: " + contextoPartida.getTablero().verCartaEnLaMesa());
 
         // Mostrar la mano del jugador actual
         for (int i = 0; i < jugador.getNumCartas(); i++) {
@@ -176,7 +174,7 @@ public class UnoEngine {
                 Efectos.efectosCartasEspeciales(cartaTirada);
             }
 
-            tablero.dejar(cartaTirada);
+            contextoPartida.getTablero().dejar(cartaTirada);
             System.out.println("La carta que has tirado es: " + cartaTirada);
             // Si el jugador se queda sin cartas el juego termina
             if (jugador.getNumCartas() == 0) {
@@ -202,17 +200,12 @@ public class UnoEngine {
             System.out.println("Restaurando parámetros de juego...");
             Thread.sleep(Datos.milisegundos);
 
-            tablero = contextoPartida.getTablero();
-            controladorTurnos = contextoPartida.getControladorTurnos();
             fin = false;
 
             System.out.println("Partida restaurada :)");
             Datos.pulsaEnter();
 
-            flujoDeLaPartida();
-            Pantallas.pantallaFinal();
-
-            Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores(), contextoPartida.getControladorTurnos());
+            partida();
         }
     }
 
