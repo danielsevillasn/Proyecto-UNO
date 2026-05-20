@@ -35,13 +35,19 @@ public class AlmacenamientoPartida {
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      * @throws SalirDelJuego        para salir del juego cuando quieras
      */
-    public static void partidaGuardada() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
+    public static int partidaGuardada() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         if (ARCHIVO_PARTIDA.exists() && ARCHIVO_PARTIDA.isFile()) {
             pedirReanudarPartida();
+            //Para terminar la partida
+            return 5;
         } else if (!ARCHIVO_PARTIDA.exists()) {
             System.out.println("No hay partida guardada");
+            //Para seguir con la partida
+            return 0;
         } else {
             System.out.println("No es un archivo lo que se indica en la ruta");
+            //Para seguir con la partida
+            return 0;
         }
     }
 

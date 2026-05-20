@@ -132,3 +132,13 @@ Jugadores de la partida:
   - Jugador2 (Cartas robadas en total: 8 | Cartas jugadas en total: 8)
 ========================================================================
 
+========================================================================
+Fecha y Hora: 20-05-2026, 10:25:41 p. m.
+Turnos jugados: 24
+Ganador: Juan
+Jugadores de la partida:
+  - Juan (Cartas robadas en total: 8 | Cartas jugadas en total: 8)
+  - Dani (Cartas robadas en total: 10 | Cartas jugadas en total: 4)
+  - Libio (Cartas robadas en total: 9 | Cartas jugadas en total: 5)
+========================================================================
+

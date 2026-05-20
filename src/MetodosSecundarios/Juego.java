@@ -133,9 +133,8 @@ public class Juego {
      * @throws SalirDelJuego        para salir del juego cuando quieras
      */
     public static void flujoDelSistema() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
-        opcion = 0;
         // Comprobación de partida guardada existente
-        AlmacenamientoPartida.partidaGuardada();
+        opcion = AlmacenamientoPartida.partidaGuardada();
         salir = false;
         while (!salir) {
             opcion = Menus.menuInicio();
