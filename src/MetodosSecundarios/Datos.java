@@ -12,12 +12,11 @@ import Excepciones.ReiniciarJuego;
 public class Datos {
     // Scanner (Objeto) estático que se podrá utilizar en todos los métodos de la
     // clase
-    static Scanner s = new Scanner(System.in);
+    private static Scanner s = new Scanner(System.in);
     public static int milisegundos = 1000;
 
     /**
      * Pide una cadena de caracteres y la devuelve
-     * 
      * 
      * @param mensaje de petición de datos tipo String
      * @return Dato introducido por teclado tipo string
@@ -74,7 +73,15 @@ public class Datos {
         s.nextLine();
     }
 
-    public static boolean salirDelJuego() throws ReiniciarJuego{
+    /**
+     * Método que incluye la posibilidad de salir del juego
+     * 
+     * @param 'ninguno'
+     * @return valor booleano que indica si quiere salir o no del juego
+     * @throws ReiniciarJuego
+     * @throws ReiniciarJuego para reiniciar el juego cuando se quiera
+     */
+    public static boolean salirDelJuego() throws ReiniciarJuego {
         String entrada;
         System.out.println("Pulse enter para continuar, si quieres salir, escribe \"salir\": ");
         entrada = s.nextLine().trim();
@@ -82,10 +89,7 @@ public class Datos {
         // Para que el usuario vuelva a iniciar el juego cuando quiera
         solicitarReinicio(entrada);
 
-        if(entrada.equalsIgnoreCase("salir")){
-            return true;
-        }
-        return false;
+        return entrada.equalsIgnoreCase("salir");
     }
 
     /**
@@ -100,8 +104,8 @@ public class Datos {
     /**
      * Salto de líneas para cuando se cambie de menu/salto de escena
      * 
-     * @throws InterruptedException para los thread sleep
      * @param 'ninguno'
+     * @throws InterruptedException para los thread sleep
      */
     public static void saltoDeLineas() throws InterruptedException {
         Thread.sleep(milisegundos);

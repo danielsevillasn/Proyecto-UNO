@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -34,50 +35,69 @@ public class AlmacenamientoDatos {
      */
     private static final Path CARPETA_ARCHIVOS = Paths.get("src", "Archivos");
 
-    // 2. Resolvemos las rutas de forma segura para cualquier SO
     private static Path rutaReglas = CARPETA_ARCHIVOS.resolve("reglas.txt");
-    private static Path rutaEstadísticas = CARPETA_ARCHIVOS.resolve("estadisticas.txt");
+    private static Path rutaEstadisticas = CARPETA_ARCHIVOS.resolve("estadisticas.txt");
     private static Path rutaPartida = CARPETA_ARCHIVOS.resolve("partida_guardada.dat");
 
-    private final static String ARCHIVO_REGLAS = rutaReglas.toString();
-    private final static String ARCHIVO_ESTADISTICAS = rutaEstadísticas.toString();
-    private final static String ARCHIVO_PARTIDA = rutaPartida.toString();
+    private static final String ARCHIVO_REGLAS = rutaReglas.toString();
+    private static final String ARCHIVO_ESTADISTICAS = rutaEstadisticas.toString();
+    private static final String ARCHIVO_PARTIDA = rutaPartida.toString();
 
     /**
      * Método que comprueba que el archivo partida sea un archivo y que exista
      * 
+     * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      * @throws SalirDelJuego        para salir del juego cuando quieras
      */
     public static void partidaGuardada() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         File archivoPartida = new File(ARCHIVO_PARTIDA);
-        boolean salir = false;
         if (archivoPartida.exists() && archivoPartida.isFile()) {
-            Datos.saltoDeLineas();
-            System.out.println("Se ha detectado una partida interrumpida.");
-            while (!salir) {
-                String respuesta = Datos.pedirCadena("¿Deseas reanudar la partida anterior? (S/N): ");
-
-                switch (respuesta) {
-                    case "S":
-                        UnoEngine.contextoPartida = (Objetos.PartidaContexto) AlmacenamientoDatos.cargarPartida();
-                        UnoEngine.reanudarPartida();
-                        Juego.iniciarJuego();
-                    case "N":
-                        archivoPartida.delete();
-                        salir = true;
-                        break;
-
-                    default:
-                        System.out.println("Tienes que poner \"S\" o \"N\", intentalo de nuevo");
-                        break;
-                }
-            }
+            pedirReanudarPartida();
         } else if (!archivoPartida.exists()) {
             System.out.println("El archivo no existe");
         } else {
             System.out.println("No es un archivo lo que se indica en la ruta");
+        }
+    }
+
+    /**
+     * Método que pide si quieres reanudar la partida anterior o no
+     * 
+     * @param archivoPartida archivo en el que se guarda la partida
+     * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
+     * @throws SalirDelJuego        para salir del juego cuando quieras
+     */
+    private static void pedirReanudarPartida()
+            throws InterruptedException, ReiniciarJuego, SalirDelJuego {
+        boolean salir = false;
+        Datos.saltoDeLineas();
+        System.out.println("Se ha detectado una partida interrumpida.");
+        while (!salir) {
+            String respuesta = Datos.pedirCadena("¿Deseas reanudar la partida anterior? (S/N): ");
+
+            switch (respuesta) {
+                case "S":
+                    UnoEngine.contextoPartida = AlmacenamientoDatos.cargarPartida();
+                    UnoEngine.reanudarPartida();
+                    Juego.iniciarJuego();
+                    break;
+                case "N":
+                    try{
+                        Files.delete(rutaPartida);
+                    }catch(IOException e){
+                        System.out.println("No se encuentra el archivo de la partida");
+                        System.out.println(e.getLocalizedMessage());
+                    }
+                    salir = true;
+                    break;
+
+                default:
+                    System.out.println("Tienes que poner \"S\" o \"N\", intentalo de nuevo");
+                    break;
+            }
         }
     }
 
@@ -100,6 +120,7 @@ public class AlmacenamientoDatos {
      * Método que carga la partida guardada leyendo el archivo binario y pasandolo a
      * objeto
      * 
+     * @param 'ninguno'
      * @return devuelve el contexto de la partida guardada
      */
     public static PartidaContexto cargarPartida() {
@@ -131,20 +152,20 @@ public class AlmacenamientoDatos {
      * @throws InterruptedException para los thread sleep
      */
     public static void pantallaReglas() throws InterruptedException {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(ARCHIVO_REGLAS));
+        try (BufferedReader br = new BufferedReader(new FileReader(ARCHIVO_REGLAS))){
             String linea = "";
 
             while (linea != null) {
                 System.out.println(linea);
                 linea = br.readLine();
-                Thread.sleep(750);
+                Thread.sleep(Datos.milisegundos);
             }
-            br.close();
         } catch (FileNotFoundException e) {
             System.out.println("No se ha encontrado el archivo");
+            System.out.println(e.getLocalizedMessage());
         } catch (IOException e) {
             System.out.println("No se puede leer el archivo");
+            System.out.println(e.getLocalizedMessage());
         }
         Datos.pulsaEnter();
         Datos.saltoDeLineas();
@@ -156,11 +177,12 @@ public class AlmacenamientoDatos {
      * 
      * @param ganador   el jugador que ha ganado
      * @param jugadores mapa de los jugadores de la partida
+     * @param turno     turnos de la partida
      * @param mostrar   variable booleana que determina si se muestran las
      *                  estadísticas o no
      * @throws InterruptedException para los thread sleep
      */
-    public static void finalizarYGuardarEstadísticas(Jugador ganador, Map<Integer, Jugador> jugadores, Turno turno,
+    public static void finalizarYGuardarEstadisticas(Jugador ganador, Map<Integer, Jugador> jugadores, Turno turno,
             boolean mostrar) throws InterruptedException {
         Datos.saltoDeLineas();
 
@@ -169,7 +191,7 @@ public class AlmacenamientoDatos {
 
         String reporteFinal = separador;
         reporteFinal += "Fecha y Hora: " + fecha + "\n";
-        reporteFinal += "Turnos jugados: "+turno.getContadorTurno()+"\n";
+        reporteFinal += "Turnos jugados: " + turno.getContadorTurno() + "\n";
         reporteFinal += "Ganador: " + ganador.getNombre() + "\n";
         reporteFinal += "Jugadores de la partida:\n";
 

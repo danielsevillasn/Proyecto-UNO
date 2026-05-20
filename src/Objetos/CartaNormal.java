@@ -83,6 +83,15 @@ public class CartaNormal extends Carta {
         return super.toString() + numero + "]" + RESETCOLOR;
     }
 
+    // Hash Code
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + numero;
+        return result;
+    }
+
     // Equals
     @Override
     public boolean equals(Object obj) {

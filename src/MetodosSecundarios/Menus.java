@@ -220,17 +220,18 @@ public class Menus {
      */
     public static void preguntarMostrarEstadisticas(Jugador jugador, Map<Integer, Jugador> jugadores, Turno turno)
             throws ReiniciarJuego, InterruptedException {
-        while (true) {
+        boolean salir = false;
+        while (!salir) {
             String respuesta = Datos.pedirCadena("Quieres ver las estadísticas? (si / no): ");
 
             if (respuesta.equalsIgnoreCase("si")) {
-                AlmacenamientoDatos.finalizarYGuardarEstadísticas(jugador, jugadores,turno, true);
-                break;
+                AlmacenamientoDatos.finalizarYGuardarEstadisticas(jugador, jugadores,turno, true);
+                salir = true;
             } else if (respuesta.equalsIgnoreCase("no")) {
-                AlmacenamientoDatos.finalizarYGuardarEstadísticas(jugador, jugadores,turno, false);
+                AlmacenamientoDatos.finalizarYGuardarEstadisticas(jugador, jugadores,turno, false);
                 System.out.println("Volviendo al menú principal...");
-                Thread.sleep(Datos.milisegundos + 500);
-                break;
+                Thread.sleep(Datos.milisegundos);
+                salir = true;
             } else {
                 Datos.entradaIncorrecta();
             }

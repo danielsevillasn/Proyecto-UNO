@@ -102,6 +102,15 @@ public class CartaEspecial extends Carta {
         return super.toString() + simbolo + "]" + RESETCOLOR;
     }
 
+    // Hash Code
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((tiposEspeciales == null) ? 0 : tiposEspeciales.hashCode());
+        return result;
+    }
+
     // Equals
     @Override
     public boolean equals(Object obj) {

@@ -61,13 +61,12 @@ public class Mecanicas {
     /**
      * Método que mira si la carta que se acaba de tirar es valida o no
      * 
-     * @param 'ninguno'
+     * @param opcionCarta numero de carta seleccionada
+     * @throws CartaLanzaNoValida excepcion que se lanza si la carta no es valida
      */
     public static boolean cartaSacada(int opcionCarta) throws CartaLanzadaNoValida {
-        Carta cartaSeleccionada;
-        Carta cartaEnMesa;
-        cartaSeleccionada = jugador.getMano().obtener(opcionCarta);
-        cartaEnMesa = tablero().verCartaEnLaMesa();
+        Carta cartaSeleccionada = jugador.getMano().obtener(opcionCarta);
+        Carta cartaEnMesa = tablero().verCartaEnLaMesa();
         return cartaSeleccionada.puedePonerseSobre(cartaEnMesa);
     }
 
@@ -93,7 +92,7 @@ public class Mecanicas {
      * 
      * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
-     * @throws ReiniciarJuego
+     * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      */
     public static void aplicarEfectoPrimeraCarta() throws InterruptedException, ReiniciarJuego {
         Carta carta = tablero().verCartaEnLaMesa();
@@ -186,9 +185,8 @@ public class Mecanicas {
      * Método que desarrolla el efecto del bloqueo cuando sale de primera carta
      * 
      * @param 'ninguno'
-     * @throws InterruptedException para los thread sleeps
      */
-    public static void efectoBloqueo() throws InterruptedException {
+    public static void efectoBloqueo() {
         System.out.println("Ha salido un 'Bloqueo': el primer jugador pierde el turno.");
         siguiente();
     }
@@ -197,9 +195,8 @@ public class Mecanicas {
      * Método que desarrolla el efecto de la reversa cuando sale de primera carta
      * 
      * @param 'ninguno'
-     * @throws InterruptedException para los thread sleeps
      */
-    public static void efectoReversa() throws InterruptedException {
+    public static void efectoReversa() {
         System.out.println(
                 "Ha salido un 'Reversa': se invierte el sentido y el primer jugador pierde el turno.");
         siguiente();

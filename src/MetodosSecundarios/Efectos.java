@@ -72,7 +72,7 @@ public class Efectos {
     private static void bloqueo() {
         Jugador jugadorSaltado;
         jugadorSaltado = contextoPartida.getJugadores().get(hallarIdJugador()); // Consultamos quién va a ser
-                                                                                          // bloqueado
+                                                                                // bloqueado
         System.out.println("¡" + jugadorSaltado.getNombre() + " ha sido bloqueado y pierde su turno!");
         siguiente();
     }
@@ -83,7 +83,8 @@ public class Efectos {
      * así hacer que chupe las cartas respectivas, luego saltar el turno y si es un
      * chupate 4 cambiar el color
      * 
-     * @param cartaTirada carta que se ha tirado en el tablero
+     * @param numeroCartas indica el numero de cartas del chupate
+     * @param cartaTirada  carta que se ha tirado en el tablero
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
      */
@@ -156,6 +157,7 @@ public class Efectos {
      * Método que halla el id del jugador seleccionado mediante un sistema parecido
      * al de los turnos
      * 
+     * @param 'ninguno'
      * @return entero que representa el id del jugador actual
      */
     private static int hallarIdJugador() {

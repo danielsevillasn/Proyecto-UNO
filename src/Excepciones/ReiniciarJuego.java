@@ -6,7 +6,7 @@ package Excepciones;
  * @author DaniS y Libio
  */
 public class ReiniciarJuego extends Exception {
-    // Constructor que cuanfo se utiliza getMessage() imprime el mensaje impuesto
+    // Constructor que cuando se utiliza getMessage() imprime el mensaje impuesto
     // donde se inicializo la excepcion
     public ReiniciarJuego(String mensaje) {
         super(mensaje);

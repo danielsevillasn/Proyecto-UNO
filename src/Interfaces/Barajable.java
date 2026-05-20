@@ -7,7 +7,7 @@ package Interfaces;
  */
 public interface Barajable {
     /**
-     * Método que sirve para barajar
+     * Método que sirve para barajar contenedores
      */
     void barajar();
 }

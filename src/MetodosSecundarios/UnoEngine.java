@@ -149,6 +149,7 @@ public class UnoEngine {
                     System.out.println("La carta que quieres lanzar no esta dentro del limite de la baraja");
                 } catch (NullPointerException e) {
                     System.out.println("No existe la carta seleccionada");
+                    System.out.println(e.getLocalizedMessage());
                 } catch (CartaLanzadaNoValida e) {
                     System.out.println(e.getMessage());
                     Mecanicas.cartaSacadaNoValida();

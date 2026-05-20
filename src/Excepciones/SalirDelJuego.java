@@ -11,7 +11,7 @@ public class SalirDelJuego extends Exception {
         super("Has salido del juego");
     }
 
-    // Constructor que cuanfo se utiliza getMessage() imprime el mensaje impuesto
+    // Constructor que cuando se utiliza getMessage() imprime el mensaje impuesto
     // donde se inicializo la excepcion
     public SalirDelJuego(String mensaje) {
         super(mensaje);

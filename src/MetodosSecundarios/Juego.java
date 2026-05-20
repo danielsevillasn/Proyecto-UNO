@@ -93,9 +93,9 @@ public class Juego {
     /**
      * Método que ejecuta el sistema de juego completo con sus menús
      * 
+     * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
-     * @param 'ninguno'
      */
     public static void sistema() throws InterruptedException, ReiniciarJuego {
         String opcion1 = "";
@@ -127,7 +127,7 @@ public class Juego {
     /**
      * Método que reproduce el flujo por el que circula el sistema
      * 
-     * @param salir valor booleano que expresa cuando sale del flujo
+     * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
      * @throws SalirDelJuego        para salir del juego cuando quieras

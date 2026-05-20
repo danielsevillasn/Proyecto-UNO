@@ -36,7 +36,7 @@ public class Pantallas {
         System.out.printf(AMARILLO + "%37s%n" + RESET, "¡ENHORABUENA!");
         Thread.sleep(Datos.milisegundos);
         System.out.print(ROJO + "\t\t\t" + mensajeJugador + RESET);
-        Thread.sleep(Datos.milisegundos + 1000);
+        Thread.sleep(Datos.milisegundos);
         System.out.println();
         Datos.pulsaEnter();
     }
