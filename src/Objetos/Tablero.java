@@ -1,5 +1,7 @@
 package Objetos;
 
+import java.io.Serializable;
+
 import Enumerados.Color;
 import Enumerados.TiposEspeciales;
 import Excepciones.ContenedorVacio;
@@ -9,7 +11,7 @@ import Excepciones.ContenedorVacio;
  * 
  * @author DaniS y Libio
  */
-public class Tablero {
+public class Tablero implements Serializable{
 
     // Atributos/////////////////////
 

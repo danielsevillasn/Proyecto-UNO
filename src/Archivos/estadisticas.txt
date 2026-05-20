@@ -1,0 +1,89 @@
+=========================================
+Fecha y Hora: 16-05-2026, 09:05:44 p. m.
+Ganador: Jugador2
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 13)
+  - Jugador2 (Cartas robadas en total: 10)
+=========================================
+
+=========================================
+Fecha y Hora: 16-05-2026, 09:19:33 p. m.
+Ganador: Jugador1
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 17)
+  - Jugador2 (Cartas robadas en total: 22)
+=========================================
+
+=========================================
+Fecha y Hora: 16-05-2026, 11:15:37 p. m.
+Ganador: Jugador1
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 21)
+  - Jugador2 (Cartas robadas en total: 21)
+=========================================
+
+=========================================
+Fecha y Hora: 16-05-2026, 11:22:15 p. m.
+Ganador: Libio
+Jugadores de la partida:
+  - Dani (Cartas robadas en total: 19)
+  - Libio (Cartas robadas en total: 16)
+=========================================
+
+========================================================================
+Fecha y Hora: 16-05-2026, 11:51:05 p. m.
+Ganador: Jugador2
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 26 | Cartas jugadas en total: 22)
+  - Jugador2 (Cartas robadas en total: 22 | Cartas jugadas en total: 22)
+========================================================================
+
+========================================================================
+Fecha y Hora: 18-05-2026, 09:53:54 p. m.
+Ganador: Jugador2
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 16 | Cartas jugadas en total: 7)
+  - Jugador2 (Cartas robadas en total: 9 | Cartas jugadas en total: 9)
+========================================================================
+
+========================================================================
+Fecha y Hora: 19-05-2026, 09:56:29 a. m.
+Ganador: Jugador2
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 10 | Cartas jugadas en total: 7)
+  - Jugador2 (Cartas robadas en total: 6 | Cartas jugadas en total: 9)
+========================================================================
+
+========================================================================
+Fecha y Hora: 19-05-2026, 10:07:55 a. m.
+Ganador: Jugador1
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 7 | Cartas jugadas en total: 7)
+  - Jugador2 (Cartas robadas en total: 11 | Cartas jugadas en total: 4)
+========================================================================
+
+========================================================================
+Fecha y Hora: 19-05-2026, 01:27:29 p. m.
+Ganador: fak
+Jugadores de la partida:
+  - put (Cartas robadas en total: 11 | Cartas jugadas en total: 6)
+  - fak (Cartas robadas en total: 7 | Cartas jugadas en total: 7)
+========================================================================
+
+========================================================================
+Fecha y Hora: 19-05-2026, 01:40:59 p. m.
+Ganador: put
+Jugadores de la partida:
+  - put (Cartas robadas en total: 9 | Cartas jugadas en total: 9)
+  - fak (Cartas robadas en total: 8 | Cartas jugadas en total: 6)
+========================================================================
+
+========================================================================
+Fecha y Hora: 19-05-2026, 01:51:12 p. m.
+Turnos jugados: 13
+Ganador: Jugador1
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 7 | Cartas jugadas en total: 7)
+  - Jugador2 (Cartas robadas en total: 11 | Cartas jugadas en total: 4)
+========================================================================
+

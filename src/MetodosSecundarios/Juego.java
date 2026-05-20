@@ -29,6 +29,8 @@ public class Juego {
      */
     public static void iniciarJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
+
+        // Configuración inicial por defecto si no se reanuda
         cantidadActualJugadores = 2;
         nombresCargados.clear();
         nombresCargados.add("Jugador1");
@@ -128,9 +130,12 @@ public class Juego {
      * @param salir valor booleano que expresa cuando sale del flujo
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reiniciar el juego cuando se quiera
+     * @throws SalirDelJuego        para salir del juego cuando quieras
      */
-    public static void flujoDelSistema() throws InterruptedException, ReiniciarJuego {
-        String opcion2;
+    public static void flujoDelSistema() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
+        String opcion2 = "";
+        // Comprobación de partida guardada existente
+        AlmacenamientoDatos.partidaGuardada();
         salir = false;
         while (!salir) {
             opcion2 = Menus.menuInicio();
@@ -143,7 +148,7 @@ public class Juego {
                     cantidadActualJugadores = Registro.configurarJugadores();
                     break;
                 case "3": // Mostrar instrucciones
-                    Pantallas.pantallaReglas();
+                    AlmacenamientoDatos.pantallaReglas();
                     break;
                 case "4": // Iniciar una partida
                     Datos.saltoDeLineas();

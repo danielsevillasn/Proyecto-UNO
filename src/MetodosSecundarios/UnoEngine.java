@@ -2,6 +2,7 @@ package MetodosSecundarios;
 
 import Excepciones.CartaLanzadaNoValida;
 import Excepciones.ReiniciarJuego;
+import Excepciones.SalirDelJuego;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,11 +23,10 @@ public class UnoEngine {
 
     private static Tablero tablero;
     private static Turno controladorTurnos;
-    protected static PartidaContexto contextoPartida;
+    protected static PartidaContexto contextoPartida = null;
     private static boolean fin = false;
     private static boolean cartaValida = false;
     private static int opcionCarta = -1;
-    private static int cantidadActualJugadores;
     protected static Jugador jugador;
 
     /**
@@ -38,8 +38,9 @@ public class UnoEngine {
      * @param nombresCargados array con todos los nombres (por referencia)
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
+     * @throws SalirDelJuego        para salir del juego cuando quieras
      */
-    public static void partida(List<String> nombresCargados) throws InterruptedException, ReiniciarJuego {
+    public static void partida(List<String> nombresCargados) throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         // Inicialización de componentes de juego
         HashMap<Integer, Jugador> jugadores;
 
@@ -48,20 +49,23 @@ public class UnoEngine {
         tablero.inicializarBaraja();
         fin = false;
 
-        cantidadActualJugadores = Juego.cantidadActualJugadores;
         jugadores = new HashMap<>();
 
-        contextoPartida = new PartidaContexto(tablero, controladorTurnos, jugadores, cantidadActualJugadores);
+        contextoPartida = new PartidaContexto(tablero, controladorTurnos, jugadores, Juego.cantidadActualJugadores);
 
         Mecanicas.repartoInicial(nombresCargados);
 
         tablero.dejar(tablero.tirarCarta());
 
         Mecanicas.aplicarEfectoPrimeraCarta();
+        Datos.pulsaEnter();
+
 
         flujoDeLaPartida();
 
         Pantallas.pantallaFinal();
+
+        Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores(), contextoPartida.getControladorTurnos());
     }
 
     /**
@@ -70,8 +74,9 @@ public class UnoEngine {
      * @param 'ninguno'
      * @throws InterruptedException para los thread sleep
      * @throws ReiniciarJuego       para reinciar el juego cuando se quiera
+     * @throws SalirDelJuego        para salir del juego cuando quieras
      */
-    private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego {
+    private static void flujoDeLaPartida() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
         while (!fin) {
             // Escoge al jugador correspondiente, basado en el turno actual
             Mecanicas.ordenarBarajaJugadores();
@@ -90,12 +95,14 @@ public class UnoEngine {
             System.out.println("\n  * " + tablero + " *");
             Thread.sleep(Datos.milisegundos);
 
-            // Cambio de turno
-            Datos.pulsaEnter();
+            if (Datos.salirDelJuego()) {
+                AlmacenamientoDatos.guardarPartida(UnoEngine.contextoPartida);
+                throw new SalirDelJuego();
+            }
 
             // Si nadie ha ganado, pasamos al siguiente turno
             if (!fin)
-                controladorTurnos.siguiente(cantidadActualJugadores);
+                siguiente();
         }
     }
 
@@ -178,8 +185,38 @@ public class UnoEngine {
         }
     }
 
-    //Metodos atajo
-    //Sirven para reducir codigo en efectos y en mecanicas
+    /**
+     * Reanuda una partida previamente guardada restaurando el estado
+     * desde el objeto contenedor contextoPartida
+     * 
+     * @throws InterruptedException para los thread sleep
+     * @throws ReiniciarJuego       para reiniciar el juego cuando quiera
+     * @throws @throws SalirDelJuego        para salir del juego cuando quieras
+     */
+    public static void reanudarPartida() throws InterruptedException, ReiniciarJuego, SalirDelJuego {
+        if (contextoPartida == null || contextoPartida.getTablero() == null) {
+            System.out.println("Error: No se encontró información válida para reanudar la partida :(");
+            Juego.iniciarJuego();
+        } else {
+            System.out.println("Restaurando parámetros de juego...");
+            Thread.sleep(Datos.milisegundos);
+
+            tablero = contextoPartida.getTablero();
+            controladorTurnos = contextoPartida.getControladorTurnos();
+            fin = false;
+
+            System.out.println("Partida restaurada :)");
+            Datos.pulsaEnter();
+
+            flujoDeLaPartida();
+            Pantallas.pantallaFinal();
+
+            Menus.preguntarMostrarEstadisticas(jugador, contextoPartida.getJugadores(), contextoPartida.getControladorTurnos());
+        }
+    }
+
+    // Metodos atajo
+    // Sirven para reducir codigo en efectos y en mecanicas
     public static Jugador actual() {
         return contextoPartida.jugadorActual();
     }

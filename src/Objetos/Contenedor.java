@@ -1,5 +1,6 @@
 package Objetos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +16,7 @@ import Interfaces.Barajable;
  * 
  * @param <T> El tipo de carta que almacenará (debe extender de Carta)
  */
-public class Contenedor<T extends Carta> implements Barajable {
+public class Contenedor<T extends Carta> implements Barajable, Serializable {
     // Atributos/////////////////////
     protected ArrayList<T> lista;
 

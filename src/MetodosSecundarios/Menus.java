@@ -1,9 +1,12 @@
 package MetodosSecundarios;
 
+import java.util.Map;
 import java.util.Scanner;
 
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
+import Objetos.Jugador;
+import Objetos.Turno;
 
 /**
  * Clase para imprimir todos los menus del juego
@@ -205,5 +208,32 @@ public class Menus {
         System.out.println("4- Azul");
 
         return Datos.pedirEntero("Elige un color(1-4):");
+    }
+
+    /**
+     * Pregunta al usuario si desea visualizar las estadísticas de la partida
+     * 
+     * @param jugador   Jugador actual o ganador
+     * @param jugadores Mapa con todos los participantes
+     * @throws ReiniciarJuego       Si se solicita el reinicio del juego
+     * @throws InterruptedException Si la entrada del usuario es interrumpida
+     */
+    public static void preguntarMostrarEstadisticas(Jugador jugador, Map<Integer, Jugador> jugadores, Turno turno)
+            throws ReiniciarJuego, InterruptedException {
+        while (true) {
+            String respuesta = Datos.pedirCadena("Quieres ver las estadísticas? (si / no): ");
+
+            if (respuesta.equalsIgnoreCase("si")) {
+                AlmacenamientoDatos.finalizarYGuardarEstadísticas(jugador, jugadores,turno, true);
+                break;
+            } else if (respuesta.equalsIgnoreCase("no")) {
+                AlmacenamientoDatos.finalizarYGuardarEstadísticas(jugador, jugadores,turno, false);
+                System.out.println("Volviendo al menú principal...");
+                Thread.sleep(Datos.milisegundos + 500);
+                break;
+            } else {
+                Datos.entradaIncorrecta();
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 package Objetos;
 
+import java.io.Serializable;
+
 import Excepciones.ContenedorLleno;
 import Excepciones.ContenedorVacio;
 
@@ -8,13 +10,15 @@ import Excepciones.ContenedorVacio;
  * 
  * @author DaniS y Libio
  */
-public class Jugador {
+public class Jugador implements Serializable{
     // Atributos/////////////////////
     private final String nombre;
     private static int idIncrementado;
     private final int id;
     private Contenedor<Carta> mano;
     private final int limiteMano;
+    private int cartasRobadasTotales;
+    private int cartasJugadasTotales;
 
     // Metodos////////////////////////
 
@@ -24,11 +28,17 @@ public class Jugador {
         this.mano = new Contenedor<>();
         limiteMano = 21;
         id = idIncrementado++;
+        cartasRobadasTotales = 0;
+        cartasJugadasTotales = 0;
     }
 
     // Getter
     public String getNombre() {
         return nombre;
+    }
+
+    public int getCartasJugadasTotales() {
+        return cartasJugadasTotales;
     }
 
     public int getNumCartas() {
@@ -43,6 +53,10 @@ public class Jugador {
         return mano;
     }
 
+    public int getCartasRobadasTotales() {
+        return cartasRobadasTotales;
+    }
+
     // Otros metodos
     /**
      * Juega una carta de la mano
@@ -52,7 +66,9 @@ public class Jugador {
      */
     public Carta jugarCarta(int n) {
         try {
-            return mano.extraer(n);
+            Carta cartaExtraida = mano.extraer(n);
+            cartasJugadasTotales++;
+            return cartaExtraida;
         } catch (ContenedorVacio e) {
             System.out.println(e.getMessage());
             return null;
@@ -67,6 +83,7 @@ public class Jugador {
     public void recibirCarta(Carta carta) {
         try {
             mano.añadir(carta, limiteMano);
+            cartasRobadasTotales++; // Registra cada carta que entra a la mano
         } catch (ContenedorLleno e) {
             System.out.println(e.getMessage());
         }
