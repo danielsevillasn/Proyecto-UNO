@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Enumerados.ModoEjecucion;
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
+import Objetos.VentanaConfiguracion;
 
 /**
  * Clase que establece la raiz del juego
@@ -13,8 +14,8 @@ import Excepciones.SalirDelJuego;
  */
 public class Juego {
 
-    protected static ArrayList<String> nombresCargados = new ArrayList<>();
-    private static int cantidadActualJugadores;
+    public static ArrayList<String> nombresCargados = new ArrayList<>();
+    public static int cantidadActualJugadores;
     private static boolean salir;
     private static int opcion;
 
@@ -144,7 +145,8 @@ public class Juego {
                     Menus.menuModoDeJuego();
                     break;
                 case 2: // Configurar nombres y cantidad de jugadores
-                    cantidadActualJugadores = Registro.configurarJugadores();
+                    VentanaConfiguracion ventanaConfiguracion = new VentanaConfiguracion();
+                    ventanaConfiguracion.setVisible(true);
                     break;
                 case 3: // Mostrar instrucciones
                     AlmacenamientoDatos.pantallaReglas();
