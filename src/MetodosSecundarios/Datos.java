@@ -3,6 +3,7 @@ package MetodosSecundarios;
 import java.util.Scanner;
 
 import Excepciones.ReiniciarJuego;
+import Objetos.GestorRankingBD;
 
 /**
  * Clase para todos los métodos o funcionalidades propias de la Entrada/Salida
@@ -122,6 +123,39 @@ public class Datos {
     public static void solicitarReinicio(String entrada) throws ReiniciarJuego {
         if (entrada.equalsIgnoreCase("reiniciar")) {
             throw new ReiniciarJuego("Regresando al menú principal...");
+        }
+    }
+
+    /**
+     * Método que agrupa el flujo final de la base de datos: Guarda, Muestra y permite Borrar.
+     * * @param nombreGanador Nombre del jugador que acaba de ganar
+     * @throws ReiniciarJuego 
+     * @throws InterruptedException 
+     */
+    public static void gestionarRankingFinal(String nombreGanador) throws ReiniciarJuego, InterruptedException {
+        Datos.saltoDeLineas();
+        System.out.println("Guardando tu victoria en la Base de Datos SQLite...");
+        
+        // 1. Guarda o actualiza el perfil (INSERT / UPDATE)
+        GestorRankingBD.registrarVictoria(nombreGanador); 
+        
+        // 2. Muestra los mejores jugadores (SELECT)
+        GestorRankingBD.mostrarTopJugadores(); 
+
+        // 3. Ofrece la opción de borrar el perfil (DELETE)
+        boolean salir = false;
+        while (!salir) {
+            String respuesta = Datos.pedirCadena("¿Deseas eliminar tu perfil y victorias del Ranking Global? (S/N): ");
+
+            if (respuesta.equalsIgnoreCase("S")) {
+                GestorRankingBD.eliminarPerfil(nombreGanador);
+                salir = true;
+            } else if (respuesta.equalsIgnoreCase("N")) {
+                System.out.println("¡Tu historial de victorias sigue a salvo!");
+                salir = true;
+            } else {
+                System.out.println("Entrada incorrecta. Por favor, introduce 'S' o 'N'.");
+            }
         }
     }
 }

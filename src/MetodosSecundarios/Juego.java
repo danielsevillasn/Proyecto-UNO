@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Enumerados.ModoEjecucion;
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
+import Objetos.GestorRankingBD;
 import Objetos.VentanaConfiguracion;
 
 /**
@@ -29,6 +30,8 @@ public class Juego {
      */
     public static void iniciarJuego() throws InterruptedException, ReiniciarJuego {
         Datos.saltoDeLineas();
+
+        GestorRankingBD.inicializarBD();
 
         // Configuración inicial por defecto si no se reanuda
         cantidadActualJugadores = 2;
