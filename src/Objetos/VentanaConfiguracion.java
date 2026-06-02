@@ -171,18 +171,16 @@ public class VentanaConfiguracion extends JFrame implements ActionListener {
         ArrayList<String> nombresValidados = new ArrayList<>();
         String mensajeError = "";
         try {
-            comprobaciónNombres(cantidadJugadores, nombresValidados);
-
-            Juego.nombresCargados = nombresValidados;
-            Juego.cantidadActualJugadores = cantidadJugadores;
-
-            JOptionPane.showMessageDialog(this,
-                    "Los " + cantidadJugadores + " nombres de los jugadores son correctos",
-                    "Configuración Guardada", JOptionPane.INFORMATION_MESSAGE);
-
-            // Cerramos la ventana
-            this.dispose();
-
+            if (comprobaciónNombres(cantidadJugadores, nombresValidados)) {
+                Juego.nombresCargados = nombresValidados;
+                Juego.cantidadActualJugadores = cantidadJugadores;
+    
+                JOptionPane.showMessageDialog(this,
+                        "Los " + cantidadJugadores + " nombres de los jugadores son correctos",
+                        "Configuración Guardada", JOptionPane.INFORMATION_MESSAGE);
+    
+                this.dispose();
+            }
         } catch (NombreUsuarioNoValido e) {
             mensajeError = e.getMessage() + "\n\nSugerencias de seguridad:\n";
 
@@ -203,7 +201,7 @@ public class VentanaConfiguracion extends JFrame implements ActionListener {
      * @param nombresValidados
      * @throws NombreUsuarioNoValido
      */
-    private void comprobaciónNombres(int cantidadJugadores, ArrayList<String> nombresValidados)
+    private boolean comprobaciónNombres(int cantidadJugadores, ArrayList<String> nombresValidados)
             throws NombreUsuarioNoValido {
         String nombre;
         for (int i = 0; i < cantidadJugadores; i++) {
@@ -213,14 +211,15 @@ public class VentanaConfiguracion extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this,
                         "El campo del Jugador " + (i + 1) + " no puede estar vacío.",
                         "Error de Entrada", JOptionPane.ERROR_MESSAGE);
+                return false;
             } else {
 
                 validacionNombre(nombre);
 
                 nombresValidados.add(nombre);
             }
-
         }
+        return true;
     }
 
     /**

@@ -147,6 +147,10 @@ public class Juego {
                 case 2: // Configurar nombres y cantidad de jugadores
                     VentanaConfiguracion ventanaConfiguracion = new VentanaConfiguracion();
                     ventanaConfiguracion.setVisible(true);
+                    // Congela el terminal para concentrar el foco en la pantalla visible
+                    while (ventanaConfiguracion.isVisible()) {
+                        Thread.sleep(200);
+                    }
                     break;
                 case 3: // Mostrar instrucciones
                     AlmacenamientoDatos.pantallaReglas();
