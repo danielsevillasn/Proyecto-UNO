@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import Enumerados.ModoEjecucion;
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
-import Objetos.GestorRankingBD;
 import Objetos.VentanaConfiguracion;
 
 /**

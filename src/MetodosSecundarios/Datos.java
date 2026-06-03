@@ -3,7 +3,6 @@ package MetodosSecundarios;
 import java.util.Scanner;
 
 import Excepciones.ReiniciarJuego;
-import Objetos.GestorRankingBD;
 
 /**
  * Clase para todos los métodos o funcionalidades propias de la Entrada/Salida

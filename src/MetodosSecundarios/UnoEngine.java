@@ -9,7 +9,6 @@ import java.util.List;
 
 import Enumerados.Tipos;
 import Objetos.Carta;
-import Objetos.GestorRankingBD;
 import Objetos.Jugador;
 import Objetos.Tablero;
 import Objetos.Turno;

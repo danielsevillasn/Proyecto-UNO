@@ -1,4 +1,4 @@
-package Objetos;
+package MetodosSecundarios;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,9 +20,7 @@ public class GestorRankingBD {
      */
     public static void inicializarBD() {
         try {
-            // Esta línea fuerza la carga de la clase del driver
             Class.forName("org.sqlite.JDBC");
-
             String sql = "CREATE TABLE IF NOT EXISTS perfil_jugador ("
                     + "codigo INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "nombre VARCHAR(100) UNIQUE, "
@@ -35,10 +33,15 @@ public class GestorRankingBD {
                 System.out.println("Base de datos de Ranking inicializada.");
             }
         } catch (ClassNotFoundException e) {
+
             System.err.println("¡ERROR CRÍTICO! No se encuentra el driver JDBC. Revisa tu carpeta lib.");
+
             e.printStackTrace();
+
         } catch (SQLException e) {
+
             System.out.println("Error al inicializar la BD: " + e.getMessage());
+
         }
     }
 
