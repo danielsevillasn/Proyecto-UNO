@@ -78,6 +78,7 @@ public class GestorRankingBD {
                 declaracion.execute(tablaPerfilJugador);
                 System.out.println("Base de datos de Ranking inicializada.");
             }
+            añadirColumnaRacha();
         } catch (ClassNotFoundException e) {
             System.err.println("No se encuentra el driver JDBC");
             e.printStackTrace();
