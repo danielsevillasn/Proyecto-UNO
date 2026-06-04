@@ -80,6 +80,8 @@ public class UnoEngine {
         
         AlmacenamientoPartida.eliminarPartida();
 
+        GestorRankingBD.cerrarConexion();
+
     }
 
     /**

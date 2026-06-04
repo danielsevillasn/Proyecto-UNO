@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Clase que gestiona la persistencia del ranking de victorias 
+ * Clase que gestiona la persistencia del ranking de victorias
  * Implementa las operaciones CRUD sobre la tabla perfil_jugador
  * utilizando el JDBC.
  *
@@ -24,11 +24,6 @@ public class GestorRankingBD {
 
     // Conexion compartida y reutilizada por todos los metodos de la clase
     private static Connection conexion;
-
-    static {
-        System.setProperty("sqlite.slf4j.detect", "false");
-        System.setProperty("sqlite.util.logging", "false");
-    }
 
     /**
      * Devuelve la conexion activa con la base de datos.
@@ -45,6 +40,7 @@ public class GestorRankingBD {
 
     /**
      * Cierra la conexion activa si esta abierta.
+     * 
      * @param 'nada'
      */
     public static void cerrarConexion() {
@@ -58,8 +54,8 @@ public class GestorRankingBD {
     }
 
     /**
-     * Crea la tabla perfil_jugador si no existe todavia. La tabla almacena un 
-     * codigo autoincremental como clave primaria, el nombre unico del jugador 
+     * Crea la tabla perfil_jugador si no existe todavia. La tabla almacena un
+     * codigo autoincremental como clave primaria, el nombre unico del jugador
      * y su contador de victorias.
      *
      * @throws ClassNotFoundException
@@ -76,7 +72,6 @@ public class GestorRankingBD {
 
             try (Statement declaracion = getConexion().createStatement()) {
                 declaracion.execute(tablaPerfilJugador);
-                System.out.println("Base de datos de Ranking inicializada.");
             }
             añadirColumnaRacha();
         } catch (ClassNotFoundException e) {
@@ -95,7 +90,8 @@ public class GestorRankingBD {
      * Los valores se pasan de forma segura mediante PreparedStatement con
      * parametros de sustitucion (?) para prevenir inyecciones SQL.
      *
-     * @param nombreJugador nombre del jugador ganador tal como aparece en la partida
+     * @param nombreJugador nombre del jugador ganador tal como aparece en la
+     *                      partida
      */
     public static void registrarVictoria(String nombreJugador) {
         String selectJugador = "SELECT victorias FROM perfil_jugador WHERE nombre = ?";
@@ -131,15 +127,15 @@ public class GestorRankingBD {
     /**
      * Consulta la tabla perfil_jugador y muestra por consola los cinco jugadores
      * con mas victorias.
-     * Utiliza Statement y ResultSet para ejecutar el SELECT y 
-     * recorrer cada fila devuelta con el metodo next(), extrayendo el nombre con 
+     * Utiliza Statement y ResultSet para ejecutar el SELECT y
+     * recorrer cada fila devuelta con el metodo next(), extrayendo el nombre con
      * getString y las victorias con getInt.
      */
     public static void mostrarTopJugadores() {
         String sql = "SELECT nombre, victorias FROM perfil_jugador ORDER BY victorias DESC LIMIT 5";
 
-        try (Statement stmt = getConexion().createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+        try (Statement declaracion = getConexion().createStatement();
+                ResultSet rs = declaracion.executeQuery(sql)) {
 
             System.out.println("\n--- TOP MEJORES JUGADORES (GLOBAL) ---");
             while (rs.next()) {
@@ -154,7 +150,8 @@ public class GestorRankingBD {
     }
 
     /**
-     * Método que elimina de la base de datos el perfil del jugador indicado mediante
+     * Método que elimina de la base de datos el perfil del jugador indicado
+     * mediante
      * DELETE. Comprueba el numero de filas afectadas que devuelve para
      * informar si el borrado fue exitoso o si el jugador no existia en la tabla.
      *
@@ -182,15 +179,15 @@ public class GestorRankingBD {
     /**
      * Modifica la estructura de la tabla perfil_jugador anadiendo la columna
      * racha_actual de tipo INTEGER, mediante ALTER TABLE.
-     * Si la columna ya existe de una ejecucion anterior, SQLite lanza una excepcion.
+     * Si la columna ya existe de una ejecucion anterior, SQLite lanza una
+     * excepcion.
      */
     public static void añadirColumnaRacha() {
-        String sql = "ALTER TABLE perfil_jugador ADD COLUMN racha_actual INTEGER DEFAULT 0";
+        String alterRacha = "ALTER TABLE perfil_jugador ADD COLUMN racha_actual INTEGER DEFAULT 0";
 
-        try (Statement stmt = getConexion().createStatement()) {
+        try (Statement declaracion = getConexion().createStatement()) {
 
-            stmt.execute(sql);
-            System.out.println("Tabla alterada: Nueva columna 'racha_actual' añadida.");
+            declaracion.execute(alterRacha);
 
         } catch (SQLException e) {
             System.out.println("Aviso al alterar la tabla (quizás la columna ya exista): " + e.getMessage());
