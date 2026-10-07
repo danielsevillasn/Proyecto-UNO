@@ -223,3 +223,12 @@ Jugadores de la partida:
   - Jugador2 (Cartas robadas en total: 22 | Cartas jugadas en total: 17)
 ========================================================================
 
+========================================================================
+Fecha y Hora: 07-10-2026, 12:35:32 p. m.
+Turnos jugados: 37
+Ganador: Jugador2
+Jugadores de la partida:
+  - Jugador1 (Cartas robadas en total: 17 | Cartas jugadas en total: 10)
+  - Jugador2 (Cartas robadas en total: 13 | Cartas jugadas en total: 13)
+========================================================================
+

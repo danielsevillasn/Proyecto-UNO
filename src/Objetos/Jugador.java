@@ -20,6 +20,7 @@ public class Jugador implements Serializable {
     private final int limiteMano;
     private int cartasRobadasTotales;
     private int cartasJugadasTotales;
+    private boolean gritoUno;
 
     // Metodos////////////////////////
 
@@ -58,6 +59,15 @@ public class Jugador implements Serializable {
         return cartasRobadasTotales;
     }
 
+    public boolean getGritoUno() {
+        return gritoUno;
+    }
+
+    // Setter
+    public void setGritoUno(boolean gritoUno) {
+        this.gritoUno = gritoUno;
+    }
+
     // Otros metodos
     /**
      * Juega una carta de la mano
@@ -69,6 +79,11 @@ public class Jugador implements Serializable {
         try {
             Carta cartaExtraida = mano.extraer(n);
             cartasJugadasTotales++;
+            if (mano.size() == 1) {
+                gritoUno = false; // aún no ha gritado UNO
+            } else if (mano.size() == 0) {
+                gritoUno = true; // si se queda sin cartas, no importa
+            }
             return cartaExtraida;
         } catch (ContenedorVacio e) {
             System.out.println(e.getMessage());
@@ -85,6 +100,9 @@ public class Jugador implements Serializable {
         try {
             mano.añadir(carta, limiteMano);
             cartasRobadasTotales++; // Registra cada carta que entra a la mano
+            if (mano.size() == 1) {
+                gritoUno = false;
+            }
         } catch (ContenedorLleno e) {
             System.out.println(e.getMessage());
         }
@@ -103,5 +121,15 @@ public class Jugador implements Serializable {
             return true;
         }
         return false;
+    }
+
+    /**
+     * El jugador grita UNO
+     * 
+     * @param 'ninguno'
+     */
+    public void gritarUno() {
+        gritoUno = true;
+        System.out.println("¡" + nombre + " ha gritado UNO!");
     }
 }

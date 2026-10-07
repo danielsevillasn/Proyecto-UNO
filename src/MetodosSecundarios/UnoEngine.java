@@ -80,7 +80,7 @@ public class UnoEngine {
         if (fin) {
             Datos.gestionarRankingFinal(jugador.getNombre());
         }
-        
+
         AlmacenamientoPartida.eliminarPartida();
 
         GestorRankingBD.cerrarConexion();
@@ -101,6 +101,9 @@ public class UnoEngine {
             Mecanicas.ordenarBarajaJugadores();
             jugador = actual();
 
+            // Comprueba si el jugador actual tiene una carta y si ha gritado UNO
+            // correctamente
+            comprobarUnoJugadorActual();
             // Imprime el tablero, con el turno, el jugador y las cartas
             verTablero();
 
@@ -246,6 +249,40 @@ public class UnoEngine {
 
                 partida();
             }
+        }
+    }
+
+    /**
+     * Método que comprueba si el jugador actual tiene una carta y si ha gritado UNO
+     * correctamente
+     * 
+     * @param 'ninguno'
+     * @throws InterruptedException
+     * @throws ReiniciarJuego
+     */
+    private static void comprobarUnoJugadorActual() throws InterruptedException, ReiniciarJuego {
+        Jugador jugadorActual = actual();
+
+        if (jugadorActual == null) {
+            return;
+        }
+
+        if (jugadorActual.getNumCartas() == 1) {
+            if (!jugadorActual.getGritoUno()) {
+                System.out.println("\n¡" + jugadorActual.getNombre() + " tiene 1 carta!");
+                String respuesta = Datos.pedirCadena("¿Quieres gritar UNO? (s/n): ");
+
+                if (respuesta.equalsIgnoreCase("s")) {
+                    jugadorActual.gritarUno();
+                } else {
+                    System.out.println("¡" + jugadorActual.getNombre() + " se olvidó de decir UNO! Roba 1 carta.");
+                    jugadorActual.recibirCarta(tablero().tirarCarta());
+                }
+            } else {
+                System.out.println("¡" + jugadorActual.getNombre() + " ya ha gritado UNO!");
+            }
+        } else {
+            jugadorActual.setGritoUno(false);
         }
     }
 
