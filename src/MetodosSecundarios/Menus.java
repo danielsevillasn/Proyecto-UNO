@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
+import Enumerados.ModoJuego;
+
 
 /**
  * Clase para imprimir todos los menus del juego
@@ -16,7 +18,7 @@ public class Menus {
     static Scanner s = new Scanner(System.in);
 
     // Variables necesarias para que los métodos de impresión funcionen
-    public static String modoDeJuego = "Clásico";
+    public static ModoJuego modoDeJuego = ModoJuego.CLASICO;
     public static String jugadores = "2";
     public static String nombreJugador = "";
 
@@ -57,7 +59,7 @@ public class Menus {
         System.out.println("\t4- Iniciar juego");
         System.out.println("\t5- Atrás <--");
         System.out.println("==========================");
-        System.out.println("Modo de juego: " + modoDeJuego + "\tJugadores: " + jugadores);
+        System.out.println("Modo de juego: " + modoDeJuego.getNombre() + "\tJugadores: " + jugadores);
 
         return (Datos.pedirEntero("\tElija opción (1-5): "));
     }
@@ -75,8 +77,8 @@ public class Menus {
         Datos.saltoDeLineas();
 
         System.out.println("=========Modos de juego===========");
-        System.out.println("\t1. Clásico");
-        System.out.println("\t2. Otra modalidad");
+        System.out.println("\t1. "+ ModoJuego.CLASICO.getNombre());
+        System.out.println("\t2. "+ ModoJuego.SIETE_CERO.getNombre());
 
         modoDeJuegoSeleccionado();
 
@@ -97,11 +99,14 @@ public class Menus {
             int opcion = Datos.pedirEntero("\tElija opción (1-2): ");
             switch (opcion) {
                 case 1:
-                    modoDeJuego = "Clásico";
+                    modoDeJuego = ModoJuego.CLASICO;
                     salir = true;
                     break;
                 case 2:
-                    modoDeJuego = "Otro";
+                    modoDeJuego = ModoJuego.SIETE_CERO;
+                    System.out.println("  Reglas especiales:");
+                    System.out.println("  • Descarta un 0: todos pasan su mano al siguiente");
+                    System.out.println("  • Descarta un 7: intercambia mano con otro jugador");
                     salir = true;
                     break;
 

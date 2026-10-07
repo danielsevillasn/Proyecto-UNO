@@ -3,6 +3,7 @@ package MetodosSecundarios;
 import java.util.ArrayList;
 
 import Enumerados.ModoEjecucion;
+import Enumerados.ModoJuego;
 import Excepciones.ReiniciarJuego;
 import Excepciones.SalirDelJuego;
 import Objetos.VentanaConfiguracion;
@@ -37,7 +38,7 @@ public class Juego {
         nombresCargados.clear();
         nombresCargados.add("Jugador1");
         nombresCargados.add("Jugador2");
-        Menus.modoDeJuego = "Clásico";
+        Menus.modoDeJuego = ModoJuego.CLASICO;
 
         menuInicio();
     }
@@ -197,7 +198,7 @@ public class Juego {
         nombresCargados.clear();
         cantidadActualJugadores = 2;
 
-        Menus.modoDeJuego = "Clásico";
+        Menus.modoDeJuego = ModoJuego.CLASICO;
         Menus.jugadores = "2";
         Menus.nombreJugador = "Invitado";
 

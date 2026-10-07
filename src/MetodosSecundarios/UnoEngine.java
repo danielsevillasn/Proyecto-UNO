@@ -7,8 +7,11 @@ import Excepciones.SalirDelJuego;
 import java.util.HashMap;
 import java.util.List;
 
+import Enumerados.ModoJuego;
 import Enumerados.Tipos;
+
 import Objetos.Carta;
+import Objetos.CartaNormal;
 import Objetos.Jugador;
 import Objetos.Tablero;
 import Objetos.Turno;
@@ -187,6 +190,11 @@ public class UnoEngine {
         Carta cartaTirada;
         if (cartaValida) {
             cartaTirada = jugador.jugarCarta(opcionCarta);
+
+            // Activar reglas del modo Uno Siete-0
+            if (Menus.modoDeJuego == ModoJuego.SIETE_CERO && cartaTirada instanceof CartaNormal) {
+                UnoSiete0ModoJuego.aplicarRegla(cartaTirada);
+            }
 
             if (cartaTirada.getTipo() == Tipos.ESPECIAL) {
                 Efectos.efectosCartasEspeciales(cartaTirada);
