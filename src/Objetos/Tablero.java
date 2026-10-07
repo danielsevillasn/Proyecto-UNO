@@ -100,12 +100,47 @@ public class Tablero implements Serializable {
      * @param 'ninguno'
      */
     public Carta tirarCarta() {
+        // Si la chupona está vacía, reciclamos el descarte
+        if (chupona.size() == 0) {
+            reciclarDescarte();
+        }
         try {
             return chupona.extraer(chupona.size() - 1);
         } catch (ContenedorVacio e) {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+    
+    /**
+     * Recicla las cartas del montón de descarte hacia la chupona.
+     * Mantiene la última carta en el descarte (la carta visible en la mesa).
+     * Las cartas recicladas se barajan.
+     * 
+     * @param 'ninguno'
+     */
+    private void reciclarDescarte() {
+        if (descarte.size() <= 1) {
+            // Si hay 0 o 1 carta en el descarte, no hay nada que reciclar
+            return;
+        }
+
+        System.out.println("\n¡El mazo se ha acabado! Reciclando cartas del descarte...\n");
+
+        // Extraer todas las cartas del descarte excepto la última (la visible)
+        int tamañoDescarte = descarte.size();
+        for (int i = 0; i < tamañoDescarte - 1; i++) {
+            try {
+                Carta carta = descarte.extraer(0);
+                chupona.añadir(carta);
+            } catch (ContenedorVacio e) {
+                System.out.println(e.getMessage());
+                break;
+            }
+        }
+
+        // Baraja las cartas recicladas
+        chupona.barajar();
     }
 
     /**

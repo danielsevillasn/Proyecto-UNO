@@ -45,6 +45,7 @@ public class Mecanicas {
 
     /**
      * Método que roba una carta de la baraja chupona
+     * Si la chupona está vacía, automáticamente recicla el descarte.
      * 
      * @param 'ninguno'
      */
