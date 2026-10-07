@@ -103,9 +103,18 @@ public class Contenedor<T extends Carta> implements Barajable, Serializable {
      * 
      * @param 'nada'
      * @return Tamaño de la lista
-     */
-    public int size() {
-        return lista.size();
+    */
+   public int size() {
+       return lista.size();
     }
-
+    
+    // ToString
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0;i<size();i++){
+            sb.append(i + ":" + obtener(i) + " ");
+        }
+        return sb.toString();
+    }
 }

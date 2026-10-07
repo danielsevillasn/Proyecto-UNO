@@ -135,9 +135,8 @@ public class UnoEngine {
         System.out.println("Mesa: " + contextoPartida.getTablero().verCartaEnLaMesa());
 
         // Mostrar la mano del jugador actual
-        for (int i = 0; i < jugador.getNumCartas(); i++) {
-            System.out.print(i + ":" + jugador.getMano().obtener(i) + " ");
-        }
+        System.out.println(jugador.getMano());
+
         System.out.println(jugador.getNumCartas() + ":[ROBAR]");
     }
 
